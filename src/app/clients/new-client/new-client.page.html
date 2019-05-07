@@ -25,7 +25,7 @@
 
         <div class = "title_body">
           <h3>
-            <i class="pi pi-chevron-left" style="font-size: 18px ; color: #21B799" (click) = "open_fiche_client()">
+            <i class="fas fa-arrow-left" style="font-size: 18px ; color: #21B799" (click) = "open_fiche_client()">
             </i> Nouveau
           </h3>
         </div>
@@ -198,7 +198,7 @@
                 </ion-item>
 
                 <div class="gps">
-                  <button pButton type="button" label="Récuperer ma position"  icon="pi pi-map-marker" iconPos="left" size = "40"  class="bt ui-button-warning" (click) = "getMyLocation()"></button>
+                  <button type="button" (click) = "getMyLocation()"><i class="fas fa-map-marker-alt" style="font-size: 18px ; color: orange"></i>Récuperer ma position</button>
                   <p>Coordonnées GPS Latitude : <ion-input formControlName= "latitude" type="text"> </ion-input></p>
                   <p>Coordonnées GPS Longitude : <ion-input formControlName= "longitude" type="text"> </ion-input> </p>
                 </div>
@@ -280,7 +280,6 @@
                     <p-tabPanel header="AGENTS COMMERCIAUX">
                         <ion-chip>
                           <ion-label>{{signature}}</ion-label>
-                          <ion-icon name="close-circle"></ion-icon>
                         </ion-chip>
                     </p-tabPanel>
 

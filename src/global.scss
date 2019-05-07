@@ -10,6 +10,15 @@
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
 
+@font-face {
+    font-family: 'Roboto';
+    src: url('../www/assets/font/Roboto-Regular.ttf');
+  }
+  
+  * {
+    font-family: 'Roboto';
+  }
+
 .container{
     background-position: center;
     background-image: url(/web_enterprise/static/src/img/application-switcher-bg.jpg);
@@ -47,4 +56,36 @@
     text-align: end;
     margin-right: 14px;
     margin-top: 5px;
+}
+
+ //Pagination Tableau
+/*.ui-table .ui-paginator-top {
+    background: transparent !important;
+    border: none !important;
+    width: 40px;
+    margin-left: auto;
+}
+body .ui-paginator .ui-paginator-first, body .ui-paginator .ui-paginator-last {
+    display: none !important;
+}
+span.ui-paginator-pages {
+    display: none !important;
+}
+body .ui-paginator .ui-paginator-prev, body .ui-paginator .ui-paginator-next {
+    min-width: 10px !important;
+} */
+
+body .ui-table .ui-table-thead > tr > th,
+body .ui-table .ui-table-tbody > tr > td {
+    border: none !important;
+}
+body .ui-table .ui-table-thead > tr > th {
+    background-color: #e2e2e0 !important;
+}
+body .ui-table .ui-table-tbody > tr:nth-child(even) {
+    background-color: #eef0f0 !important;
+}
+.o_list_view.table thead > tr > th.o_column_sortable:hover {
+    background-color: #d6d6d3 !important;
+    color: #333333 !important;
 }

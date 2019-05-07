@@ -33,7 +33,7 @@
               <p-table #dt [columns]="cols" [value]="data" [paginator]="true" [paginatorPosition]="'top'" [rows]="10" [(selection)]="selected" dataKey="name" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
                   <ng-template pTemplate="caption">
                       <div style="text-align: right">        
-                          <i class="pi pi-search" style="margin: 4px 4px 0 0 ; color: gray; font-size: 20px;"></i>
+                          <i class="fas fa-search" style="margin: 4px 4px 0 0 ; color: gray; font-size: 20px;"></i>
                           <input type="text" pInputText size="20" placeholder="Filtrer" (input)="dt.filterGlobal($event.target.value, 'contains')" >
                       </div>
                   </ng-template>

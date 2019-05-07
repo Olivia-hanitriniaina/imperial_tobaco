@@ -24,8 +24,9 @@
       <div class="body">
 
         <div class = "title_body">
+          
           <h3>
-            Fiche client / {{data_cli.name}}
+              <i class="fas fa-arrow-left" style="font-size: 18px ; color: #21B799"></i> {{data_cli.name}}
           </h3>
         </div>
 
@@ -177,7 +178,7 @@
                 </ion-item>
 
                 <div class="gps">
-                  <button pButton type="button" label="Récuperer ma position"  icon="pi pi-map-marker" iconPos="left" size = "40"  class="bt ui-button-warning" (click) = "getMyLocation()"></button>
+                    <button type="button" (click) = "getMyLocation()"><i class="fas fa-map-marker-alt" style="font-size: 18px ; color: orange"></i>Récuperer ma position</button>
                   <p>Coordonnées GPS Latitude : {{client_detail.latitude}}</p>
                   <p>Coordonnées GPS Longitude : {{client_detail.longitude}} </p>
                 </div>
@@ -200,6 +201,11 @@
                     <ion-label position="floating">Activité POS</ion-label>
                     <p> {{client_detail.activite_pos}}</p>
                   </ion-item>
+
+                  <ion-item>
+                      <ion-label position="floating">Canal</ion-label>
+                      <p> {{client_detail.canal}}</p>
+                    </ion-item>
 
                   <ion-item>
                       <ion-label position="floating">Enseigne d'appartenance</ion-label>
@@ -242,7 +248,9 @@
                  <!--ZAVATRA MITSIVALANA-->
                  <p-tabView>
                     <p-tabPanel header="AGENTS COMMERCIAUX">
-                        <p> {{client_detail.signature}}</p>
+                        <ion-chip>
+                          <ion-label>{{client_detail.signature}}</ion-label>
+                        </ion-chip>
                     </p-tabPanel>
 
                     <p-tabPanel header="PERMANENT POSM">
@@ -275,9 +283,6 @@
                         <ion-label position="floating">Permanent POSM 4</ion-label>
                         <p> {{client_detail.permanent_POSM4_id}}</p>
                     </ion-item>
-
-                    <ion-label position="floating">Permanent POSM 4</ion-label>
-                    <p> {{client_detail.permanent_POSM4_id}}</p>
 
                     <ion-item>
                         <ion-label position="floating">Permanent POSM 5</ion-label>
@@ -408,8 +413,7 @@
           
                   <div class = "title_body">
                     <h3>
-                      <i class="pi pi-chevron-left" style="font-size: 18px ; color: #21B799" (click) = "open_fiche_client()">
-                      </i> Modification / {{data_cli.name}}
+                        <i class="fas fa-arrow-left" style="font-size: 18px ; color: #21B799"></i> {{data_cli.name}}
                     </h3>
                   </div>
           
@@ -571,14 +575,13 @@
                           </ion-item>
           
                           <ion-item>
-                            <ion-label position="floating">Type de quartier</ion-label>
+                            <ion-label position="floating">Type Quartier</ion-label>
                             <ion-select [value]="data_cli.type_quartier_id" formControlName= "type_quartier_id" >
                               <ion-select-option *ngFor = "let type_qurtier of i_t_type_quartier" [value] = "type_qurtier.id" > {{type_qurtier.name}}</ion-select-option>
                             </ion-select>
                           </ion-item>
           
                           <div class="gps">
-                            <button pButton type="button" label="Récuperer ma position"  icon="pi pi-map-marker" iconPos="left" size = "40"  class="bt ui-button-warning" (click) = "getMyLocation()"></button>
                             <p>Coordonnées GPS Latitude : <ion-input [value]="data_cli.latitude" formControlName= "latitude" type="text"> </ion-input></p>
                             <p>Coordonnées GPS Longitude : <ion-input [value]="data_cli.longitude" formControlName= "longitude" type="text"> </ion-input> </p>
                           </div>
