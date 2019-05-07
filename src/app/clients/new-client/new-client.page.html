@@ -1,0 +1,435 @@
+<ion-content>
+  <div class = "container">
+
+       <!-- HEAD -->
+       <div class = "head">
+        <div class="back_button" (click) = "open_menu()" >
+          <i class="fas fa-th" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+        </div>
+
+        <div class = "menu">
+          <div class="list_icon">
+            <i class="fas fa-at" style="color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+            <i class="fas fa-comments" style=" color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+            <i class="fas fa-ban on fa-camera" style=" color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+          </div> 
+        </div>
+
+        <div class= "menu_icon">
+            <i class="fas fa-bars" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+        </div>
+      </div>
+      <!-- HEAD -->
+
+      <div class="body">
+
+        <div class = "title_body">
+          <h3>
+            <i class="pi pi-chevron-left" style="font-size: 18px ; color: #21B799" (click) = "open_fiche_client()">
+            </i> Nouveau
+          </h3>
+        </div>
+
+        <div class = "btn_nw_cr">
+          <button pButton type="submit" label="SAUVEGARDER"     class="bt ui-button-success" (click) = "save_new_client()"></button>
+          <button pButton type="button" label="ANNULER"  class="bt ui-button-secondary" (click) = "abort_new_client()"></button>
+        </div>
+        
+
+        <div class="breacumb ui-g">
+          <div class="ui-g-4">
+              <button pButton type="button" label="VALIDÉE PAR SUPERVISEUR"  class="bt ui-button-secondary"></button>
+          </div>
+
+          <div class="ui-g-8">
+              <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>
+          </div> 
+         
+        </div>
+
+        <div class = "archive  ui-g">
+            <div class="ui-g-7">
+               
+            </div>
+  
+            <div class="div_btn ui-g-5">
+                <button pButton type="button" icon="pi pi-folder" iconPos="left" label="ARCHIVER"  class="bt ui-button-danger"></button>
+            </div>
+        </div>
+
+        <div class = "photo  ui-g">
+            <div class="ui-g-9">
+               
+            </div>
+  
+            <div class="cam ui-g-3" *ngIf = "base64Image" [ngStyle]="{'background-image' : base64Image.file}">
+               <!--
+                <div class="del_mod_btn">
+                  <button pButton type="button" icon="pi pi-pencil" iconPos="center" class="bt ui-button-success" (click)="edit_image()"></button>
+                  <button pButton type="button" icon="pi pi-trash" iconPos="center" class="bt ui-button-danger" (click)="delete_image()"></button>
+                </div>
+               --> 
+            </div>
+
+            <div class="cam ui-g-3" *ngIf = "!base64Image" [ngStyle]="{'background-image' : base64Image}">
+                <i class="pi pi-camera" style="font-size: 78px ; color: gray" (click)="takePicture()"></i> <br />
+            </div>
+        </div>
+        
+          
+        <div class = "form">
+          <form [formGroup]="fiche_client" (ngSubmit) = "save_new_client()">
+            <div class = "form_inside">
+
+              
+              <div class="form_item">
+                <!--Organisation Commerciale-->
+                <h3>Organisation Commerciale</h3>
+
+                <ion-item>
+                  <ion-label position="floating">Région</ion-label>
+                  <ion-select  formControlName= "region_id" >
+                    <ion-select-option *ngFor = "let region of i_t_region" [value]= "region.id"> {{region.name}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="floating">Agence</ion-label>
+                  <ion-select  formControlName= "agence_id" >
+                    <ion-select-option *ngFor = "let agence of i_t_agence" [value] = "agence.id" > {{agence.name}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="floating">Zone</ion-label>
+                  <ion-select  formControlName= "zone_id" >
+                    <ion-select-option *ngFor = "let zone of i_t_zone" [value] = "zone.id" > {{zone.name}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="floating">Secteur</ion-label>
+                  <ion-select  formControlName= "secteur_id" >
+                    <ion-select-option *ngFor = "let secteur of i_t_secteur" [value] = "secteur.id" > {{secteur.name}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+
+                    <!--Organisation Commerciale-->
+              </div>
+              
+
+              <div class="form_item">
+                <!--Coordonnées du point de vente-->
+                <h3>Coordonnées du point de vente</h3>
+
+                <ion-item>
+                    <ion-label position="floating">Nom du POS</ion-label>
+                    <ion-input formControlName= "nom_pos" type="text"> </ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="floating">Nom du Gérant</ion-label>
+                  <ion-input formControlName= "nom_gerant" type="text"> </ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="floating">Adresse</ion-label>
+                  <ion-input formControlName= "adresse" type="text"> </ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="floating">Repère</ion-label>
+                  <ion-input formControlName= "repere" type="text"> </ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="floating">Quartier</ion-label>
+                  <ion-input formControlName= "quartier" type="text"> </ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="floating">Ville</ion-label>
+                  <ion-select  formControlName= "ville_id" >
+                    <ion-select-option *ngFor = "let ville of i_t_ville" [value] = "ville.id" > {{ville.name}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="floating">N° de téléphone 1</ion-label>
+                  <ion-input formControlName= "numero_telephone1" type="text"> </ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="floating">N° de téléphone 2</ion-label>
+                  <ion-input formControlName= "numero_telephone2" type="text"> </ion-input>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="floating">N° de téléphone 3</ion-label>
+                  <ion-input formControlName= "numero_telephone3" type="text"> </ion-input>
+                </ion-item>
+                              
+                <!--Coordonnées du point de vente-->
+              </div>
+                    
+              <div class="form_item">
+                <!--Coordonnées complémentaire du Point de Vente-->
+                <h3>Coordonnées complémentaire du Point de Vente</h3>
+
+                <ion-item>
+                  <ion-label position="floating">Emplacement</ion-label>
+                  <ion-select  formControlName= "emplacement_id" >
+                    <ion-select-option *ngFor = "let emplacement of i_t_emplacement" [value] = "emplacement.id" > {{emplacement.name}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="floating">Proximité</ion-label>
+                  <ion-select  formControlName= "proximite_id" >
+                    <ion-select-option *ngFor = "let proximite of i_t_proximite" [value] = "proximite.id" > {{proximite.name}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+
+                <ion-item>
+                  <ion-label position="floating">Type de quartier</ion-label>
+                  <ion-select  formControlName= "type_quartier_id" >
+                    <ion-select-option *ngFor = "let type_qurtier of i_t_type_quartier" [value] = "type_qurtier.id" > {{type_qurtier.name}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+
+                <div class="gps">
+                  <button pButton type="button" label="Récuperer ma position"  icon="pi pi-map-marker" iconPos="left" size = "40"  class="bt ui-button-warning" (click) = "getMyLocation()"></button>
+                  <p>Coordonnées GPS Latitude : <ion-input formControlName= "latitude" type="text"> </ion-input></p>
+                  <p>Coordonnées GPS Longitude : <ion-input formControlName= "longitude" type="text"> </ion-input> </p>
+                </div>
+
+
+                  <!--Coordonnées complémentaire du Poin de Vente-->
+              </div>
+                   
+
+              <div class="form_item">
+                <!--Typologie de Point de Vente-->
+                <h3>Typologie de Point de Vente</h3>
+
+                <ion-item>
+                  <ion-label position="floating">Type Client</ion-label>
+                  <ion-select  formControlName= "type_client_id" >
+                    <ion-select-option *ngFor = "let type_client of i_t_type_client" [value] = "type_client.id" > {{type_client.name}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label position="floating">Activité POS</ion-label>
+                    <ion-select  formControlName= "activite_pos_id" >
+                      <ion-select-option *ngFor = "let activite_pos of i_t_activite_pos" [value] = "activite_pos.id" > {{activite_pos.name}}</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+
+                  <ion-item>
+                      <ion-label position="floating">Enseigne d'appartenance</ion-label>
+                      <ion-select  formControlName= "enseigne_appartenance_id" >
+                        <ion-select-option *ngFor = "let enseigne_appartenance of i_t_enseigne_appartenance" [value] = "enseigne_appartenance.id" > {{enseigne_appartenance.name}}</ion-select-option>
+                      </ion-select>
+                    </ion-item>
+
+                    <ion-item>
+                        <ion-label position="floating">Classification 1</ion-label>
+                        <ion-select  formControlName= "classification1_id" >
+                          <ion-select-option *ngFor = "let classification1 of i_t_classification1" [value] = "classification1.id" > {{classification1.name}}</ion-select-option>
+                        </ion-select>
+                      </ion-item>
+
+                      <ion-item>
+                          <ion-label position="floating">Classification 2</ion-label>
+                          <ion-select  formControlName= "classification2_id" >
+                            <ion-select-option *ngFor = "let classification2 of i_t_classification2" [value] = "classification2.id" > {{classification2.name}}</ion-select-option>
+                          </ion-select>
+                        </ion-item>
+
+
+                      <!--Typologie de Point de Vente-->
+              </div>
+                
+              <div class="form_item">
+                <!--Couverture commerciale-->
+                <h3>Couverture commerciale</h3>
+
+                <ion-item>
+                  <ion-label position="floating">Couverture commerciale</ion-label>
+                  <ion-select  formControlName= "couverture_commerciale_id" >
+                    <ion-select-option *ngFor = "let couverture_commerciale of i_t_couverture_commerciale" [value] = "couverture_commerciale.id" > {{couverture_commerciale.name}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label position="floating">Fréquence de visite</ion-label>
+                    <ion-select  formControlName= "frequence_visite_id" >
+                      <ion-select-option *ngFor = "let frequence_visite of i_t_frequence_visite" [value] = "frequence_visite.id" > {{frequence_visite.name}}</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+
+                  <!--Couverture commerciale-->
+              </div>
+                     
+
+
+                 <!--ZAVATRA MITSIVALANA-->
+                 <p-tabView>
+
+                    <p-tabPanel header="AGENTS COMMERCIAUX">
+                        <ion-chip>
+                          <ion-label>{{signature}}</ion-label>
+                          <ion-icon name="close-circle"></ion-icon>
+                        </ion-chip>
+                    </p-tabPanel>
+
+                    <p-tabPanel header="PERMANENT POSM">
+
+                      <ion-item>
+                          <ion-label position="floating">Cible installation présentoirs</ion-label>
+                          <ion-select  formControlName= "cible_installation_presentoirs_id" >
+                            <ion-select-option *ngFor = "let cible_installation_presentoirs of i_t_cible_installation_presentoirs" [value] = "cible_installation_presentoirs.id" > {{cible_installation_presentoirs.name}}</ion-select-option>
+                          </ion-select>
+                      </ion-item>
+                      
+                      <ion-item>
+                          <ion-label position="floating">Permanent POSM 1</ion-label>
+                          <ion-select  formControlName= "permanent_POSM1_id" >
+                            <ion-select-option *ngFor = "let posm1 of i_t_permanent_posm" [value] = "posm1.id" > {{posm1.name}}</ion-select-option>
+                          </ion-select>
+                      </ion-item>
+                    
+                      <ion-item>
+                          <ion-label position="floating">Permanent POSM 2</ion-label>
+                          <ion-select  formControlName= "permanent_POSM2_id" >
+                            <ion-select-option *ngFor = "let posm2 of i_t_permanent_posm" [value] = "posm2.id" > {{posm2.name}}</ion-select-option>
+                          </ion-select>
+                      </ion-item>
+                    
+                      <ion-item>
+                          <ion-label position="floating">Permanent POSM 3</ion-label>
+                          <ion-select  formControlName= "permanent_POSM3_id" >
+                            <ion-select-option *ngFor = "let posm3 of i_t_permanent_posm" [value] = "posm3.id" > {{posm3.name}}</ion-select-option>
+                          </ion-select>
+                      </ion-item>
+                    
+                      <ion-item>
+                          <ion-label position="floating">Permanent POSM 4</ion-label>
+                          <ion-select  formControlName= "permanent_POSM4_id" >
+                            <ion-select-option *ngFor = "let posm4 of i_t_permanent_posm" [value] = "posm4.id" > {{posm4.name}}</ion-select-option>
+                          </ion-select>
+                      </ion-item>
+                    
+                      <ion-item>
+                          <ion-label position="floating">Permanent POSM 5</ion-label>
+                          <ion-select  formControlName= "permanent_POSM5_id" >
+                            <ion-select-option *ngFor = "let posm5 of i_t_permanent_posm" [value] = "posm5.id" > {{posm5.name}}</ion-select-option>
+                          </ion-select>
+                      </ion-item>
+                    
+
+                    </p-tabPanel>
+
+                    <p-tabPanel header="CONTRAT">
+                      <ion-item>
+                          <ion-label position="floating">Contrat</ion-label>
+                          <ion-select   >
+                            <ion-select-option *ngFor = "let contrat of i_t_contrat" [value] = "contrat.id" > {{contrat.name}}</ion-select-option>
+                          </ion-select>
+                      </ion-item>
+                        
+
+                    <ion-item>
+                      <ion-label position="floating">Date debut contrat</ion-label>
+                      <ion-datetime formControlName= "date_debut_contrat" display-format="YYYY-MM-DD" picker-format="YYYY-MM-DD"></ion-datetime>
+                    </ion-item>
+
+                    <ion-item>
+                      <ion-label position="floating">Date fin contrat</ion-label>
+                      <ion-datetime formControlName= "date_fin_contrat" display-format="YYYY-MM-DD" picker-format="YYYY-MM-DD"></ion-datetime>
+                    </ion-item>
+                    </p-tabPanel>
+
+                    <p-tabPanel header="ACTIVATION">
+                      <ion-item>
+                          <ion-label position="floating">Coopération ITG</ion-label>
+                          <ion-select  formControlName= "cooperation_itg_id" >
+                            <ion-select-option *ngFor = "let cooperation_itg of i_t_cooperation_itg" [value] = "cooperation_itg.id" > {{cooperation_itg.name}}</ion-select-option>
+                          </ion-select>
+                      </ion-item>
+                        
+                      <ion-item>
+                          <ion-label position="floating">Activation autorisée</ion-label>
+                          <ion-select  formControlName= "activation_autorisee_id" >
+                            <ion-select-option *ngFor = "let activation_autorisee of i_t_activation_autorisee" [value] = "activation_autorisee.id" > {{activation_autorisee.name}}</ion-select-option>
+                          </ion-select>
+                      </ion-item>
+                        
+                      <ion-item>
+                          <ion-label position="floating">Préférence animateur</ion-label>
+                          <ion-select  formControlName= "preference_animateur_id" >
+                            <ion-select-option *ngFor = "let preference_animateur of i_t_preference_animateur" [value] = "preference_animateur.id" > {{preference_animateur.name}}</ion-select-option>
+                          </ion-select>
+                      </ion-item>
+                    
+                  </p-tabPanel>
+
+                  <p-tabPanel header="APPROVISIONNEMENT">
+                    <ion-item>
+                        <ion-label position="floating">Fréquence d'approvisionnement</ion-label>
+                        <ion-select  formControlName= "frequence_approvisionnement_id" >
+                          <ion-select-option *ngFor = "let frequence_appro of i_t_frequence_approvisionnement" [value] = "frequence_appro.id" > {{frequence_appro.name}}</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                      
+                    <ion-item>
+                        <ion-label position="floating">Source d'approvisionnemen</ion-label>
+                        <ion-select  formControlName= "source_approvisionnement_id" >
+                          <ion-select-option *ngFor = "let source_appro of i_t_source_approvisionnement" [value] = "source_appro.id" > {{source_appro.name}}</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                    
+                    <ion-item>
+                        <ion-label position="floating">Fournisseur principal</ion-label>
+                        <ion-select  formControlName= "fournisseur_principal_id" >
+                          <ion-select-option *ngFor = "let fornisseur_principale of i_t_fournisseur_principale" [value] = "fornisseur_principale.id" > {{fornisseur_principale.name}}</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                    
+                    <ion-item>
+                        <ion-label position="floating">Fournisseur secondaire</ion-label>
+                        <ion-select  formControlName= "fournisseur_secondaire_id" >
+                          <ion-select-option *ngFor = "let fournisseur_secondaire of i_t_fournisseur_secondaire" [value] = "fournisseur_secondaire.id" > {{fournisseur_secondaire.name}}</ion-select-option>
+                        </ion-select>
+                    </ion-item>
+                    
+                  </p-tabPanel>
+                  
+                </p-tabView>
+
+                 <!--ZAVATRA MITSIVALANA-->
+
+
+                 <!--Commentaire-->
+
+                 <ion-item>
+                    <ion-label position="floating">Commentaires</ion-label>
+                    <ion-textarea  formControlName= "commentaire" ></ion-textarea>
+                  </ion-item>
+
+                  <!--Commentaire-->
+
+
+            </div>
+            
+          </form>
+        </div>
+      </div>
+
+      <div class="footer">
+
+      </div>
+  </div>
+
+</ion-content>
