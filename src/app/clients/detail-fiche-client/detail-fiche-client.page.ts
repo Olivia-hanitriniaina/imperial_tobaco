@@ -34,6 +34,7 @@ import { res_partner } from '../../model/data/res_partner.model';
 import { res_users } from '../../model/data/res_users.model';
 import { Storage } from '@ionic/storage' ;
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Data } from 'src/app/model/data/data.model';
 
 @Component({
   selector: 'app-detail-fiche-client',
@@ -41,61 +42,64 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
   styleUrls: ['./detail-fiche-client.page.scss'],
 })
 export class DetailFicheClientPage implements OnInit {
+  ngOnInit(): void {
 
-  edit : boolean = false ;
-  items: { label: string; }[];
-  id : number ;
-  client_detail : ClientDetail ;
-  i_t_activation_autorisee: Array<i_t_activation_autorisee>;
-  i_t_cible_activation: Array<i_t_cible_activation>;
-  i_t_cible_installation_presentoirs: Array<i_t_cible_installation_presentoirs>;
-  i_t_activite_pos: Array<i_t_activite_pos>;
-  i_t_agence:Array<i_t_agence>;
-  i_t_classification1: Array<i_t_classification1>;
-  i_t_classification2: Array<i_t_classification2>;
-  i_t_contrat: Array<i_t_contrat>;
-  i_t_cooperation_itg: Array<i_t_cooperation_itg>;
-  i_t_couverture_commerciale: Array<i_t_couverture_commerciale>;
-  i_t_emplacement: Array<i_t_emplacement>;
-  i_t_enseigne_appartenance: Array<i_t_enseigne_appartenance>;
-  i_t_frequence_approvisionnement: Array<i_t_frequence_approvisionnement>;
-  i_t_frequence_visite: Array<i_t_frequence_visite>;
-  i_t_permanent_posm: Array<i_t_permanent_posm>;
-  i_t_preference_animateur: Array<i_t_preference_animateur>;
-  i_t_proximite: Array<i_t_proximite>;
-  i_t_secteur: Array<i_t_secteur>;
-  i_t_type_client: Array<i_t_type_client>;
-  i_t_type_quartier: Array<i_t_type_quartier>;
-  i_t_ville: Array<i_t_ville>;
-  i_t_zone: Array<i_t_zone>;
-  i_t_fournisseur_secondaire: Array<i_t_fournisseur_secondaire>;
-  i_t_fournisseur_principale: Array<i_t_fournisseur_principale>;
-  i_t_region: Array<i_t_region>;
-  i_t_source_approvisionnement : Array<i_t_source_approvisionnement>
-  res_user: res_users;
-  fiche_client: FormGroup;
-  data_cli : res_partner ;
-
-  constructor(private geolocation : Geolocation,private storage: Storage, private dbm : Database_manager, private form_builder: FormBuilder, private router : Router, private activatedRoute : ActivatedRoute) { 
-    
   }
 
-  async ngOnInit() {
+  edit : boolean = false ;
+  items: { label: string; } [] ;
+  id : number ;
+  client_detail : any = {};
+  i_t_activation_autorisee: Array<i_t_activation_autorisee> = [] ;
+  i_t_cible_activation: Array<i_t_cible_activation> = [] ;
+  i_t_cible_installation_presentoirs: Array<i_t_cible_installation_presentoirs> = [] ;
+  i_t_activite_pos: Array<i_t_activite_pos> = [] ;
+  i_t_agence:Array<i_t_agence> = [] ;
+  i_t_classification1: Array<i_t_classification1> = [] ;
+  i_t_classification2: Array<i_t_classification2> = [] ;
+  i_t_contrat: Array<i_t_contrat> = [] ;
+  i_t_cooperation_itg: Array<i_t_cooperation_itg> = [] ;
+  i_t_couverture_commerciale: Array<i_t_couverture_commerciale> = [] ;
+  i_t_emplacement: Array<i_t_emplacement> = [] ;
+  i_t_enseigne_appartenance: Array<i_t_enseigne_appartenance> = [] ;
+  i_t_frequence_approvisionnement: Array<i_t_frequence_approvisionnement> = [] ;
+  i_t_frequence_visite: Array<i_t_frequence_visite> = [] ;
+  i_t_permanent_posm: Array<i_t_permanent_posm> = [] ;
+  i_t_preference_animateur: Array<i_t_preference_animateur> = [] ;
+  i_t_proximite: Array<i_t_proximite> = [] ;
+  i_t_secteur: Array<i_t_secteur> = [] ;
+  i_t_type_client: Array<i_t_type_client> = [] ;
+  i_t_type_quartier: Array<i_t_type_quartier> = [] ;
+  i_t_ville: Array<i_t_ville> = [] ;
+  i_t_zone: Array<i_t_zone> = [] ;
+  i_t_fournisseur_secondaire: Array<i_t_fournisseur_secondaire> = [] ;
+  i_t_fournisseur_principale: Array<i_t_fournisseur_principale> = [] ;
+  i_t_region: Array<i_t_region> = [] ;
+  i_t_source_approvisionnement : Array<i_t_source_approvisionnement>
+  res_user: any = {} ;
+  fiche_client: FormGroup;
+  data_cli : any = {} ;
+
+  constructor(private data_router : Data, private geolocation : Geolocation,private storage: Storage, private dbm : Database_manager, private form_builder: FormBuilder, private router : Router, private activatedRoute : ActivatedRoute) { 
+
+  }
+
+  ionViewWillEnter() {
     this.items = [
       {label:'PROSPECT'},
       {label:'VALIDÉE PAR SUPERVISEUR'},
       {label:'VALIDÉE PAR ADMINISTRATEUR'},
     ];
 
-    this.storage.get("data_for_detail").then(id => {
-
-      this.dbm.get_res_partner_data(id).then( data => {
-        this.client_detail = data ;
-      }) ;
-      
-      this.dbm.select_basic_data_with_id("res_partner",id).then(data => {
-        this.data_cli = data;
-      }) ;
+   
+    this.dbm.get_res_partner_data(this.data_router.storage).then( data => {
+      this.client_detail = data ;
+      console.log('client_detail : \n' + JSON.stringify(data)) ;
+    }) ;
+    
+    this.dbm.select_basic_data_with_id("res_partner",this.data_router.storage).then(data => {
+      this.data_cli = data;
+    }) ;
 
       this.dbm.select_basic_data("i_t_region").then( data => {
         this.i_t_region = data
@@ -260,9 +264,6 @@ export class DetailFicheClientPage implements OnInit {
   
         commentaire : [''] ,
       })
-
-     
-    });
   }
 
   edit_fiche_client(){

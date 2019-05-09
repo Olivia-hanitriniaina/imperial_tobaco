@@ -14,6 +14,7 @@ import { SQLite } from '@ionic-native/sqlite/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 import { HttpClientModule } from '@angular/common/http' ;
 import { Database_manager } from './model/DAO/database_manager.model';
+import { Data } from './model/data/data.model';
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,6 +35,7 @@ import { Database_manager } from './model/DAO/database_manager.model';
     StatusBar,
     SplashScreen,
     SQLite,
+    Data,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

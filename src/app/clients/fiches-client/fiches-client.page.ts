@@ -4,6 +4,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { Storage } from '@ionic/storage'
 import { HttpClient } from '@angular/common/http';
 import { ClientInterface } from '../../model/screen/clients.screen';
+import { Data } from 'src/app/model/data/data.model';
 
 @Component({
   selector: 'app-fiches-client',
@@ -22,7 +23,7 @@ export class FichesClientPage implements OnInit {
   data : ClientInterface [] ;
   selected : ClientInterface[]
 
-  constructor(private dbm : Database_manager,private router : Router, private storage : Storage, private http : HttpClient) { }
+  constructor(private data_router : Data , private dbm : Database_manager,private router : Router, private storage : Storage, private http : HttpClient) { }
 
   ngOnInit() {
     this.cols = [
@@ -62,7 +63,7 @@ export class FichesClientPage implements OnInit {
   }
 
   onRowClicked(rowData : ClientInterface){
-    this.storage.set("data_for_detail", rowData.id) ;
+    this.data_router.storage = rowData.id ;
     this.router.navigate(['detail-fiche-client']) ;
   }
 }

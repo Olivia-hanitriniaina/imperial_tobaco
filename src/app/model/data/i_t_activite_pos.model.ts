@@ -14,8 +14,5 @@ export class i_t_activite_pos extends base_data {
         
         this.canal_id = canal_id ;
     }
-
-    
-
 }
 
