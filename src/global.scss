@@ -89,3 +89,49 @@ body .ui-table .ui-table-tbody > tr:nth-child(even) {
     background-color: #d6d6d3 !important;
     color: #333333 !important;
 }
+
+// STYLES WORKFLOW
+.archive.ui-g {
+    line-height: 41px;
+}
+
+// By Tolotra 08/05/2019
+.breacumb.ui-g {
+    border-top: 1px solid #8f8f8f;
+    border-bottom: 1px solid #8f8f8f;
+    margin-top: 10px;
+}
+body .ui-breadcrumb {
+    border: none;
+    line-height: 31px;
+}
+.ui-breadcrumb ul li .ui-menuitem-link {
+    font-weight: bold;
+}
+body .ui-breadcrumb ul li .ui-menuitem-link {
+    color: #5b5b5b;
+}
+ul.CustomArchive {
+    margin: 0;
+    padding: 0;
+    width: 120px !important;
+}
+ul.CustomArchive li {
+    list-style-type: none;
+    font-size: 16px;
+    padding-right: 10px;
+    cursor: pointer;
+    border-left: 1px solid #8f8f8f;
+    color: #3c763d;
+}
+ul.CustomArchive li i.pi.pi-folder {
+    font-size: 28px;
+    position: relative;
+    top: 5px;
+    right: 10px;
+    color: #8f8f8f;
+}
+
+.InputObligatoire:host(.item-interactive), .InputObligatoire:host(.item-lines-full) {
+    border-width: 0 0 3px 0 !important;
+}

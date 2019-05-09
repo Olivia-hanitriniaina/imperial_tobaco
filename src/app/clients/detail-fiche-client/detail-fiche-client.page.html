@@ -52,14 +52,24 @@
                
             </div>
   
-            <div class="div_btn ui-g-5">
-                <button pButton type="button" icon="pi pi-folder" iconPos="left" label="ARCHIVER"  class="bt ui-button-danger"></button>
+            <div class="div_btn ui-g-5" (click)="ConvertStatut()">
+                <!-- <button pButton type="button" icon="pi pi-folder" iconPos="left" label="ARCHIVER"  class="bt ui-button-danger"></button> -->
+                <ul class="CustomArchive">
+                  <li *ngIf="!OnClickInactif">
+                    <i class="pi pi-folder"></i>
+                    Actif
+                  </li>
+                  <li *ngIf="OnClickInactif">
+                    <i class="pi pi-folder"></i>
+                    Inactif
+                  </li>
+                </ul>
             </div>
         </div>
 
         <div class = "photo  ui-g">
             <div class="ui-g-9">
-               
+               <h2 class="DataCLI">{{data_cli.name}}</h2>
             </div>
   
             <div class="cam ui-g-3">
@@ -440,13 +450,23 @@
                       </div>
             
                       <div class="div_btn ui-g-5">
-                          <button pButton type="button" icon="pi pi-folder" iconPos="left" label="ARCHIVER"  class="bt ui-button-danger"></button>
+                          <!-- <button pButton type="button" icon="pi pi-folder" iconPos="left" label="ARCHIVER"  class="bt ui-button-danger"></button> -->
+                          <ul class="CustomArchive">
+                            <li *ngIf="!OnClickInactif">
+                              <i class="pi pi-folder"></i>
+                              Actif
+                            </li>
+                            <li *ngIf="OnClickInactif">
+                              <i class="pi pi-folder"></i>
+                              Inactif
+                            </li>
+                          </ul>
                       </div>
                   </div>
           
                   <div class = "photo  ui-g">
                       <div class="ui-g-9">
-                         
+                         <h2 class="DataCLI">{{data_cli.name}}</h2>
                       </div>
             
                       <div class="cam ui-g-3" >

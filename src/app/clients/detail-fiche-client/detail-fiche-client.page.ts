@@ -75,6 +75,9 @@ export class DetailFicheClientPage implements OnInit {
   fiche_client: FormGroup;
   data_cli : res_partner ;
 
+  // By Tolotra
+  OnClickInactif = false;
+
   constructor(private storage: Storage, private dbm : Database_manager, private form_builder: FormBuilder, private router : Router, private activatedRoute : ActivatedRoute) { 
     
   }
@@ -308,6 +311,10 @@ export class DetailFicheClientPage implements OnInit {
 
   abort_edit(){
     this.edit = false ;
+  }
+
+  ConvertStatut(){
+    this.OnClickInactif = true;
   }
 
 }

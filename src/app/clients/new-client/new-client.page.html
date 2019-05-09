@@ -41,8 +41,9 @@
               <button pButton type="button" label="VALIDÉE PAR SUPERVISEUR"  class="bt ui-button-secondary"></button>
           </div>
 
-          <div class="ui-g-8">
-              <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb>
+          <div class="ui-g-8 dropdownworkflow">
+              <!-- <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb> -->
+              <p-dropdown [options]="items.label" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name" [showClear]="true"></p-dropdown>
           </div> 
          
         </div>
@@ -53,7 +54,17 @@
             </div>
   
             <div class="div_btn ui-g-5">
-                <button pButton type="button" icon="pi pi-folder" iconPos="left" label="ARCHIVER"  class="bt ui-button-danger"></button>
+                <!-- <button pButton type="button" icon="pi pi-folder" iconPos="left" label="ARCHIVER"  class="bt ui-button-danger"></button> -->
+                <ul class="CustomArchive">
+                  <li *ngIf="!OnClickInactif">
+                    <i class="pi pi-folder"></i>
+                    Archiver
+                  </li>
+                  <li *ngIf="OnClickInactif">
+                    <i class="pi pi-folder"></i>
+                    Désarchiver
+                  </li>
+                </ul>
             </div>
         </div>
 
@@ -86,21 +97,21 @@
                 <!--Organisation Commerciale-->
                 <h3>Organisation Commerciale</h3>
 
-                <ion-item>
-                  <ion-label position="floating">Région</ion-label>
+                <ion-item class="InputObligatoire">
+                  <ion-label position="floating">Région *</ion-label>
                   <ion-select  formControlName= "region_id" >
                     <ion-select-option *ngFor = "let region of i_t_region" [value]= "region.id"> {{region.name}}</ion-select-option>
                   </ion-select>
                 </ion-item>
 
-                <ion-item>
+                <ion-item class="InputObligatoire">
                   <ion-label position="floating">Agence</ion-label>
                   <ion-select  formControlName= "agence_id" >
                     <ion-select-option *ngFor = "let agence of i_t_agence" [value] = "agence.id" > {{agence.name}}</ion-select-option>
                   </ion-select>
                 </ion-item>
 
-                <ion-item>
+                <ion-item class="InputObligatoire">
                   <ion-label position="floating">Zone</ion-label>
                   <ion-select  formControlName= "zone_id" >
                     <ion-select-option *ngFor = "let zone of i_t_zone" [value] = "zone.id" > {{zone.name}}</ion-select-option>

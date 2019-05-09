@@ -18,6 +18,7 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { TabViewModule } from 'primeng/tabview';
+import { CardModule } from 'primeng/card';
 
 const routes: Routes = [
   {
@@ -44,6 +45,7 @@ const routes: Routes = [
     MessageModule,
     BreadcrumbModule,
     TabViewModule,
+    CardModule,
     RouterModule.forChild(routes)
   ],
   declarations: [DetailFicheClientPage]
