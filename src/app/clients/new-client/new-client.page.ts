@@ -205,9 +205,7 @@ export class NewClientPage implements OnInit {
       this.i_t_canal = data ;
     }) ;
 
-    this.dbm.select_max_basic_data("i_t_contat").then(data => {
-      this.id_contrat = data.max ;
-    }) ;
+    
 
     this.dbm.select_res_user_active().then(data => {
       this.active_user = data ;
@@ -272,6 +270,11 @@ export class NewClientPage implements OnInit {
 
       commentaire : [''] ,
    }) ;
+
+   this.dbm.select_max_basic_data("i_t_contat").then(data => {
+     console.log(data);
+      this.fiche_client.controls['contrat_id'].setValue(data.max) ;
+    }) ;
   }
 
   takePicture(){
@@ -352,7 +355,7 @@ export class NewClientPage implements OnInit {
 
     else {
     this.fiche_client.controls['user_id'].setValue(this.active_user.id) ;
-    this.fiche_client.controls['contrat_id'].setValue(this.id_contrat) ;
+    this.fiche_client.controls['contrat_id'].setValue(this.i_t_contrat[this.i_t_contrat.length].id + 1) ;
     let q1 = "insert into res_partner " ;
     let q2 = "" ;
     let q3 = "" ;
