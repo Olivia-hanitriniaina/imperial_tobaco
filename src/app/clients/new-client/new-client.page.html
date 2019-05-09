@@ -84,8 +84,13 @@
                --> 
             </div>
 
-            <div class="cam ui-g-3" *ngIf = "!base64Image" [ngStyle]="{'background-image' : base64Image}">
-                <i class="pi pi-camera" style="font-size: 78px ; color: gray" (click)="takePicture()"></i> <br />
+            <div class="cam ui-g-3" >
+              <i class="pi pi-camera" style="font-size: 78px ; color: gray" (click)="takePicture()" *ngIf = "!base64Image"></i> <br />
+              <img *ngIf = "base64Image" [src] = "base64Image">
+              <div class="del_mod_btn">
+                <button pButton type="button" icon="pi pi-pencil" iconPos="center" class="bt ui-button-success"></button>
+                <button pButton type="button" icon="pi pi-trash" iconPos="center" class="bt ui-button-danger"></button>
+              </div>
             </div>
         </div>
         
