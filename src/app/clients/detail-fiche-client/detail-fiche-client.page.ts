@@ -33,6 +33,7 @@ import { i_t_source_approvisionnement } from '../../model/data/i_t_source_approv
 import { res_partner } from '../../model/data/res_partner.model';
 import { res_users } from '../../model/data/res_users.model';
 import { Storage } from '@ionic/storage' ;
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 @Component({
   selector: 'app-detail-fiche-client',
@@ -75,7 +76,7 @@ export class DetailFicheClientPage implements OnInit {
   fiche_client: FormGroup;
   data_cli : res_partner ;
 
-  constructor(private storage: Storage, private dbm : Database_manager, private form_builder: FormBuilder, private router : Router, private activatedRoute : ActivatedRoute) { 
+  constructor(private geolocation : Geolocation,private storage: Storage, private dbm : Database_manager, private form_builder: FormBuilder, private router : Router, private activatedRoute : ActivatedRoute) { 
     
   }
 
@@ -305,6 +306,29 @@ export class DetailFicheClientPage implements OnInit {
     });
     
 }
+
+getMyLocation(){
+    this.geolocation.getCurrentPosition().then((resp) => {
+      // resp.coords.latitude
+      // resp.coords.longitude
+      this.fiche_client.controls['longitude'].setValue(resp.coords.longitude) ;
+      this.fiche_client.controls['latitude'].setValue(resp.coords.latitude) ;
+
+      this.fiche_client.controls['longitude'].disable();
+      this.fiche_client.controls['latitude'].disable();
+
+     }).catch((error) => {
+       console.log('Error getting location', error);
+     });
+     
+     let watch = this.geolocation.watchPosition();
+     watch.subscribe((data) => {
+      // data can be a set of coordinates, or an error (if an error occurred).
+      // data.coords.latitude
+      // data.coords.longitude
+      console.log('watch \n' + data.coords) ;
+     });
+  }
 
   abort_edit(){
     this.edit = false ;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {MenuItem} from 'primeng/api';
+import {MenuItem, MessageService} from 'primeng/api';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Router } from '@angular/router';
@@ -76,8 +76,9 @@ export class NewClientPage implements OnInit {
   i_t_region: Array<i_t_region>;
   i_t_source_approvisionnement : Array<i_t_source_approvisionnement>
   signature : string ;
+  invalid_fields = [] ;
 
-  constructor(private toast : ToastController,private dbm : Database_manager,private form_builder : FormBuilder, private router : Router ,private camera: Camera, private geolocation: Geolocation, private alert : AlertController) { }
+  constructor(private messageService : MessageService, private toast : ToastController,private dbm : Database_manager,private form_builder : FormBuilder, private router : Router ,private camera: Camera, private geolocation: Geolocation, private alert : AlertController) { }
 
   ngOnInit() {
 
@@ -320,6 +321,20 @@ export class NewClientPage implements OnInit {
 
   save_new_client(){
 
+    if(this.fiche_client.invalid) {
+      let invalid = '' ;
+      for (const name in this.fiche_client.controls) {
+        if (this.fiche_client.controls[name].invalid) {
+            let named = name.charAt(0).toUpperCase() + name.slice(1) ;
+            named = named.replace(/_|(id)/gi, function( a ){ return ' '; }) ;
+            invalid = '\n' + invalid + ' - ' + named + '\n' ;
+        }
+      }
+      this.messageService.add({severity:'error', summary: 'Les champs suivants sont incorrects : ', detail : invalid, key:'invalid'});
+    }
+    
+
+    else {
     let q1 = "insert into res_partner " ;
     let q2 = "" ;
     let q3 = "" ;
@@ -358,10 +373,12 @@ export class NewClientPage implements OnInit {
       })
     }).catch(e => {
       console.log('tsy mety res \n ', JSON.stringify(e)) }) ;
+    }
   }
 
   abort_new_client() {
-    //this.dbm.get_res_partner() ;
+    console.log("ato") ;
+    
   }
 
   edit_image(){
@@ -370,6 +387,13 @@ export class NewClientPage implements OnInit {
 
   delete_image() {
     
+  }
+
+  regionChange(event) {
+    this.i_t_agence = this.i_t_agence.filter(function(agence_filtered) {
+      return agence_filtered.region_id == event;
+    });
+    console.log('1 : ' + JSON.stringify(this.i_t_agence)) ;
   }
 
   //this.posts.filter(post => post.nomCategorie === m_categorie) ; (selectionChange)="selectChangeSigle($event)"

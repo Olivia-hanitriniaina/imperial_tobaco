@@ -18,8 +18,10 @@ import { AccordionModule } from 'primeng/accordion';
 import { PasswordModule } from 'primeng/password';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
-import {BreadcrumbModule} from 'primeng/breadcrumb';
-import {TabViewModule} from 'primeng/tabview';
+import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { TabViewModule } from 'primeng/tabview';
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/components/common/messageservice';
 
 const routes: Routes = [
   {
@@ -46,9 +48,10 @@ const routes: Routes = [
     MessageModule,
     BreadcrumbModule,
     TabViewModule,
+    ToastModule,
     RouterModule.forChild(routes)
   ],
   declarations: [NewClientPage],
-  providers : [Camera, Geolocation]
+  providers : [Camera, Geolocation, MessageService]
 })
 export class NewClientPageModule {}

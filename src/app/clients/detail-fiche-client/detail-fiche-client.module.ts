@@ -18,6 +18,8 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { TabViewModule } from 'primeng/tabview';
+import { Camera } from '@ionic-native/camera/ngx' ;
+import { Geolocation } from '@ionic-native/geolocation/ngx' ;
 
 const routes: Routes = [
   {
@@ -46,6 +48,7 @@ const routes: Routes = [
     TabViewModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [DetailFicheClientPage]
+  declarations: [DetailFicheClientPage] ,
+  providers : [Camera, Geolocation]
 })
 export class DetailFicheClientPageModule {}
