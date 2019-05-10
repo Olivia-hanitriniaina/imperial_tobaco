@@ -1,6 +1,8 @@
 <ion-content>
   <div class = "container">
 
+    <p-toast [style]="{marginTop: '80px'}" position="top-right" key="invalid"></p-toast>
+
        <!-- HEAD -->
        <div class = "head">
         <div class="back_button" (click) = "open_menu()" >
@@ -43,7 +45,7 @@
 
           <div class="ui-g-8 dropdownworkflow">
               <!-- <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb> -->
-              <p-dropdown [options]="items.label" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name" [showClear]="true"></p-dropdown>
+              <p-dropdown [options]="items" [(ngModel)]="selectedCity" placeholder="PROSPECT" optionLabel="label" [showClear]="true"></p-dropdown>
           </div> 
          
         </div>
@@ -97,9 +99,9 @@
                 <!--Organisation Commerciale-->
                 <h3>Organisation Commerciale</h3>
 
-                <ion-item class="InputObligatoire">
-                  <ion-label position="floating">Région *</ion-label>
-                  <ion-select  formControlName= "region_id" >
+                <ion-item>
+                  <ion-label position="floating">Région</ion-label>
+                  <ion-select  formControlName= "region_id" (ionChange)="regionChange($event.detail.value)">
                     <ion-select-option *ngFor = "let region of i_t_region" [value]= "region.id"> {{region.name}}</ion-select-option>
                   </ion-select>
                 </ion-item>
@@ -436,6 +438,8 @@
           </form>
         </div>
       </div>
+
+      
 
       <div class="footer">
 

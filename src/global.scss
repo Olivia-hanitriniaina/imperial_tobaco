@@ -131,7 +131,40 @@ ul.CustomArchive li i.pi.pi-folder {
     right: 10px;
     color: #8f8f8f;
 }
-
 .InputObligatoire:host(.item-interactive), .InputObligatoire:host(.item-lines-full) {
     border-width: 0 0 3px 0 !important;
+}
+
+// WORKFLOW
+.dropdownworkflow {
+    text-align: right;
+    line-height: 45px;
+}
+.dropdownworkflow .ui-dropdown {
+    background: #21b799 !important;
+    border: none !important;
+    border-radius: 0 !important;
+    text-align: center;
+}
+.dropdownworkflow .ui-inputtext {
+    background: #21b799 !important;
+    color: #fff !important;
+    text-transform: uppercase;
+    border-radius: 0 !important;
+    text-align: center;
+    padding-right: 8px !important;
+}
+.dropdownworkflow .ui-dropdown-trigger {
+    display: none;
+}
+.dropdownworkflow .ui-widget * {
+    background: #21b799 !important;
+    color: #ffffff;
+}
+.TxtBoldtabPanel {
+    font-weight: bold !important;
+    margin-bottom: 10px !important;
+}
+.ForRequired {
+    border-bottom: 2px solid #666666;
 }
