@@ -310,6 +310,12 @@ export class DetailFicheClientPage implements OnInit {
     
 }
 
+open_fiche_client(){
+    this.router.navigate(['fiches-client']) ;
+  }
+
+
+
 getMyLocation(){
     this.geolocation.getCurrentPosition().then((resp) => {
       // resp.coords.latitude
@@ -333,7 +339,7 @@ getMyLocation(){
      });
   }
 
-  abort_edit(){
+  abort_edit_client(){
     this.edit = false ;
   }
 

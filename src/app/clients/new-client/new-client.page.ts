@@ -400,7 +400,6 @@ export class NewClientPage implements OnInit {
   }
 
   abort_new_client() {
-    console.log("ato") ;
     
   }
 
