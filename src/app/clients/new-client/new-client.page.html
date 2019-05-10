@@ -39,8 +39,8 @@
         
 
         <div class="breacumb ui-g">
-          <div class="ui-g-4">
-              <button pButton type="button" label="VALIDÉE PAR SUPERVISEUR"  class="bt ui-button-secondary"></button>
+          <div class="ui-g-4 noPadding">
+              <button pButton type="button" label="VALIDÉE PAR SUPERVISEUR"  class="bt ui-button-secondary noPadding"></button>
           </div>
 
           <div class="ui-g-8 dropdownworkflow">
@@ -55,16 +55,16 @@
                
             </div>
   
-            <div class="div_btn ui-g-5">
+            <div class="div_btn ui-g-5" (click)="ConvertStatut()">
                 <!-- <button pButton type="button" icon="pi pi-folder" iconPos="left" label="ARCHIVER"  class="bt ui-button-danger"></button> -->
                 <ul class="CustomArchive">
                   <li *ngIf="!OnClickInactif">
                     <i class="pi pi-folder"></i>
-                    Archiver
+                    Actif
                   </li>
                   <li *ngIf="OnClickInactif">
                     <i class="pi pi-folder"></i>
-                    Désarchiver
+                    Inactif
                   </li>
                 </ul>
             </div>
@@ -86,6 +86,10 @@
 
             <div class="cam ui-g-3" *ngIf = "!base64Image" [ngStyle]="{'background-image' : base64Image}">
                 <i class="pi pi-camera" style="font-size: 78px ; color: gray" (click)="takePicture()"></i> <br />
+                <div class="del_mod_btn">
+                  <button pButton type="button" icon="pi pi-pencil" iconPos="center" class="bt ui-button-success"></button>
+                  <button pButton type="button" icon="pi pi-trash" iconPos="center" class="bt ui-button-danger"></button>
+                </div>
             </div>
         </div>
         
@@ -211,7 +215,7 @@
                 </ion-item>
 
                 <div class="gps">
-                  <button type="button" (click) = "getMyLocation()"><i class="fas fa-map-marker-alt" style="font-size: 18px ; color: orange"></i>Récuperer ma position</button>
+                  <button type="button" (click) = "getMyLocation()" style="padding: 6px;margin-top: 10px;"><i class="fas fa-map-marker-alt" style="font-size: 18px ; color: red;    margin-right: 10px;"></i> Récuperer ma position</button>
                   <p>Coordonnées GPS Latitude : <ion-input formControlName= "latitude" type="text"> </ion-input></p>
                   <p>Coordonnées GPS Longitude : <ion-input formControlName= "longitude" type="text"> </ion-input> </p>
                 </div>
