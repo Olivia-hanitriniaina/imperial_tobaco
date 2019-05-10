@@ -35,11 +35,11 @@
 				
 				<div class="breacumb ui-g">
 				  <div class="ui-g-4">
-					  <!-- <button pButton type="button" label="VALIDÉE PAR SUPERVISEUR"  class="bt ui-button-secondary"></button> -->
+					  <button pButton type="button" label="VALIDÉE PAR SUPERVISEUR"  class="bt ui-button-secondary"></button>
 				  </div>
 				  <div class="ui-g-8 dropdownworkflow">
 					  <!-- <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb> -->
-					  <p-dropdown [options]="items" [(ngModel)]="selectedCity" placeholder="VALIDÉE PAR SUPERVISEUR" optionLabel="label" [showClear]="true"></p-dropdown>
+					  <p-dropdown [options]="items" [(ngModel)]="selectedCity" placeholder="PROSPECT" optionLabel="label" [showClear]="true"></p-dropdown>
 				  </div> 
 				</div>
 
@@ -272,12 +272,12 @@
 			  </div>
 			  <div class="breacumb ui-g">
 				<div class="ui-g-4">
-					<!-- <button pButton type="button" label="VALIDÉE PAR SUPERVISEUR"  class="bt ui-button-secondary"></button> -->
+					<button pButton type="button" label="VALIDÉE PAR SUPERVISEUR"  class="bt ui-button-secondary"></button>
 				</div>
 
 				<div class="ui-g-8 dropdownworkflow">
 					<!-- <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb> -->
-					<p-dropdown [options]="items" [(ngModel)]="selectedCity" placeholder="VALIDÉE PAR SUPERVISEUR" optionLabel="label" [showClear]="true"></p-dropdown>
+					<p-dropdown [options]="items" [(ngModel)]="selectedCity" placeholder="PROSPECT" optionLabel="label" [showClear]="true"></p-dropdown>
 				</div> 
 			   
 			  </div>
@@ -288,16 +288,7 @@
 				  </div>
 		
 				  <div class="div_btn ui-g-5">
-					  <ul class="CustomArchive">
-						  <li *ngIf="!OnClickInactif">
-							<i class="pi pi-folder"></i>
-							Actif
-						  </li>
-						  <li *ngIf="OnClickInactif">
-							<i class="pi pi-folder"></i>
-							Inactif
-						  </li>
-					  </ul>
+					  <button pButton type="button" icon="pi pi-folder" iconPos="left" label="ARCHIVER"  class="bt ui-button-danger"></button>
 				  </div>
 			  </div>
 
@@ -439,7 +430,6 @@
 					  </ion-item>
 
 					  <div class="gps">
-					  	<button type="button" (click) = "getMyLocation()" style="padding: 6px;margin-top: 10px;"><i class="fas fa-map-marker-alt" style="font-size: 18px ; color: red;    margin-right: 10px;"></i> Récuperer ma position</button>
 						<p>Coordonnées GPS Latitude : <ion-input [value]="data_cli.latitude" formControlName= "latitude" type="text"> </ion-input></p>
 						<p>Coordonnées GPS Longitude : <ion-input [value]="data_cli.longitude" formControlName= "longitude" type="text"> </ion-input> </p>
 					  </div>

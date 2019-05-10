@@ -39,8 +39,8 @@
         
 
         <div class="breacumb ui-g">
-          <div class="ui-g-4 noPadding">
-              <button pButton type="button" label="VALIDÉE PAR SUPERVISEUR"  class="bt ui-button-secondary noPadding"></button>
+          <div class="ui-g-4">
+              <button pButton type="button" label="VALIDÉE PAR SUPERVISEUR"  class="bt ui-button-secondary"></button>
           </div>
 
           <div class="ui-g-8 dropdownworkflow">
@@ -55,16 +55,16 @@
                
             </div>
   
-            <div class="div_btn ui-g-5" (click)="ConvertStatut()">
+            <div class="div_btn ui-g-5">
                 <!-- <button pButton type="button" icon="pi pi-folder" iconPos="left" label="ARCHIVER"  class="bt ui-button-danger"></button> -->
                 <ul class="CustomArchive">
                   <li *ngIf="!OnClickInactif">
                     <i class="pi pi-folder"></i>
-                    Actif
+                    Archiver
                   </li>
                   <li *ngIf="OnClickInactif">
                     <i class="pi pi-folder"></i>
-                    Inactif
+                    Désarchiver
                   </li>
                 </ul>
             </div>
@@ -216,7 +216,7 @@
                 </ion-item>
 
                 <div class="gps">
-                  <button type="button" (click) = "getMyLocation()" style="padding: 6px;margin-top: 10px;"><i class="fas fa-map-marker-alt" style="font-size: 18px ; color: red;    margin-right: 10px;"></i> Récuperer ma position</button>
+                  <button type="button" (click) = "getMyLocation()"><i class="fas fa-map-marker-alt" style="font-size: 18px ; color: orange"></i>Récuperer ma position</button>
                   <p>Coordonnées GPS Latitude : <ion-input formControlName= "latitude" type="text"> </ion-input></p>
                   <p>Coordonnées GPS Longitude : <ion-input formControlName= "longitude" type="text"> </ion-input> </p>
                 </div>

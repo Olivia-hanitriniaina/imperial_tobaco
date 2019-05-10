@@ -44,8 +44,6 @@ import { i_t_canal } from 'src/app/model/data/i_t_canal.model';
 })
 export class NewClientPage implements OnInit {
 
-  OnClickInactif = false;
-  
   items : Array<MenuItem> ;
   home : any ;
   longitude : String = "0.0000000000";
@@ -274,11 +272,11 @@ export class NewClientPage implements OnInit {
       commentaire : [''] ,
    }) ;
 
-   this.dbm.select_max_basic_data("i_t_contat").then(data => {
+  /* this.dbm.select_max_basic_data("i_t_contat").then(data => {
      console.log(data);
       this.fiche_client.controls['contrat_id'].setValue(data.max) ;
-    }) ;
-  }
+    }) ;*/
+  } 
 
   takePicture(){
     const options: CameraOptions = {
@@ -445,8 +443,5 @@ export class NewClientPage implements OnInit {
   }
 
   //this.posts.filter(post => post.nomCategorie === m_categorie) ; (selectionChange)="selectChangeSigle($event)"
-	
-ConvertStatut(){
-    this.OnClickInactif = true;
-  }
+
 }

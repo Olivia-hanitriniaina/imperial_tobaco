@@ -138,7 +138,7 @@ ul.CustomArchive li i.pi.pi-folder {
 // WORKFLOW
 .dropdownworkflow {
     text-align: right;
-    padding: 0px;
+    line-height: 45px;
 }
 .dropdownworkflow .ui-dropdown {
     background: #21b799 !important;
@@ -160,7 +160,6 @@ ul.CustomArchive li i.pi.pi-folder {
 .dropdownworkflow .ui-widget * {
     background: #21b799 !important;
     color: #ffffff;
-    line-height: 35px;
 }
 .TxtBoldtabPanel {
     font-weight: bold !important;
