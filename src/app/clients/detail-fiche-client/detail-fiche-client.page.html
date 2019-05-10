@@ -288,7 +288,17 @@
 				  </div>
 		
 				  <div class="div_btn ui-g-5">
-					  <button pButton type="button" icon="pi pi-folder" iconPos="left" label="ARCHIVER"  class="bt ui-button-danger"></button>
+					  <!-- <button pButton type="button" icon="pi pi-folder" iconPos="left" label="ARCHIVER"  class="bt ui-button-danger"></button> -->
+					  <ul class="CustomArchive">
+						  <li *ngIf="!OnClickInactif">
+							<i class="pi pi-folder"></i>
+							Actif
+						  </li>
+						  <li *ngIf="OnClickInactif">
+							<i class="pi pi-folder"></i>
+							Inactif
+						  </li>
+						</ul>
 				  </div>
 			  </div>
 
