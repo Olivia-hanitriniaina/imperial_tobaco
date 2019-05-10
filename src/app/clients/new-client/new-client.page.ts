@@ -217,6 +217,7 @@ export class NewClientPage implements OnInit {
     
    
     this.fiche_client = this.form_builder.group({
+      name : [''] ,
       region_id : ['', Validators.required],
       agence_id : ['', Validators.required] ,
       zone_id : ['', Validators.required] ,
@@ -357,7 +358,8 @@ export class NewClientPage implements OnInit {
 
     else {
     this.fiche_client.controls['user_id'].setValue(this.active_user.id) ;
-    this.fiche_client.controls['contrat_id'].setValue(this.i_t_contrat[this.i_t_contrat.length].id + 1) ;
+    this.fiche_client.controls['contrat_id'].setValue(this.i_t_contrat[this.i_t_contrat.length - 1].id + 1) ;
+    this.fiche_client.controls['name'].setValue("/") ;
     let q1 = "insert into res_partner " ;
     let q2 = "" ;
     let q3 = "" ;
@@ -400,7 +402,6 @@ export class NewClientPage implements OnInit {
   }
 
   abort_new_client() {
-    console.log("ato") ;
     
   }
 
