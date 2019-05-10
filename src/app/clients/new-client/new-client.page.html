@@ -108,22 +108,22 @@
 
                 <ion-item class="InputObligatoire">
                   <ion-label position="floating">Agence</ion-label>
-                  <ion-select  formControlName= "agence_id" >
-                    <ion-select-option *ngFor = "let agence of i_t_agence" [value] = "agence.id" > {{agence.name}}</ion-select-option>
+                  <ion-select  formControlName= "agence_id" (ionChange)="agenceChange($event.detail.value)">
+                    <ion-select-option *ngFor = "let agence of i_t_agence_filtered" [value] = "agence.id" > {{agence.name}}</ion-select-option>
                   </ion-select>
                 </ion-item>
 
                 <ion-item class="InputObligatoire">
                   <ion-label position="floating">Zone</ion-label>
-                  <ion-select  formControlName= "zone_id" >
-                    <ion-select-option *ngFor = "let zone of i_t_zone" [value] = "zone.id" > {{zone.name}}</ion-select-option>
+                  <ion-select  formControlName= "zone_id" (ionChange)="zoneChange($event.detail.value)">
+                    <ion-select-option *ngFor = "let zone of i_t_zone_filtered" [value] = "zone.id" > {{zone.name}}</ion-select-option>
                   </ion-select>
                 </ion-item>
 
                 <ion-item>
                   <ion-label position="floating">Secteur</ion-label>
                   <ion-select  formControlName= "secteur_id" >
-                    <ion-select-option *ngFor = "let secteur of i_t_secteur" [value] = "secteur.id" > {{secteur.name}}</ion-select-option>
+                    <ion-select-option *ngFor = "let secteur of i_t_secteur_filtered" [value] = "secteur.id" > {{secteur.name}}</ion-select-option>
                   </ion-select>
                 </ion-item>
 
@@ -234,9 +234,14 @@
 
                 <ion-item>
                     <ion-label position="floating">Activité POS</ion-label>
-                    <ion-select  formControlName= "activite_pos_id" >
+                    <ion-select  formControlName= "activite_pos_id" (ionChange)="activite_pos_Change($event.detail.value)">
                       <ion-select-option *ngFor = "let activite_pos of i_t_activite_pos" [value] = "activite_pos.id" > {{activite_pos.name}}</ion-select-option>
                     </ion-select>
+                  </ion-item>
+
+                  <ion-item>
+                    <ion-label position="floating">Canal</ion-label>
+                    <p class="canal" >{{canal}}</p>
                   </ion-item>
 
                   <ion-item>

@@ -35,6 +35,7 @@ import { i_t_source_approvisionnement } from '../../model/data/i_t_source_approv
 import { res_users } from '../../model/data/res_users.model';
 import { stringify } from 'querystring';
 import { NEXT } from '@angular/core/src/render3/interfaces/view';
+import { i_t_canal } from 'src/app/model/data/i_t_canal.model';
 
 @Component({
   selector: 'app-new-client',
@@ -49,48 +50,52 @@ export class NewClientPage implements OnInit {
   latitude : String = "0.00000000";
   base64Image : any ;
   fiche_client : FormGroup ;
-  i_t_activation_autorisee: Array<i_t_activation_autorisee>;
-  i_t_cible_activation: Array<i_t_cible_activation>;
-  i_t_cible_installation_presentoirs: Array<i_t_cible_installation_presentoirs>;
-  i_t_activite_pos: Array<i_t_activite_pos>;
-  i_t_agence:Array<i_t_agence>;
-  i_t_classification1: Array<i_t_classification1>;
-  i_t_classification2: Array<i_t_classification2>;
-  i_t_contrat: Array<i_t_contrat>;
-  i_t_cooperation_itg: Array<i_t_cooperation_itg>;
-  i_t_couverture_commerciale: Array<i_t_couverture_commerciale>;
-  i_t_emplacement: Array<i_t_emplacement>;
-  i_t_enseigne_appartenance: Array<i_t_enseigne_appartenance>;
-  i_t_frequence_approvisionnement: Array<i_t_frequence_approvisionnement>;
-  i_t_frequence_visite: Array<i_t_frequence_visite>;
-  i_t_permanent_posm: Array<i_t_permanent_posm>;
-  i_t_preference_animateur: Array<i_t_preference_animateur>;
-  i_t_proximite: Array<i_t_proximite>;
-  i_t_secteur: Array<i_t_secteur>;
-  i_t_type_client: Array<i_t_type_client>;
-  i_t_type_quartier: Array<i_t_type_quartier>;
-  i_t_ville: Array<i_t_ville>;
-  i_t_zone: Array<i_t_zone>;
-  i_t_fournisseur_secondaire: Array<i_t_fournisseur_secondaire>;
-  i_t_fournisseur_principale: Array<i_t_fournisseur_principale>;
-  i_t_region: Array<i_t_region>;
-  i_t_source_approvisionnement : Array<i_t_source_approvisionnement>
+  i_t_activation_autorisee: Array<i_t_activation_autorisee> = [] ;
+  i_t_cible_activation: Array<i_t_cible_activation> = [] ;
+  i_t_cible_installation_presentoirs: Array<i_t_cible_installation_presentoirs> = [] ;
+  i_t_activite_pos: Array<i_t_activite_pos> = [] ;
+  i_t_agence:Array<i_t_agence> = [] ;
+  i_t_agence_filtered:Array<i_t_agence> = [] ;
+  i_t_classification1: Array<i_t_classification1> = [] ;
+  i_t_classification2: Array<i_t_classification2> = [] ;
+  i_t_contrat: Array<i_t_contrat> = [] ;
+  i_t_cooperation_itg: Array<i_t_cooperation_itg> = [] ;
+  i_t_couverture_commerciale: Array<i_t_couverture_commerciale> = [] ;
+  i_t_emplacement: Array<i_t_emplacement> = [] ;
+  i_t_enseigne_appartenance: Array<i_t_enseigne_appartenance> = [] ;
+  i_t_frequence_approvisionnement: Array<i_t_frequence_approvisionnement> = [] ;
+  i_t_frequence_visite: Array<i_t_frequence_visite> = [] ;
+  i_t_permanent_posm: Array<i_t_permanent_posm> = [] ;
+  i_t_preference_animateur: Array<i_t_preference_animateur> = [] ;
+  i_t_proximite: Array<i_t_proximite> = [] ;
+  i_t_secteur: Array<i_t_secteur> = [] ;
+  i_t_type_client: Array<i_t_type_client> = [] ;
+  i_t_type_quartier: Array<i_t_type_quartier> = [] ;
+  i_t_ville: Array<i_t_ville> = [] ;
+  i_t_zone: Array<i_t_zone> = [] ;
+  i_t_fournisseur_secondaire: Array<i_t_fournisseur_secondaire> = [] ;
+  i_t_fournisseur_principale: Array<i_t_fournisseur_principale> = [] ;
+  i_t_region: Array<i_t_region> = [] ;
+  i_t_source_approvisionnement : Array<i_t_source_approvisionnement> ;
+  i_t_zone_filtered : Array<i_t_zone> = [] ;
+  i_t_secteur_filtered : Array<i_t_secteur> = [] ;
+  i_t_canal : Array<i_t_canal> = [] ;
+  i_t_canal_filtered : Array<i_t_canal> = [] ;
   signature : string ;
   invalid_fields = [] ;
+  canal : string = "" ;
+  id_contrat : number = 0 ;
+  active_user : res_users ;
 
   constructor(private messageService : MessageService, private toast : ToastController,private dbm : Database_manager,private form_builder : FormBuilder, private router : Router ,private camera: Camera, private geolocation: Geolocation, private alert : AlertController) { }
 
   ngOnInit() {
 
-   
-    
     this.items = [
       {label:'PROSPECT'},
       {label:'VALIDÉE PAR SUPERVISEUR'},
       {label:'VALIDÉE PAR ADMINISTRATEUR'},
     ];
-
-    
 
     this.dbm.select_basic_data("i_t_region").then(data => {
       this.i_t_region = data
@@ -111,7 +116,6 @@ export class NewClientPage implements OnInit {
     this.dbm.select_basic_data("i_t_activite_pos").then(data => {
       this.i_t_activite_pos = data ;
     }) ;
-
 
     this.dbm.select_basic_data("i_t_agence").then(data => {
       this.i_t_agence = data ;
@@ -197,9 +201,20 @@ export class NewClientPage implements OnInit {
       this.i_t_source_approvisionnement = data ;
     }) ;
 
+    this.dbm.select_basic_data("i_t_canal").then(data => {
+      this.i_t_canal = data ;
+    }) ;
+
+    this.dbm.select_max_basic_data("i_t_contat").then(data => {
+      this.id_contrat = data.max ;
+    }) ;
+
     this.dbm.select_res_user_active().then(data => {
+      this.active_user = data ;
       this.signature = data.signature ;
     }) ;
+
+    
    
     this.fiche_client = this.form_builder.group({
       region_id : ['', Validators.required],
@@ -233,6 +248,7 @@ export class NewClientPage implements OnInit {
       frequence_visite_id : [''] ,
 
       user_id : [''] ,
+      canal_id : [''] ,
 
       cible_installation_presentoirs_id : ['', Validators.required] ,
       permanent_POSM1_id : ['', Validators.required] ,
@@ -241,7 +257,7 @@ export class NewClientPage implements OnInit {
       permanent_POSM4_id : ['', Validators.required] ,
       permanent_POSM5_id : ['', Validators.required] ,
 
-      contrat_id : ['', Validators.required] ,
+      contrat_id : [''] ,
       date_debut_contrat : ['', Validators.required] ,
       date_fin_contrat : ['', Validators.required] ,
 
@@ -335,6 +351,8 @@ export class NewClientPage implements OnInit {
     
 
     else {
+    this.fiche_client.controls['user_id'].setValue(this.active_user.id) ;
+    this.fiche_client.controls['contrat_id'].setValue(this.id_contrat) ;
     let q1 = "insert into res_partner " ;
     let q2 = "" ;
     let q3 = "" ;
@@ -390,10 +408,34 @@ export class NewClientPage implements OnInit {
   }
 
   regionChange(event) {
-    this.i_t_agence = this.i_t_agence.filter(function(agence_filtered) {
+    this.i_t_agence_filtered = this.i_t_agence.filter(function(agence_filtered) {
       return agence_filtered.region_id == event;
     });
     console.log('1 : ' + JSON.stringify(this.i_t_agence)) ;
+  }
+
+  agenceChange(event) {
+    this.i_t_zone_filtered = this.i_t_zone.filter(function(zone_filtered) {
+      return zone_filtered.agence_id == event;
+    });
+    console.log('1 : ' + JSON.stringify(this.i_t_agence)) ;
+  }
+
+  zoneChange(event) {
+    this.i_t_secteur_filtered = this.i_t_secteur.filter(function(secteur_filtered) {
+      return secteur_filtered.zone_id == event;
+    });
+    console.log('1 : ' + JSON.stringify(this.i_t_agence)) ;
+  }
+
+  activite_pos_Change(event){
+    this.fiche_client.controls['canal_id'].setValue(event) ;
+    this.i_t_canal_filtered = this.i_t_canal.filter(function(canal_filtered) {
+      return canal_filtered.id == event;
+    });
+    this.canal = this.i_t_canal_filtered[0].name 
+    
+    console.log('1 : ' + JSON.stringify(this.i_t_canal_filtered)) ;
   }
 
   //this.posts.filter(post => post.nomCategorie === m_categorie) ; (selectionChange)="selectChangeSigle($event)"
