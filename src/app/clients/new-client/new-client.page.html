@@ -39,13 +39,14 @@
         
 
         <div class="breacumb ui-g">
-          <div class="ui-g-4">
-              <button pButton type="button" label="VALIDÉE PAR SUPERVISEUR"  class="bt ui-button-secondary"></button>
+          <div class="ui-g-4 dropdownworkflow">
+              <!-- <button pButton type="button" label="VALIDÉE PAR SUPERVISEUR"  class="bt ui-button-secondary"></button> -->
+              <p-dropdown [options]="itemsActions" [(ngModel)]="selectedAction" placeholder="ACTION" optionLabel="label" [showClear]="true"></p-dropdown>
           </div>
 
-          <div class="ui-g-8 dropdownworkflow">
+          <div class="ui-g-8 dropdownworkflow noCLick">
               <!-- <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb> -->
-              <p-dropdown [options]="items" [(ngModel)]="selectedCity" placeholder="PROSPECT" optionLabel="label" [showClear]="true"></p-dropdown>
+              <p-dropdown [options]="items" [(ngModel)]="selectedWorkFlow" placeholder="PROSPECT" optionLabel="label" [showClear]="true"></p-dropdown>
           </div> 
          
         </div>
@@ -216,7 +217,7 @@
                 </ion-item>
 
                 <div class="gps">
-                  <button type="button" (click) = "getMyLocation()"><i class="fas fa-map-marker-alt" style="font-size: 18px ; color: orange"></i>Récuperer ma position</button>
+                  <button type="button" (click) = "getMyLocation()" style="padding: 5px 10px;margin-top: 10px;"><i class="fas fa-map-marker-alt" style="font-size: 18px ; color: red;margin-right: 10px;"></i>Récuperer ma position</button>
                   <p>Coordonnées GPS Latitude : <ion-input formControlName= "latitude" type="text"> </ion-input></p>
                   <p>Coordonnées GPS Longitude : <ion-input formControlName= "longitude" type="text"> </ion-input> </p>
                 </div>

@@ -48,6 +48,7 @@ export class DetailFicheClientPage implements OnInit {
 
   edit : boolean = false ;
   items: { label: string; } [] ;
+  itemsActions: { label: string; } [] ;
   id : number ;
   client_detail : any = {};
   i_t_activation_autorisee: Array<i_t_activation_autorisee> = [] ;
@@ -88,6 +89,11 @@ export class DetailFicheClientPage implements OnInit {
 
   ionViewWillEnter() {
     this.items = [
+      {label:'PROSPECT'},
+      {label:'VALIDÉE PAR SUPERVISEUR'},
+      {label:'VALIDÉE PAR ADMINISTRATEUR'},
+    ];
+    this.itemsActions = [
       {label:'PROSPECT'},
       {label:'VALIDÉE PAR SUPERVISEUR'},
       {label:'VALIDÉE PAR ADMINISTRATEUR'},

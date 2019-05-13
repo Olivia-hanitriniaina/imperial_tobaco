@@ -45,6 +45,7 @@ import { i_t_canal } from 'src/app/model/data/i_t_canal.model';
 export class NewClientPage implements OnInit {
 
   items : Array<MenuItem> ;
+  itemsActions : Array<MenuItem> ;
   home : any ;
   longitude : String = "0.0000000000";
   latitude : String = "0.00000000";
@@ -93,6 +94,10 @@ export class NewClientPage implements OnInit {
 
     this.items = [
       {label:'PROSPECT'},
+      {label:'VALIDÉE PAR SUPERVISEUR'},
+      {label:'VALIDÉE PAR ADMINISTRATEUR'},
+    ];
+    this.itemsActions = [
       {label:'VALIDÉE PAR SUPERVISEUR'},
       {label:'VALIDÉE PAR ADMINISTRATEUR'},
     ];

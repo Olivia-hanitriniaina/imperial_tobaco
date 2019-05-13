@@ -138,7 +138,7 @@ ul.CustomArchive li i.pi.pi-folder {
 // WORKFLOW
 .dropdownworkflow {
     text-align: right;
-    line-height: 45px;
+    padding: 0;
 }
 .dropdownworkflow .ui-dropdown {
     background: #21b799 !important;
@@ -161,6 +161,9 @@ ul.CustomArchive li i.pi.pi-folder {
     background: #21b799 !important;
     color: #ffffff;
 }
+.noCLick li {
+    pointer-events: none;
+}
 .TxtBoldtabPanel {
     font-weight: bold !important;
     margin-bottom: 10px !important;
@@ -177,4 +180,7 @@ ul.CustomArchive li i.pi.pi-folder {
 }
 .ng-trigger-toastAnimation {
     background: red !important;
+}
+.dropdownworkflow .ui-dropdown .ui-dropdown-clear-icon {
+    display: none;
 }
