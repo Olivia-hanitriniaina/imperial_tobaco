@@ -35,6 +35,7 @@ import { res_users } from '../../model/data/res_users.model';
 import { Storage } from '@ionic/storage' ;
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Data } from 'src/app/model/data/data.model';
+import { LoadingController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-detail-fiche-client',
@@ -81,9 +82,9 @@ export class DetailFicheClientPage implements OnInit {
   data_cli : any = {} ;
 
   // By Tolotra
-  OnClickInactif = false;
+  OnClickInactif : number ;
 
-  constructor(private data_router : Data, private geolocation : Geolocation,private storage: Storage, private dbm : Database_manager, private form_builder: FormBuilder, private router : Router, private activatedRoute : ActivatedRoute) { 
+  constructor(private toast : ToastController, private load : LoadingController, private data_router : Data, private geolocation : Geolocation,private storage: Storage, private dbm : Database_manager, private form_builder: FormBuilder, private router : Router, private activatedRoute : ActivatedRoute) { 
   }
 
   ionViewWillEnter() {
@@ -101,6 +102,7 @@ export class DetailFicheClientPage implements OnInit {
     
     this.dbm.select_basic_data_with_id("res_partner",this.data_router.storage).then(data => {
       this.data_cli = data;
+      
     }) ;
 
       this.dbm.select_basic_data("i_t_region").then( data => {
@@ -305,18 +307,26 @@ export class DetailFicheClientPage implements OnInit {
   
       let query = q1 + q2 + keys[keys.length-1] + " = \" " + values[values.length - 1] + " \" where id = " + id ;
       let query2 = "update i_t_contrat set date_debut_contrat = " + + ", date_fin_contrat = " + + " where id = " + this.fiche_client.get('contrat_id').value ;
-      console.log('query 1 : \n' + query + ' \n query 2 \n' + query2)
+      this.dbm.update_res_data(query) ;
+      this.dbm.update_res_data(query2) ;
+      this.make_toast("Mise à jour avec succès...") ;
     });
     
 }
 
 open_fiche_client(){
-    this.router.navigate(['fiches-client']) ;
-  }
+  this.router.navigate(['fiches-client']) ;
+}
 
 
 
-getMyLocation(){
+async getMyLocation(){
+
+    let loading = await this.load.create({
+      duration : 6000
+    }) ;
+    loading.present() ;
+
     this.geolocation.getCurrentPosition().then((resp) => {
       // resp.coords.latitude
       // resp.coords.longitude
@@ -325,7 +335,7 @@ getMyLocation(){
 
       this.fiche_client.controls['longitude'].disable();
       this.fiche_client.controls['latitude'].disable();
-
+      loading.dismiss() ;
      }).catch((error) => {
        console.log('Error getting location', error);
      });
@@ -343,8 +353,29 @@ getMyLocation(){
     this.edit = false ;
   }
 
-  ConvertStatut(){
-    this.OnClickInactif = true;
+  ConvertStatut(status : number){
+    this.dbm.update_status_res_partner(this.data_router.storage, status).then(() => {
+      this.data_cli.active = status ;
+      if(status == 0) {
+        this.make_toast("Client active...") ;
+      }
+      else {
+        this.make_toast("Client inactive...") ;
+      }
+    })
+  }
+
+  async make_toast(message){
+    let x = await this.toast.create({
+      message : message ,
+      duration : 3000
+    }) ;
+    x.present() ;
+  }
+
+  cancel(champ : string) {
+    this.fiche_client.controls[champ].setValue(null) ;
+    //console.log(this.fiche_client.get('champ').value) ;
   }
 
 }
