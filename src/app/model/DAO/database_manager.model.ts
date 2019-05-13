@@ -198,7 +198,7 @@ export class Database_manager {
                                 console.log ('insert i_t_activite_pos with succes \n') ;
                             })
                             .catch (e => {
-                                console.log ('Error on insert i_t_activite_pos \n' + e) ;
+                                console.log ('Error on insert i_t_activite_pos \n' + JSON.stringify (e) ) ;
                             })    
                             }
                         });
@@ -216,7 +216,7 @@ export class Database_manager {
                                 console.log ('insert i_t_agence with succes \n') ;
                             })
                             .catch (e => {
-                                console.log ('Error on insert i_t_agence \n' + e) ;
+                                console.log ('Error on insert i_t_agence \n' + JSON.stringify (e) ) ;
                             })      
                             }
                         });
@@ -260,7 +260,7 @@ export class Database_manager {
                                     console.log ('insert i_t_contrat with succes \n') ;
                                 })
                                 .catch (e => {
-                                    console.log ('Error on insert i_t_contrat \n' + e) ;
+                                    console.log ('Error on insert i_t_contrat \n' + JSON.stringify (e) ) ;
                                 })
                             }
                             }
@@ -353,7 +353,7 @@ export class Database_manager {
                                 console.log ('insert i_t_region with succes \n') ;
                             })
                             .catch (e => {
-                                console.log ('Error on insert i_t_region \n' + e) ;
+                                console.log ('Error on insert i_t_region \n' + JSON.stringify (e) ) ;
                             })
                         }
                         
@@ -375,7 +375,7 @@ export class Database_manager {
                     ]) . then (() => {
                         console.log ('insert i_t_secteur with succes \n') ;
                     }).catch (e => {
-                        console.log ('Error on insert i_t_secteur \n' + e) ;
+                        console.log ('Error on insert i_t_secteur \n' + JSON.stringify (e) ) ;
                     }) 
                 }
             });
@@ -395,7 +395,7 @@ export class Database_manager {
                         data[i].write_uid ,
                         data[i].code
                     ])  . then (() => { console.log ('insert i_t_type_client with succes \n') ; })
-                        .catch (e => { console.log ('Error on insert i_t_type_client \n' + e) ; })
+                        .catch (e => { console.log ('Error on insert i_t_type_client \n' + JSON.stringify (e) ) ; })
                 }
             });
 
@@ -590,9 +590,9 @@ export class Database_manager {
             console.log ('insert '+nom_table+' with succes \n') ;
         })
         .catch (e => {
-            console.log ('Error on insert '+nom_table+' \n' + e) ;
+            console.log ('Error on insert '+nom_table+' \n' + JSON.stringify (e) ) ;
         }) . catch (e => {
-            console.log('Error on connexion '+nom_table+' \n' + e) ;
+            console.log('Error on connexion '+nom_table+' \n' + JSON.stringify (e) ) ;
         })
     }
 
@@ -609,9 +609,22 @@ export class Database_manager {
         })
     }
 
+    update_res_data (sql : string) : Promise<any> {
+
+        return this.init_database().then( (db : SQLiteObject) => {
+            return db.executeSql (sql, [])
+        }) . then (() => {
+            console.log ('update res with succes \n') ;
+        }) .catch (e => {
+            console.log ('Error on update res \n' + JSON.stringify(e)) ;
+        }) . catch (e => {
+            console.log('Error on connexion res \n' + JSON.stringify(e)) ;
+        }) ;
+    }
+
     get_res_partner() {
         return this.init_database().then((db : SQLiteObject) => {
-            let sql_select = "select res_partner.id, res_partner.name as name, i_t_region.name as region_id, i_t_agence.name as agence_id, i_t_zone.name as zone_id, i_t_secteur.name as secteur_id, res_partner.nom_agent_commercial_id as nom_agent_commercial_id, res_partner.nom_pos as nom_pos, res_partner.nom_gerant as nom_gerant, res_partner.adresse as adresse, res_partner.state_id as state_id from res_partner inner join i_t_region on res_partner.region_id = i_t_region.id inner join i_t_agence on res_partner.agence_id = i_t_agence.id inner join i_t_zone on res_partner.zone_id = i_t_zone.id inner join i_t_secteur on res_partner.secteur_id = i_t_secteur.id " ;
+            let sql_select = "select res_partner.id, res_partner.name as name, i_t_region.name as region_id, i_t_agence.name as agence_id, i_t_zone.name as zone_id, i_t_secteur.name as secteur_id, res_users.signature as nom_agent_commercial_id, res_partner.nom_pos as nom_pos, res_partner.nom_gerant as nom_gerant, res_partner.adresse as adresse, res_partner.state_id as state_id from res_partner inner join i_t_region on res_partner.region_id = i_t_region.id inner join i_t_agence on res_partner.agence_id = i_t_agence.id inner join i_t_zone on res_partner.zone_id = i_t_zone.id inner join i_t_secteur on res_partner.secteur_id = i_t_secteur.id inner join res_users on res_partner.user_id = res_users.id" ;
             let data_return = [] ;
             return db.executeSql(sql_select, [])
                 .then (data => {
@@ -648,10 +661,10 @@ export class Database_manager {
                   return data_return ;
                 }
             }).catch(e => {
-                console.log('Error on select \n' + e) ;
+                console.log('Error on select \n' + JSON.stringify (e)) ;
             })
         }).catch (e => {
-            console.log('Error on connexion \n' + e) ;
+            console.log('Error on connexion \n' + JSON.stringify (e)) ;
         })
     }
 
@@ -664,10 +677,10 @@ export class Database_manager {
                   return data.rows.item(0) ;
                 }
             }).catch(e => {
-                console.log('Error on select \n' + e) ;
+                console.log('Error on select \n' + JSON.stringify (e)) ;
             })
         }).catch (e => {
-            console.log('Error on connexion \n' + e) ;
+            console.log('Error on connexion \n' + JSON.stringify (e)) ;
         })
     }
 
@@ -705,10 +718,10 @@ export class Database_manager {
                   return  data_return ;
                 }
             }).catch(e => {
-                console.log('Error on select \n' + e) ;
+                console.log('Error on select \n' + JSON.stringify (e)) ;
             })
         }).catch (e => {
-            console.log('Error on connexion \n' + e) ;
+            console.log('Error on connexion \n' + JSON.stringify (e)) ;
         })
     }
 
@@ -733,7 +746,7 @@ export class Database_manager {
                 console.log('Error on select \n' + JSON.stringify(e)) ;
             })
         }).catch (e => {
-            console.log('Error on connexion \n' + e) ;
+            console.log('Error on connexion \n' + JSON.stringify (e)) ;
         })
     }
 
@@ -748,10 +761,25 @@ export class Database_manager {
                     return data.rows.item(0) ;
                 }
             }).catch(e => {
-                console.log('Error on select \n' + e) ;
+                console.log('Error on select \n' + JSON.stringify (e) ) ;
             })
         }).catch (e => {
-            console.log('Error on connexion \n' + e) ;
+            console.log('Error on connexion \n' + JSON.stringify (e) ) ;
+        })
+    }
+
+    update_status_res_partner(id : number, status : number) : Promise<any> {
+        return this.init_database().then ( (db : SQLiteObject) => {
+            let sql_select : string = "update res_partner set active = ? where id = ?" ;
+            return db.executeSql (sql_select, [status, id]).then((data) => {
+                if(data.rows.length > 0) {
+                    return data.rows.item(0) ;
+                }
+            }).catch(e => {
+                console.log('Error on update \n' + JSON.stringify (e) ) ;
+            })
+        }).catch (e => {
+            console.log('Error on connexion \n' +  JSON.stringify (e) ) ;
         })
     }
 

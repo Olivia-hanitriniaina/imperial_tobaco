@@ -46,14 +46,14 @@
 
 				<div class = "archive  ui-g">
 					<div class="ui-g-7"></div>
-					<div class="div_btn ui-g-5" (click)="ConvertStatut()">
+					<div class="div_btn ui-g-5" >
 						<!-- <button pButton type="button" icon="pi pi-folder" iconPos="left" label="ARCHIVER"  class="bt ui-button-danger"></button> -->
 						<ul class="CustomArchive">
-						  <li *ngIf="!OnClickInactif">
+						  <li *ngIf="data_cli.active == 0" (click)="ConvertStatut(1)">
 							<i class="pi pi-folder"></i>
 							Actif
 						  </li>
-						  <li *ngIf="OnClickInactif">
+						  <li *ngIf="data_cli.active == 1" (click)="ConvertStatut(0)">
 							<i class="pi pi-folder"></i>
 							Inactif
 						  </li>
@@ -332,28 +332,28 @@
 
 					  <ion-item>
 						<ion-label position="floating">Région</ion-label>
-						<ion-select [value]="data_cli.region_id" formControlName= "region_id" >
+						<ion-select [(ngModel)] = "data_cli.region_id" [value]="data_cli.region_id" formControlName= "region_id" (ionCancel) = "cancel('region_id')" >
 						  <ion-select-option *ngFor = "let region of i_t_region" [value]= "region.id"> {{region.name}}</ion-select-option>
 						</ion-select>
 					  </ion-item>
 
 					  <ion-item>
 						<ion-label position="floating">Agence</ion-label>
-						<ion-select [value]="data_cli.agence_id" formControlName= "agence_id" >
+						<ion-select [(ngModel)] = "data_cli.agence_id" [value]="data_cli.agence_id" formControlName= "agence_id" (ionCancel) = "cancel('agence_id')" >
 						  <ion-select-option *ngFor = "let agence of i_t_agence" [value] = "agence.id" > {{agence.name}}</ion-select-option>
 						</ion-select>
 					  </ion-item>
 
 					  <ion-item>
 						<ion-label position="floating">Zone</ion-label>
-						<ion-select [value]="data_cli.zone_id" formControlName= "zone_id" >
+						<ion-select [(ngModel)] = "data_cli.zone_id" [value]="data_cli.zone_id" formControlName= "zone_id" (ionCancel) = "cancel('zone_id')" >
 						  <ion-select-option *ngFor = "let zone of i_t_zone" [value] = "zone.id" > {{zone.name}}</ion-select-option>
 						</ion-select>
 					  </ion-item>
 
 					  <ion-item>
 						<ion-label position="floating">Secteur</ion-label>
-						<ion-select [value]="data_cli.secteur_id" formControlName= "secteur_id" >
+						<ion-select [(ngModel)] = "data_cli.secteur_id" [value]="data_cli.secteur_id" formControlName= "secteur_id" (ionCancel) = "cancel('secteur_id')" >
 						  <ion-select-option *ngFor = "let secteur of i_t_secteur" [value] = "secteur.id" > {{secteur.name}}</ion-select-option>
 						</ion-select>
 					  </ion-item>
@@ -368,49 +368,49 @@
 
 					  <ion-item>
 						  <ion-label position="floating">Nom du POS</ion-label>
-						  <ion-input [value]="data_cli.nom_pos" formControlName= "nom_pos" type="text"> </ion-input>
+						  <ion-input [(ngModel)] = "data_cli.nom_pos" [value]="data_cli.nom_pos" formControlName= "nom_pos" type="text"> </ion-input>
 					  </ion-item>
 
 					  <ion-item>
 						<ion-label position="floating">Nom du Gérant</ion-label>
-						<ion-input [value]="data_cli.nom_gerant" formControlName= "nom_gerant" type="text"> </ion-input>
+						<ion-input [(ngModel)] = "data_cli.nom_gerant" [value]="data_cli.nom_gerant" formControlName= "nom_gerant" type="text"> </ion-input>
 					  </ion-item>
 
 					  <ion-item>
 						<ion-label position="floating">Adresse</ion-label>
-						<ion-input [value]="data_cli.adresse" formControlName= "adresse" type="text"> </ion-input>
+						<ion-input [(ngModel)] = "data_cli.adresse" [value]="data_cli.adresse" formControlName= "adresse" type="text"> </ion-input>
 					  </ion-item>
 
 					  <ion-item>
 						<ion-label position="floating">Repère</ion-label>
-						<ion-input [value]="data_cli.repere" formControlName= "repere" type="text"> </ion-input>
+						<ion-input [(ngModel)] = "data_cli.repere" [value]="data_cli.repere" formControlName= "repere" type="text"> </ion-input>
 					  </ion-item>
 
 					  <ion-item>
 						<ion-label position="floating">Quartier</ion-label>
-						<ion-input [value]="data_cli.quartier" formControlName= "quartier" type="text"> </ion-input>
+						<ion-input [(ngModel)] = "data_cli.quartier" [value]="data_cli.quartier" formControlName= "quartier" type="text"> </ion-input>
 					  </ion-item>
 
 					  <ion-item>
 						<ion-label position="floating">Ville</ion-label>
-						<ion-select [value]="data_cli.ville_id" formControlName= "ville_id" >
+						<ion-select [(ngModel)] = "data_cli.ville_id" [value]="data_cli.ville_id" formControlName= "ville_id" (ionCancel) = "cancel('ville_id')">
 						  <ion-select-option *ngFor = "let ville of i_t_ville" [value] = "ville.id" > {{ville.name}}</ion-select-option>
 						</ion-select>
 					  </ion-item>
 
 					  <ion-item>
 						<ion-label position="floating">N° de téléphone 1</ion-label>
-						<ion-input [value]="data_cli.numero_telephone1" formControlName= "numero_telephone1" type="text"> </ion-input>
+						<ion-input [(ngModel)] = "data_cli.numero_telephone1" [value]="data_cli.numero_telephone1" formControlName= "numero_telephone1" type="text"> </ion-input>
 					  </ion-item>
 
 					  <ion-item>
 						<ion-label position="floating">N° de téléphone 2</ion-label>
-						<ion-input [value]="data_cli.numero_telephone2" formControlName= "numero_telephone2" type="text"> </ion-input>
+						<ion-input [(ngModel)] = "data_cli.numero_telephone2" [value]="data_cli.numero_telephone2" formControlName= "numero_telephone2" type="text"> </ion-input>
 					  </ion-item>
 
 					  <ion-item>
 						<ion-label position="floating">N° de téléphone 3</ion-label>
-						<ion-input [value]="data_cli.numero_telephone3" formControlName= "numero_telephone3" type="text"> </ion-input>
+						<ion-input [(ngModel)] = "data_cli.numero_telephone3" [value]="data_cli.numero_telephone3" formControlName= "numero_telephone3" type="text"> </ion-input>
 					  </ion-item>
 									
 					  <!--Coordonnées du point de vente-->
@@ -422,29 +422,29 @@
 
 					  <ion-item>
 						<ion-label position="floating">Emplacement</ion-label>
-						<ion-select [value]="data_cli.emplacement_id" formControlName= "emplacement_id" >
+						<ion-select [(ngModel)] = "data_cli.emplacement_id" [value]="data_cli.emplacement_id" formControlName= "emplacement_id" (ionCancel) = "cancel('emplacement_id')" >
 						  <ion-select-option *ngFor = "let emplacement of i_t_emplacement" [value] = "emplacement.id" > {{emplacement.name}}</ion-select-option>
 						</ion-select>
 					  </ion-item>
 
 					  <ion-item>
 						<ion-label position="floating">Proximité</ion-label>
-						<ion-select [value]="data_cli.proximite_id" formControlName= "proximite_id" >
+						<ion-select [(ngModel)] = "data_cli.proximite_id" [value]="data_cli.proximite_id" formControlName= "proximite_id" (ionCancel) = "cancel('proximite_id')">
 						  <ion-select-option *ngFor = "let proximite of i_t_proximite" [value] = "proximite.id" > {{proximite.name}}</ion-select-option>
 						</ion-select>
 					  </ion-item>
 
 					  <ion-item>
 						<ion-label position="floating">Type Quartier</ion-label>
-						<ion-select [value]="data_cli.type_quartier_id" formControlName= "type_quartier_id" >
+						<ion-select [(ngModel)] = "data_cli.type_quartier_id" [value]="data_cli.type_quartier_id" formControlName= "type_quartier_id" (ionCancel) = "cancel('type_quartier_id')">
 						  <ion-select-option *ngFor = "let type_qurtier of i_t_type_quartier" [value] = "type_qurtier.id" > {{type_qurtier.name}}</ion-select-option>
 						</ion-select>
 					  </ion-item>
 
 					  <div class="gps">
-					  	<button type="button" (click) = "getMyLocation()" style="padding: 5px 10px;margin-top: 10px;"><i class="fas fa-map-marker-alt" style="font-size: 18px ; color: red;margin-right: 10px;"></i>Récuperer ma position</button>
-						<p>Coordonnées GPS Latitude : <ion-input [value]="data_cli.latitude" formControlName= "latitude" type="text"> </ion-input></p>
-						<p>Coordonnées GPS Longitude : <ion-input [value]="data_cli.longitude" formControlName= "longitude" type="text"> </ion-input> </p>
+							<button type="button" (click) = "getMyLocation()" style="padding: 5px 10px;margin-top: 10px;"><i class="fas fa-map-marker-alt" style="font-size: 18px ; color: red;margin-right: 10px;"></i>Récuperer ma position</button>
+						<p>Coordonnées GPS Latitude : <ion-input [(ngModel)] = "data_cli.latitude" [value]="data_cli.latitude" formControlName= "latitude" type="text"> </ion-input></p>
+						<p>Coordonnées GPS Longitude : <ion-input [(ngModel)] = "data_cli.longitude" [value]="data_cli.longitude" formControlName= "longitude" type="text"> </ion-input> </p>
 					  </div>
 
 
@@ -458,35 +458,35 @@
 
 					  <ion-item>
 						<ion-label position="floating">Type Client</ion-label>
-						<ion-select [value]="data_cli.type_client_id" formControlName= "type_client_id" >
+						<ion-select [(ngModel)] = "data_cli.type_client_id" [value]="data_cli.type_client_id" formControlName= "type_client_id" (ionCancel) = "cancel('type_client_id')">
 						  <ion-select-option *ngFor = "let type_client of i_t_type_client" [value] = "type_client.id" > {{type_client.name}}</ion-select-option>
 						</ion-select>
 					  </ion-item>
 
 					  <ion-item>
 						  <ion-label position="floating">Activité POS</ion-label>
-						  <ion-select [value]="data_cli.activite_pos_id" formControlName= "activite_pos_id" >
+						  <ion-select [(ngModel)] = "data_cli.activite_pos_id" [value]="data_cli.activite_pos_id" formControlName= "activite_pos_id" (ionCancel) = "cancel('activite_pos_id')">
 							<ion-select-option *ngFor = "let activite_pos of i_t_activite_pos" [value] = "activite_pos.id" > {{activite_pos.name}}</ion-select-option>
 						  </ion-select>
 						</ion-item>
 
 						<ion-item>
 							<ion-label position="floating">Enseigne d'appartenance</ion-label>
-							<ion-select [value]="data_cli.enseigne_appartenance_id" formControlName= "enseigne_appartenance_id" >
+							<ion-select [(ngModel)] = "data_cli.enseigne_appartenance_id" [value]="data_cli.enseigne_appartenance_id" formControlName= "enseigne_appartenance_id" (ionCancel) = "cancel('enseigne_appartenance_id')" >
 							  <ion-select-option *ngFor = "let enseigne_appartenance of i_t_enseigne_appartenance" [value] = "enseigne_appartenance.id" > {{enseigne_appartenance.name}}</ion-select-option>
 							</ion-select>
 						  </ion-item>
 
 						  <ion-item>
 							  <ion-label position="floating">Classification 1</ion-label>
-							  <ion-select [value]="data_cli.classification1_id" formControlName= "classification1_id" >
+							  <ion-select [(ngModel)] = "data_cli.classification1_id" [value]="data_cli.classification1_id" formControlName= "classification1_id" (ionCancel) = "cancel('classification1_id')" >
 								<ion-select-option *ngFor = "let classification1 of i_t_classification1" [value] = "classification1.id" > {{classification1.name}}</ion-select-option>
 							  </ion-select>
 							</ion-item>
 
 							<ion-item>
 								<ion-label position="floating">Classification 2</ion-label>
-								<ion-select [value]="data_cli.classification2_id" formControlName= "classification2_id" >
+								<ion-select [(ngModel)] = "data_cli.classification2_id" [value]="data_cli.classification2_id" formControlName= "classification2_id" (ionCancel) = "cancel('classification2_id')" >
 								  <ion-select-option *ngFor = "let classification2 of i_t_classification2" [value] = "classification2.id" > {{classification2.name}}</ion-select-option>
 								</ion-select>
 							  </ion-item>
@@ -501,14 +501,14 @@
 
 					  <ion-item>
 						<ion-label position="floating">Couverture commerciale</ion-label>
-						<ion-select [value]="data_cli.couverture_commerciale_id" formControlName= "couverture_commerciale_id" >
+						<ion-select [(ngModel)] = "data_cli.couverture_commerciale_id" [value]="data_cli.couverture_commerciale_id" formControlName= "couverture_commerciale_id" (ionCancel) = "cancel('couverture_commerciale_id')" >
 						  <ion-select-option *ngFor = "let couverture_commerciale of i_t_couverture_commerciale" [value] = "couverture_commerciale.id" > {{couverture_commerciale.name}}</ion-select-option>
 						</ion-select>
 					  </ion-item>
 
 					  <ion-item>
 						  <ion-label position="floating">Fréquence de visite</ion-label>
-						  <ion-select [value]="data_cli.frequence_visite_id" formControlName= "frequence_visite_id" >
+						  <ion-select [(ngModel)] = "data_cli.frequence_visite_id" [value]="data_cli.frequence_visite_id" formControlName= "frequence_visite_id" (ionCancel) = "cancel('frequence_visite_id')">
 							<ion-select-option *ngFor = "let frequence_visite of i_t_frequence_visite" [value] = "frequence_visite.id" > {{frequence_visite.name}}</ion-select-option>
 						  </ion-select>
 						</ion-item>
@@ -524,7 +524,6 @@
 						  <p-tabPanel header="AGENTS COMMERCIAUX">
 							  <ion-chip>
 								<ion-label>{{client_detail.signature}}</ion-label>
-								<ion-icon name="close-circle"></ion-icon>
 							  </ion-chip>
 						  </p-tabPanel>
 
@@ -532,42 +531,42 @@
 
 							<ion-item>
 								<ion-label position="floating">Cible installation présentoirs</ion-label>
-								<ion-select [value]="data_cli.cible_installation_presentoirs_id" formControlName= "cible_installation_presentoirs_id" >
+								<ion-select [(ngModel)] = "data_cli.cible_installation_presentoirs_id" [value]="data_cli.cible_installation_presentoirs_id" formControlName= "cible_installation_presentoirs_id" (ionCancel) = "cancel('cible_installation_presentoirs_id')" >
 								  <ion-select-option *ngFor = "let cible_installation_presentoirs of i_t_cible_installation_presentoirs" [value] = "cible_installation_presentoirs.id" > {{cible_installation_presentoirs.name}}</ion-select-option>
 								</ion-select>
 							</ion-item>
 							
 							<ion-item>
 								<ion-label position="floating">Permanent POSM 1</ion-label>
-								<ion-select [value]="data_cli.permanent_POSM1_id" formControlName= "permanent_POSM1_id" >
+								<ion-select [(ngModel)] = "data_cli.permanent_POSM1_id" [value]="data_cli.permanent_POSM1_id" formControlName= "permanent_POSM1_id" (ionCancel) = "cancel('permanent_POSM1_id')">
 								  <ion-select-option *ngFor = "let posm1 of i_t_permanent_posm" [value] = "posm1.id" > {{posm1.name}}</ion-select-option>
 								</ion-select>
 							</ion-item>
 						  
 							<ion-item>
 								<ion-label position="floating">Permanent POSM 2</ion-label>
-								<ion-select [value]="data_cli.permanent_POSM2_id" formControlName= "permanent_POSM2_id" >
+								<ion-select [(ngModel)] = "data_cli.permanent_POSM2_id" [value]="data_cli.permanent_POSM2_id" formControlName= "permanent_POSM2_id" (ionCancel) = "cancel('permanent_POSM2_id')">
 								  <ion-select-option *ngFor = "let posm2 of i_t_permanent_posm" [value] = "posm2.id" > {{posm2.name}}</ion-select-option>
 								</ion-select>
 							</ion-item>
 						  
 							<ion-item>
 								<ion-label position="floating">Permanent POSM 3</ion-label>
-								<ion-select [value]="data_cli.permanent_POSM3_id" formControlName= "permanent_POSM3_id" >
+								<ion-select [(ngModel)] = "data_cli.permanent_POSM3_id" [value]="data_cli.permanent_POSM3_id" formControlName= "permanent_POSM3_id" (ionCancel) = "cancel('permanent_POSM3_id')">
 								  <ion-select-option *ngFor = "let posm3 of i_t_permanent_posm" [value] = "posm3.id" > {{posm3.name}}</ion-select-option>
 								</ion-select>
 							</ion-item>
 						  
 							<ion-item>
 								<ion-label position="floating">Permanent POSM 4</ion-label>
-								<ion-select [value]="data_cli.permanent_POSM4_id" formControlName= "permanent_POSM4_id" >
+								<ion-select [(ngModel)] = "data_cli.permanent_POSM4_id" [value]="data_cli.permanent_POSM4_id" formControlName= "permanent_POSM4_id" (ionCancel) = "cancel('permanent_POSM4_id')">
 								  <ion-select-option *ngFor = "let posm4 of i_t_permanent_posm" [value] = "posm4.id" > {{posm4.name}}</ion-select-option>
 								</ion-select>
 							</ion-item>
 						  
 							<ion-item>
 								<ion-label position="floating">Permanent POSM 5</ion-label>
-								<ion-select [value]="data_cli.permanent_POSM5_id" formControlName= "permanent_POSM5_id" >
+								<ion-select [(ngModel)] = "data_cli.permanent_POSM5_id" [value]="data_cli.permanent_POSM5_id" formControlName= "permanent_POSM5_id" (ionCancel) = "cancel('permanent_POSM5_id')">
 								  <ion-select-option *ngFor = "let posm5 of i_t_permanent_posm" [value] = "posm5.id" > {{posm5.name}}</ion-select-option>
 								</ion-select>
 							</ion-item>
@@ -578,7 +577,7 @@
 						  <p-tabPanel header="CONTRAT">
 							<ion-item>
 								<ion-label position="floating">Contrat</ion-label>
-								<ion-select [value]="data_cli.i_t_contrat"  >
+								<ion-select [(ngModel)] = "data_cli.i_t_contrat" [value]="data_cli.i_t_contrat" (ionCancel) = "cancel('contrat_id')" >
 								  <ion-select-option *ngFor = "let contrat of i_t_contrat" [value] = "contrat.id" > {{contrat.name}}</ion-select-option>
 								</ion-select>
 							</ion-item>
@@ -586,33 +585,33 @@
 
 						  <ion-item>
 							<ion-label position="floating">Date debut contrat</ion-label>
-							<ion-datetime [value]="data_cli.date_debut_contrat" formControlName= "date_debut_contrat" display-format="YYYY-MM-DD" picker-format="YYYY-MM-DD"></ion-datetime>
+							<ion-datetime [(ngModel)] = "data_cli.date_debut_contrat" [value]="data_cli.date_debut_contrat" formControlName= "date_debut_contrat" display-format="YYYY-MM-DD" picker-format="YYYY-MM-DD" ></ion-datetime>
 						  </ion-item>
 
 						  <ion-item>
 							<ion-label position="floating">Date debut contrat</ion-label>
-							<ion-datetime [value]="data_cli.date_fin_contrat" formControlName= "date_fin_contrat" display-format="YYYY-MM-DD" picker-format="YYYY-MM-DD"></ion-datetime>
+							<ion-datetime [(ngModel)] = "data_cli.date_fin_contrat" [value]="data_cli.date_fin_contrat" formControlName= "date_fin_contrat" display-format="YYYY-MM-DD" picker-format="YYYY-MM-DD"></ion-datetime>
 						  </ion-item>
 						  </p-tabPanel>
 
 						  <p-tabPanel header="ACTIVATION">
 							<ion-item>
 								<ion-label position="floating">Coopération ITG</ion-label>
-								<ion-select [value]="data_cli.cooperation_itg_id" formControlName= "cooperation_itg_id" >
+								<ion-select [(ngModel)] = "data_cli.cooperation_itg_id" [value]="data_cli.cooperation_itg_id" formControlName= "cooperation_itg_id" (ionCancel) = "cancel('cooperation_itg_id')" >
 								  <ion-select-option *ngFor = "let cooperation_itg of i_t_cooperation_itg" [value] = "cooperation_itg.id" > {{cooperation_itg.name}}</ion-select-option>
 								</ion-select>
 							</ion-item>
 							  
 							<ion-item>
 								<ion-label position="floating">Activation autorisée</ion-label>
-								<ion-select [value]="data_cli.activation_autorisee_id" formControlName= "activation_autorisee_id" >
+								<ion-select [(ngModel)] = "data_cli.activation_autorisee_id" [value]="data_cli.activation_autorisee_id" formControlName= "activation_autorisee_id" (ionCancel) = "cancel('activation_autorisee_id')" >
 								  <ion-select-option *ngFor = "let activation_autorisee of i_t_activation_autorisee" [value] = "activation_autorisee.id" > {{activation_autorisee.name}}</ion-select-option>
 								</ion-select>
 							</ion-item>
 							  
 							<ion-item>
 								<ion-label position="floating">Préférence animateur</ion-label>
-								<ion-select [value]="data_cli.preference_animateur_id" formControlName= "preference_animateur_id" >
+								<ion-select [(ngModel)] = "data_cli.preference_animateur_id" [value]="data_cli.preference_animateur_id" formControlName= "preference_animateur_id" (ionCancel) = "cancel('preference_animateur_id')">
 								  <ion-select-option *ngFor = "let preference_animateur of i_t_preference_animateur" [value] = "preference_animateur.id" > {{preference_animateur.name}}</ion-select-option>
 								</ion-select>
 							</ion-item>
@@ -622,28 +621,28 @@
 						<p-tabPanel header="APPROVISIONNEMENT">
 						  <ion-item>
 							  <ion-label position="floating">Fréquence d'approvisionnement</ion-label>
-							  <ion-select [value]="data_cli.frequence_approvisionnement_id" formControlName= "frequence_approvisionnement_id" >
+							  <ion-select [(ngModel)] = "data_cli.frequence_approvisionnement_id" [value]="data_cli.frequence_approvisionnement_id" formControlName= "frequence_approvisionnement_id" (ionCancel) = "cancel('frequence_approvisionnement_id')" >
 								<ion-select-option *ngFor = "let frequence_appro of i_t_frequence_approvisionnement" [value] = "frequence_appro.id" > {{frequence_appro.name}}</ion-select-option>
 							  </ion-select>
 						  </ion-item>
 							
 						  <ion-item>
 							  <ion-label position="floating">Source d'approvisionnemen</ion-label>
-							  <ion-select [value]="data_cli.source_approvisionnement_id" formControlName= "source_approvisionnement_id" >
+							  <ion-select [(ngModel)] = "data_cli.source_approvisionnement_id" [value]="data_cli.source_approvisionnement_id" formControlName= "source_approvisionnement_id" (ionCancel) = "cancel('source_approvisionnement_id')">
 								<ion-select-option *ngFor = "let source_appro of i_t_source_approvisionnement" [value] = "source_appro.id" > {{source_appro.name}}</ion-select-option>
 							  </ion-select>
 						  </ion-item>
 						  
 						  <ion-item>
 							  <ion-label position="floating">Fournisseur principal</ion-label>
-							  <ion-select [value]="data_cli.fournisseur_principal_id" formControlName= "fournisseur_principal_id" >
+							  <ion-select [(ngModel)] = "data_cli.fournisseur_principal_id" [value]="data_cli.fournisseur_principal_id" formControlName= "fournisseur_principal_id" (ionCancel) = "cancel('fournisseur_principal_id')" >
 								<ion-select-option *ngFor = "let fornisseur_principale of i_t_fournisseur_principale" [value] = "fornisseur_principale.id" > {{fornisseur_principale.name}}</ion-select-option>
 							  </ion-select>
 						  </ion-item>
 						  
 						  <ion-item>
 							  <ion-label position="floating">Fournisseur secondaire</ion-label>
-							  <ion-select [value]="data_cli.fournisseur_secondaire_id" formControlName= "fournisseur_secondaire_id" >
+							  <ion-select [(ngModel)] = "data_cli.fournisseur_secondaire_id" [value]="data_cli.fournisseur_secondaire_id" formControlName= "fournisseur_secondaire_id" (ionCancel) = "cancel('fournisseur_secondaire_id')">
 								<ion-select-option *ngFor = "let fournisseur_secondaire of i_t_fournisseur_secondaire" [value] = "fournisseur_secondaire.id" > {{fournisseur_secondaire.name}}</ion-select-option>
 							  </ion-select>
 						  </ion-item>
@@ -659,7 +658,7 @@
 
 					   <ion-item>
 						  <ion-label position="floating">Commentaires</ion-label>
-						  <ion-textarea [value]="data_cli.commentaire" formControlName= "commentaire" ></ion-textarea>
+						  <ion-textarea [(ngModel)] = "data_cli.commentaire" [value]="data_cli.commentaire" formControlName= "commentaire" ></ion-textarea>
 						</ion-item>
 
 						<!--Commentaire-->
