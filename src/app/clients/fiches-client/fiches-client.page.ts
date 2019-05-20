@@ -63,7 +63,13 @@ export class FichesClientPage implements OnInit {
   }
 
   onRowClicked(rowData : ClientInterface){
+    let navigationExtras: NavigationExtras = {
+            queryParams: {
+               
+                "id": rowData.id
+            }
+        };
     this.data_router.storage = rowData.id ;
-    this.router.navigate(['detail-fiche-client']) ;
+    this.router.navigate(['detail-fiche-client'], navigationExtras) ;
   }
 }

@@ -47,8 +47,6 @@ export class NewClientPage implements OnInit {
   items : Array<MenuItem> ;
   itemsActions : Array<MenuItem> ;
   home : any ;
-  longitude : String = "0.0000000000";
-  latitude : String = "0.00000000";
   base64Image : any ;
   fiche_client : FormGroup ;
   i_t_activation_autorisee: Array<i_t_activation_autorisee> = [] ;
@@ -87,6 +85,9 @@ export class NewClientPage implements OnInit {
   canal : string = "" ;
   id_contrat : number = 0 ;
   active_user : res_users ;
+  active : number = 0 ;
+  filePath : string ;
+  window : any = window ;
 
   constructor(private messageService : MessageService, private toast : ToastController,private dbm : Database_manager,private form_builder : FormBuilder, private router : Router ,private camera: Camera, private geolocation: Geolocation, private alert : AlertController) { }
 
@@ -239,8 +240,8 @@ export class NewClientPage implements OnInit {
       emplacement_id : ['', Validators.required] ,
       proximite_id : ['', Validators.required] ,
       type_quartier_id : ['', Validators.required] ,
-      latitude : [''] ,
-      longitude : [''] ,
+      latitude : ['0.000000000'] ,
+      longitude : ['0.000000000'] ,
 
       type_client_id : ['', Validators.required] ,
       activite_pos_id : ['', Validators.required] ,
@@ -251,8 +252,11 @@ export class NewClientPage implements OnInit {
       couverture_commerciale_id : ['', Validators.required] ,
       frequence_visite_id : [''] ,
 
-      user_id : [''] ,
-      canal_id : [''] ,
+      user_id : ['', Validators.required] ,
+      canal_id : ['', Validators.required] ,
+
+      active : [''] ,
+      photo : [''] ,
 
       cible_installation_presentoirs_id : ['', Validators.required] ,
       permanent_POSM1_id : ['', Validators.required] ,
@@ -261,7 +265,7 @@ export class NewClientPage implements OnInit {
       permanent_POSM4_id : ['', Validators.required] ,
       permanent_POSM5_id : ['', Validators.required] ,
 
-      contrat_id : [''] ,
+      contrat_id : ['', Validators.required] ,
       date_debut_contrat : ['', Validators.required] ,
       date_fin_contrat : ['', Validators.required] ,
 
@@ -277,50 +281,53 @@ export class NewClientPage implements OnInit {
       commentaire : [''] ,
    }) ;
 
+   this.fiche_client.controls['active'].setValue(this.active) ;
+
   /* this.dbm.select_max_basic_data("i_t_contat").then(data => {
      console.log(data);
       this.fiche_client.controls['contrat_id'].setValue(data.max) ;
     }) ;*/
   } 
 
-  takePicture(){
-    const options: CameraOptions = {
+  async takePicture(){
+    let cameraOptions: CameraOptions = {
       quality: 100,
       destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
+      mediaType: this.camera.MediaType.PICTURE,
+      targetHeight : 70 ,
+      targetWidth : 100
+    };
+    const imagePath : string = await this.camera.getPicture(cameraOptions);
+    console.log(imagePath); //this.win.Ionic.WebView.convertFileSrc(imageSrc);
+    return this.window.Ionic.WebView.convertFileSrc(imagePath);
+  }
+
+  async showImageFromCamera() {
+    try {
+      this.filePath = await this.takePicture();
+    } catch(error) {
+      console.log(error);
     }
-    
-    this.camera.getPicture(options).then((imageData) => {
-     // imageData is either a base64 encoded string or a file URI
-     // If it's base64 (DATA_URL):
-     this.base64Image = 'data:image/jpeg;base64,' + imageData;
-     this.make_alert(JSON.stringify(this.base64Image)) ;
-    }, (err) => {
-     // Handle error
-    });
   }
 
   getMyLocation(){
-    this.geolocation.getCurrentPosition().then((resp) => {
-      // resp.coords.latitude
-      // resp.coords.longitude
+    var options = {
+      enableHighAccuracy: true, timeout: 60000, maximumAge: 0
+    };
+    console.log("mande") ;
+    this.geolocation.getCurrentPosition(options).then((resp) => {
+      console.log('geolocation \n ' + JSON.stringify(resp.coords)) ;
       this.fiche_client.controls['longitude'].setValue(resp.coords.longitude) ;
       this.fiche_client.controls['latitude'].setValue(resp.coords.latitude) ;
 
       this.fiche_client.controls['longitude'].disable();
       this.fiche_client.controls['latitude'].disable();
 
+      
+
      }).catch((error) => {
        console.log('Error getting location', error);
-     });
-     
-     let watch = this.geolocation.watchPosition();
-     watch.subscribe((data) => {
-      // data can be a set of coordinates, or an error (if an error occurred).
-      // data.coords.latitude
-      // data.coords.longitude
-      console.log('watch \n' + data.coords) ;
      });
   }
 
@@ -345,7 +352,8 @@ export class NewClientPage implements OnInit {
   }
 
   save_new_client(){
-
+    this.fiche_client.controls['contrat_id'].setValue(this.i_t_contrat[this.i_t_contrat.length - 1].id + 1) ;
+    this.fiche_client.controls['user_id'].setValue(this.active_user.id) ;
     if(this.fiche_client.invalid) {
       let invalid = '' ;
       for (const name in this.fiche_client.controls) {
@@ -360,8 +368,8 @@ export class NewClientPage implements OnInit {
     
 
     else {
-    this.fiche_client.controls['user_id'].setValue(this.active_user.id) ;
-    this.fiche_client.controls['contrat_id'].setValue(this.i_t_contrat[this.i_t_contrat.length - 1].id + 1) ;
+   
+    this.fiche_client.controls['photo'].setValue(this.filePath) ;
     this.fiche_client.controls['name'].setValue("/") ;
     let q1 = "insert into res_partner " ;
     let q2 = "" ;
@@ -389,7 +397,7 @@ export class NewClientPage implements OnInit {
     }
 
     let query = q1 + " ( "+ q2 + keys[keys.length - 1] + " ) values (" + q3 + " \" "+ values[values.length - 1] + " \" )";
-    let query2 = "insert into i_t_contrat (date_debut_contrat, date_fin_contrat) values (" + this.fiche_client.get('date_debut_contrat').value + " ," + this.fiche_client.get('date_debut_contrat').value + " )" ;
+    let query2 = "insert into i_t_contrat (date_debut_contrat, date_fin_contrat) values ('" + this.fiche_client.get('date_debut_contrat').value + "' ,'" + this.fiche_client.get('date_debut_contrat').value + "' )" ;
     
     console.log('query \n' + query);
     this.dbm.insert_res_data(query).then(() => {
@@ -445,6 +453,17 @@ export class NewClientPage implements OnInit {
     this.canal = this.i_t_canal_filtered[0].name 
     
     console.log('1 : ' + JSON.stringify(this.i_t_canal_filtered)) ;
+  }
+
+  ConvertStatut(status : number){
+    this.active = status ;
+    this.fiche_client.controls['active'].setValue(status) ;
+      if(status == 0) {
+        this.make_toast("Client active...") ;
+      }
+      else {
+        this.make_toast("Client inactive...") ;
+      }
   }
 
   //this.posts.filter(post => post.nomCategorie === m_categorie) ; (selectionChange)="selectChangeSigle($event)"

@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { DetailFicheClientPage } from './detail-fiche-client.page';
+import { DetailTourneePage } from './detail-tournee.page';
 import { ChartModule } from 'primeng/chart';
 import { FullCalendarModule } from 'primeng/fullcalendar';
 import { ButtonModule } from 'primeng/button';
@@ -19,13 +19,14 @@ import { MessageModule } from 'primeng/message';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { TabViewModule } from 'primeng/tabview';
 import { CardModule } from 'primeng/card';
-import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
+import { DialogModule } from 'primeng/dialog';
+import { TableModule } from 'primeng/table';
 
 const routes: Routes = [
   {
     path: '',
-    component: DetailFicheClientPage
+    component: DetailTourneePage
   }
 ];
 
@@ -49,9 +50,10 @@ const routes: Routes = [
     TabViewModule,
     CardModule,
     ToastModule,
+    DialogModule,
+    TableModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [DetailFicheClientPage] ,
-  providers : [MessageService]
+  declarations: [DetailTourneePage]
 })
-export class DetailFicheClientPageModule {}
+export class DetailTourneePageModule {}

@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { DetailFicheClientPage } from './detail-fiche-client.page';
+import { ListeTourneePage } from './liste-tournee.page';
 import { ChartModule } from 'primeng/chart';
 import { FullCalendarModule } from 'primeng/fullcalendar';
 import { ButtonModule } from 'primeng/button';
@@ -16,16 +16,13 @@ import { AccordionModule } from 'primeng/accordion';
 import { PasswordModule } from 'primeng/password';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
-import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { TabViewModule } from 'primeng/tabview';
-import { CardModule } from 'primeng/card';
-import { MessageService } from 'primeng/api';
-import { ToastModule } from 'primeng/toast';
+import { TableModule } from 'primeng/table';
+import { Database_manager } from 'src/app/model/DAO/database_manager.model';
 
 const routes: Routes = [
   {
     path: '',
-    component: DetailFicheClientPage
+    component: ListeTourneePage
   }
 ];
 
@@ -45,13 +42,12 @@ const routes: Routes = [
     PasswordModule,
     MessagesModule,
     MessageModule,
-    BreadcrumbModule,
-    TabViewModule,
-    CardModule,
-    ToastModule,
+    TableModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [DetailFicheClientPage] ,
-  providers : [MessageService]
+  declarations: [ListeTourneePage],
+  providers : [
+    
+  ]
 })
-export class DetailFicheClientPageModule {}
+export class ListeTourneePageModule {}

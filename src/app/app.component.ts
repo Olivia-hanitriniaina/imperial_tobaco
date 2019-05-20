@@ -26,12 +26,6 @@ export class AppComponent {
        this.statusBar.styleDefault();
        this.splashScreen.hide();
        this.dbm.init_all_table();
-       this.dbm.init_table_data();
     });
   }
-
- 
-    
-    
-  
 }

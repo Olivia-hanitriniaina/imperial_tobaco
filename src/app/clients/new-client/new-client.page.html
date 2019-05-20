@@ -59,11 +59,11 @@
             <div class="div_btn ui-g-5">
                 <!-- <button pButton type="button" icon="pi pi-folder" iconPos="left" label="ARCHIVER"  class="bt ui-button-danger"></button> -->
                 <ul class="CustomArchive">
-                  <li *ngIf="!OnClickInactif">
+                  <li *ngIf="active == 0" (click)="ConvertStatut(1)">
                     <i class="pi pi-folder"></i>
                     Actif
                   </li>
-                  <li *ngIf="OnClickInactif">
+                  <li *ngIf="active == 1" (click)="ConvertStatut(0)">
                     <i class="pi pi-folder"></i>
                     Inactif
                   </li>
@@ -75,24 +75,19 @@
             <div class="ui-g-9">
                
             </div>
-  
-            <div class="cam ui-g-3" *ngIf = "base64Image" [ngStyle]="{'background-image' : base64Image.file}">
-               <!--
-                <div class="del_mod_btn">
-                  <button pButton type="button" icon="pi pi-pencil" iconPos="center" class="bt ui-button-success" (click)="edit_image()"></button>
-                  <button pButton type="button" icon="pi pi-trash" iconPos="center" class="bt ui-button-danger" (click)="delete_image()"></button>
-                </div>
-               --> 
-            </div>
 
-            <div class="cam ui-g-3" >
-              <i class="pi pi-camera" style="font-size: 78px ; color: gray" (click)="takePicture()" *ngIf = "!base64Image"></i> <br />
-              <img *ngIf = "base64Image" [src] = "base64Image">
+            <div class="cam ui-g-3">
+              <div  *ngIf = "!filePath"> <i class="pi pi-camera" style="font-size: 78px ; color: gray" ></i> <br /></div>
+              <div *ngIf = "filePath" [style.background] = "'url('+ filePath +')'" class="contentAvatar"></div>
               <div class="del_mod_btn">
-                <button pButton type="button" icon="pi pi-pencil" iconPos="center" class="bt ui-button-success"></button>
+                <button pButton type="button" icon="pi pi-pencil" iconPos="center" class="bt ui-button-success" (click)="showImageFromCamera()"></button>
                 <button pButton type="button" icon="pi pi-trash" iconPos="center" class="bt ui-button-danger"></button>
               </div>
             </div>
+  
+            <!-- <div class="cam ui-g-3" *ngIf = "!filePath" >
+              <i class="pi pi-camera" style="font-size: 78px ; color: gray" (click)="showImageFromCamera()"></i> <br />
+            </div> -->
         </div>
         
           

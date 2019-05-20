@@ -36,6 +36,9 @@ import { Storage } from '@ionic/storage' ;
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { Data } from 'src/app/model/data/data.model';
 import { LoadingController, ToastController } from '@ionic/angular';
+import { MessageService } from 'primeng/api';
+import { i_t_canal } from 'src/app/model/data/i_t_canal.model';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 @Component({
   selector: 'app-detail-fiche-client',
@@ -48,8 +51,8 @@ export class DetailFicheClientPage implements OnInit {
   }
 
   edit : boolean = false ;
-  items: { label: string; } [] ;
-  itemsActions: { label: string; } [] ;
+  items: { id : number , label: string; } [] ;
+  itemsActions: {id : number , label: string; } [] ;
   id : number ;
   client_detail : any = {};
   i_t_activation_autorisee: Array<i_t_activation_autorisee> = [] ;
@@ -81,39 +84,69 @@ export class DetailFicheClientPage implements OnInit {
   res_user: any = {} ;
   fiche_client: FormGroup;
   data_cli : any = {} ;
+  i_t_agence_filtered : Array<i_t_agence> =  [] ;
+  i_t_zone_filtered : Array<i_t_zone> = [] ;
+  i_t_secteur_filtered : Array<i_t_secteur> = [] ;
+  i_t_canal : Array<i_t_canal> = [] ;
+  i_t_canal_filtered : Array<i_t_canal> = [] ;
+  canal : string = "" ;
+  filePath : String = "";
+  window : any = window ;
+  resp : any ;
 
   // By Tolotra
   OnClickInactif : number ;
 
-  constructor(private toast : ToastController, private load : LoadingController, private data_router : Data, private geolocation : Geolocation,private storage: Storage, private dbm : Database_manager, private form_builder: FormBuilder, private router : Router, private activatedRoute : ActivatedRoute) { 
+  constructor(private camera : Camera,private messageService : MessageService, private toast : ToastController, private load : LoadingController, private data_router : Data, private geolocation : Geolocation,private storage: Storage, private dbm : Database_manager, private form_builder: FormBuilder, private router : Router, private activatedRoute : ActivatedRoute) { 
+
   }
 
   ionViewWillEnter() {
     this.items = [
-      {label:'PROSPECT'},
-      {label:'VALIDÉE PAR SUPERVISEUR'},
-      {label:'VALIDÉE PAR ADMINISTRATEUR'},
-    ];
-    this.itemsActions = [
-      {label:'PROSPECT'},
-      {label:'VALIDÉE PAR SUPERVISEUR'},
-      {label:'VALIDÉE PAR ADMINISTRATEUR'},
+      {id : 1 , label:'PROSPECT'},
+      {id : 2 , label:'VALIDÉE PAR SUPERVISEUR'},
+      {id : 3 , label:'VALIDÉE PAR ADMINISTRATEUR'},
     ];
 
-   
-    this.dbm.get_res_partner_data(this.data_router.storage).then( data => {
+    this.itemsActions = [
+      {id : 1 , label:'PROSPECT'},
+      {id : 2 , label:'VALIDÉE PAR SUPERVISEUR'},
+      {id : 3 , label:'VALIDÉE PAR ADMINISTRATEUR'},
+    ];
+
+   this.activatedRoute.queryParams.subscribe( async params =>{
+    this.dbm.get_res_partner_data(params["id"]).then( data => {
       this.client_detail = data ;
-      console.log('client_detail : \n' + JSON.stringify(data)) ;
     }) ;
     
-    this.dbm.select_basic_data_with_id("res_partner",this.data_router.storage).then(data => {
-      this.data_cli = data;
+     this.dbm.select_basic_data_with_id("res_partner",params["id"]).then(data_res_partner => {
+        this.data_cli = data_res_partner;
+        console.log(this.data_cli) ;
+    }) ;
+
+    this.dbm.select_basic_data("i_t_region").then( data => {
+      this.i_t_region = data ;
+            
+    }) ;
+
+    this.dbm.select_basic_data("i_t_agence").then( data => {
+      this.i_t_agence = data ;
       
     }) ;
 
-      this.dbm.select_basic_data("i_t_region").then( data => {
-        this.i_t_region = data
+     this.dbm.select_basic_data("i_t_zone").then( data => {
+      this.i_t_zone = data ;
+      
+    }) ;
+
+    this.dbm.select_basic_data("i_t_activite_pos").then( data => {
+      
+        this.i_t_activite_pos = data ;
+       
+      
       }) ;
+
+    
   
         this.dbm.select_basic_data("i_t_activation_autorisee").then( data => {
         this.i_t_activation_autorisee = data ;
@@ -126,17 +159,9 @@ export class DetailFicheClientPage implements OnInit {
         this.dbm.select_basic_data("i_t_cible_installation_presentoirs").then( data => {
         this.i_t_cible_installation_presentoirs = data ;
       }) ;
-  
-        this.dbm.select_basic_data("i_t_activite_pos").then( data => {
-        this.i_t_activite_pos = data ;
-      }) ;
-  
-  
-        this.dbm.select_basic_data("i_t_agence").then( data => {
-        this.i_t_agence = data ;
-      }) ;
-  
-        this.dbm.select_basic_data("i_t_classification1").then( data => {
+
+ 
+     this.dbm.select_basic_data("i_t_classification1").then( data => {
         this.i_t_classification1 = data ;
       }) ;
   
@@ -200,9 +225,7 @@ export class DetailFicheClientPage implements OnInit {
         this.i_t_ville = data ;
       }) ;
   
-        this.dbm.select_basic_data("i_t_zone").then( data => {
-        this.i_t_zone = data ;
-      }) ;
+      
   
         this.dbm.select_basic_data("i_t_fournisseur_secondaire").then( data => {
         this.i_t_fournisseur_secondaire = data ;
@@ -215,68 +238,93 @@ export class DetailFicheClientPage implements OnInit {
         this.dbm.select_basic_data("i_t_source_approvisionnement").then( data => {
         this.i_t_source_approvisionnement = data ;
       }) ;
+
+      this.dbm.select_basic_data("i_t_canal").then( data => {
+        this.i_t_canal = data ;
+        this.canal = this.i_t_canal[0].name 
+      }) ;
   
         this.dbm.select_res_user_active().then( data => {
         this.res_user = data ;
       }) ;
 
+      
+
       this.fiche_client = this.form_builder.group({
-        region_id : [ '' , Validators.required],
-        agence_id : ['' , Validators.required] ,
-        zone_id : [ '', Validators.required] ,
+        region_id : ['', Validators.required],
+        agence_id : ['', Validators.required] ,
+        zone_id : ['', Validators.required] ,
         secteur_id : [''] ,
-  
+
         nom_pos : ['', Validators.required] ,
         nom_gerant : ['', Validators.required] ,
         adresse : ['', Validators.required] ,
         repere : ['', Validators.required] ,
         quartier : ['', Validators.required] ,
-        ville_id : [, Validators.required] ,
+        ville_id : ['', Validators.required] ,
         numero_telephone1 : [''] ,
         numero_telephone2 : [''] ,
         numero_telephone3 : [''] ,
-  
+
         emplacement_id : ['', Validators.required] ,
         proximite_id : ['', Validators.required] ,
         type_quartier_id : ['', Validators.required] ,
         latitude : [''] ,
         longitude : [''] ,
-  
+
         type_client_id : ['', Validators.required] ,
         activite_pos_id : ['', Validators.required] ,
         enseigne_appartenance_id : ['', Validators.required] ,
         classification1_id : ['', Validators.required] ,
         classification2_id : ['', Validators.required] ,
+
         couverture_commerciale_id : ['', Validators.required] ,
         frequence_visite_id : [''] ,
-  
-        user_id : [''] ,
-  
+
+        canal_id : ['', Validators.required] ,
+
+        active : [''] ,
+
         cible_installation_presentoirs_id : ['', Validators.required] ,
         permanent_POSM1_id : ['', Validators.required] ,
         permanent_POSM2_id : ['', Validators.required] ,
         permanent_POSM3_id : ['', Validators.required] ,
         permanent_POSM4_id : ['', Validators.required] ,
         permanent_POSM5_id : ['', Validators.required] ,
-  
+
         contrat_id : ['', Validators.required] ,
-        date_debut_contrat : ['', Validators.required] ,
-        date_fin_contrat : ['', Validators.required] ,
-  
+        date_debut_contrat : [this.client_detail.date_debut_contrat, Validators.required] ,
+        date_fin_contrat : [this.client_detail.date_fin_contrat, Validators.required] ,
+
         cooperation_itg_id : ['', Validators.required] ,
         activation_autorisee_id : ['', Validators.required] , 
         preference_animateur_id : ['', Validators.required] ,
-  
+
         frequence_approvisionnement_id : ['', Validators.required] ,
         source_approvisionnement_id : ['', Validators.required] ,
         fournisseur_principal_id : ['', Validators.required] ,
         fournisseur_secondaire_id : ['', Validators.required] ,
-  
+
+        photo : [''] ,
+
         commentaire : [''] ,
-      })
+      }) ;
+
+      //this.fiche_client.controls['contrat_id'].setValue(this.data_cli.contrat_id) ;
+      this.fiche_client.controls['date_debut_contrat'].patchValue(this.client_detail.date_debut_contrat) ;
+      this.fiche_client.controls['date_fin_contrat'].patchValue(this.client_detail.date_fin_contrat) ; 
+      this.fiche_client.controls['canal_id'].disable() ; 
+   }) ;
+    
+      
   }
 
   edit_fiche_client(){
+    this.regionChange(this.data_cli.region_id);
+    this.agenceChange(this.data_cli.agence_id) ;
+    this.zoneChange(this.data_cli.zone_id) ;
+    
+    this.activite_pos_Change(this.data_cli.canal_id) ;
     this.edit = true ;
   }
 
@@ -285,7 +333,29 @@ export class DetailFicheClientPage implements OnInit {
   }
 
   save_edit(){
-    this.storage.get("data_for_detail").then(id => { 
+    this.activatedRoute.queryParams.subscribe(params => {
+
+    if(this.fiche_client.invalid) {
+      let invalid = '' ;
+      for (const name in this.fiche_client.controls) {
+        if (this.fiche_client.controls[name].invalid) {
+            let named = name.charAt(0).toUpperCase() + name.slice(1) ;
+            named = named.replace(/_|(id)/gi, function( a ){ return ' '; }) ;
+            invalid = '\n' + invalid + ' - ' + named + '\n' ;
+        }
+      }
+      this.messageService.add({severity:'error', summary: 'Les champs suivants sont incorrects : ', detail : invalid, key:'invalid'});
+    }
+    else {
+      if(this.filePath != "") this.fiche_client.controls['photo'].setValue(this.filePath) ;
+      if(this.resp != undefined || this.resp != null) {
+        this.fiche_client.controls['latitude'].setValue(this.resp.latitude) ;
+        this.fiche_client.controls['longitude'].setValue(this.resp.longitude) ;
+      } 
+      if(this.fiche_client.get('active').value == null ) {
+        this.fiche_client.controls['active'].setValue(this.data_cli.active) ;
+      } 
+      console.log(this.resp) ;
       let q1 = "update res_partner set " ;
       let q2 = "" ;
       let q3 = "" ;
@@ -311,12 +381,19 @@ export class DetailFicheClientPage implements OnInit {
         }
       }
   
-      let query = q1 + q2 + keys[keys.length-1] + " = \" " + values[values.length - 1] + " \" where id = " + id ;
-      let query2 = "update i_t_contrat set date_debut_contrat = " + + ", date_fin_contrat = " + + " where id = " + this.fiche_client.get('contrat_id').value ;
-      this.dbm.update_res_data(query) ;
-      this.dbm.update_res_data(query2) ;
-      this.make_toast("Mise à jour avec succès...") ;
-    });
+      let query = q1 + q2 + keys[keys.length-1] + " = \" " + values[values.length - 1] + " \" where id = " + params["id"] ;
+      let query2 = "update i_t_contrat set date_debut_contrat = '" + this.fiche_client.get('date_debut_contrat').value + "' , date_fin_contrat = '" + this.fiche_client.get('date_debut_contrat').value + "' where id = " + this.data_cli.contrat_id ;
+      console.log('query \n' + query) ;
+      console.log('query2 \n' + query2) ;
+      this.dbm.update_res_data(query).then(() => {
+        this.dbm.update_res_data(query2).then(() => {
+          this.make_toast("Mise à jour avec succès...") ;
+          this.edit = false ;
+          this.ionViewWillEnter() ;
+        }) ;
+      }) ;
+    }
+    }) ;
     
 }
 
@@ -328,14 +405,21 @@ open_fiche_client(){
 
 async getMyLocation(){
 
+  var options = {
+    enableHighAccuracy: true, 
+    timeout: 60000, 
+    maximumAge: 0
+  };
+
     let loading = await this.load.create({
       duration : 6000
     }) ;
     loading.present() ;
 
-    this.geolocation.getCurrentPosition().then((resp) => {
+    this.geolocation.getCurrentPosition(options).then((resp) => {
       // resp.coords.latitude
       // resp.coords.longitude
+      this.resp = resp.coords ;
       this.fiche_client.controls['longitude'].setValue(resp.coords.longitude) ;
       this.fiche_client.controls['latitude'].setValue(resp.coords.latitude) ;
 
@@ -345,14 +429,6 @@ async getMyLocation(){
      }).catch((error) => {
        console.log('Error getting location', error);
      });
-     
-     let watch = this.geolocation.watchPosition();
-     watch.subscribe((data) => {
-      // data can be a set of coordinates, or an error (if an error occurred).
-      // data.coords.latitude
-      // data.coords.longitude
-      console.log('watch \n' + data.coords) ;
-     });
   }
 
   abort_edit_client(){
@@ -360,15 +436,18 @@ async getMyLocation(){
   }
 
   ConvertStatut(status : number){
-    this.dbm.update_status_res_partner(this.data_router.storage, status).then(() => {
-      this.data_cli.active = status ;
-      if(status == 0) {
-        this.make_toast("Client active...") ;
-      }
-      else {
-        this.make_toast("Client inactive...") ;
-      }
-    })
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.dbm.update_status_res_partner(params["id"], status).then(() => {
+        this.data_cli.active = status ;
+        if(status == 0) {
+          this.make_toast("Client active...") ;
+        }
+        else {
+          this.make_toast("Client inactive...") ;
+        }
+      }) ;
+    });
+    
   }
 
   async make_toast(message){
@@ -382,6 +461,72 @@ async getMyLocation(){
   cancel(champ : string) {
     this.fiche_client.controls[champ].setValue(null) ;
     //console.log(this.fiche_client.get('champ').value) ;
+  }
+
+  async regionChange(event) {
+    this.i_t_agence_filtered = await this.i_t_agence.filter(function(agence_filtered) {
+      return agence_filtered.region_id == event;
+    });
+    console.log('regionChange : ' + JSON.stringify(this.i_t_agence_filtered)) ;
+  }
+
+  async agenceChange(event) {
+    this.i_t_zone_filtered = await this.i_t_zone.filter(function(zone_filtered) {
+      return zone_filtered.agence_id == event;
+    });
+    console.log('agenceChange : ' + JSON.stringify(this.i_t_zone_filtered)) ;
+  }
+
+  async zoneChange(event) {
+     this.i_t_secteur_filtered = await this.i_t_secteur.filter(function(secteur_filtered) {
+      return secteur_filtered.zone_id == event;
+    });
+    console.log('zoneChange : ' + JSON.stringify(this.i_t_secteur_filtered)) ;
+  }
+
+  async activite_pos_Change(event){
+    this.fiche_client.controls['canal_id'].setValue(event) ;
+    this.i_t_canal_filtered = await this.i_t_canal.filter(function(canal_filtered) {
+      return canal_filtered.id == event;
+    });
+    console.log('zoneChange : ' + JSON.stringify(this.i_t_canal_filtered)) ;
+    this.canal = this.i_t_canal_filtered[0].name 
+  }
+
+  async takePicture(){
+    let cameraOptions: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE ,
+      targetHeight : 70 ,
+      targetWidth : 100
+    };
+    const imagePath : string = await this.camera.getPicture(cameraOptions);
+    return this.window.Ionic.WebView.convertFileSrc(imagePath);
+  }
+
+  async showImageFromCamera() {
+    try {
+      this.filePath = await this.takePicture();
+      this.fiche_client.controls['photo'].setValue(this.filePath) ;
+      console.log("showImageFromCamera : " +  this.fiche_client.get('photo').value) ;
+    } catch(error) {
+      console.log(error);
+    }
+  }
+
+  removeImage() {
+      this.fiche_client.controls['photo'].setValue(null) ;
+      console.log("remove_image : " +  this.fiche_client.get('photo').value) ;
+  }
+
+  itemsActionsChange(idaction) {
+    console.log(idaction) ;
+    this.items = this.itemsActions.filter(function(item) {
+      return item.id > idaction;
+    });
+    console.log(this.items)
   }
 
 }

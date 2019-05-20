@@ -184,3 +184,71 @@ ul.CustomArchive li i.pi.pi-folder {
 .dropdownworkflow .ui-dropdown .ui-dropdown-clear-icon {
     display: none;
 }
+.del_mod_btn button {
+    width: 50% !important;
+    display: inline-block;
+    margin: 0 !important;
+}
+.contentAvatar {
+    width: 100%;
+    height: 70px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.del_mod_btn .ui-corner-all {
+    border-radius: 0 !important;
+}
+
+.tableau .ui-table table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+    display: inline-table;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+body .ui-dialog .ui-dialog-titlebar {
+    border: 1px solid #c8c8c8;
+    background-color: #FFFFFF;
+    color: #333333;
+    padding: 1em;
+    font-weight: 700;
+    border-bottom: 0 none;
+}
+
+body .ui-corner-top {
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+}
+
+body .ui-dialog .ui-dialog-titlebar .ui-dialog-titlebar-icon {
+    color: #333333;
+    border: 0 none;
+    padding: 0;
+    margin-left: 0.5em;
+    transition: color 0.2s;
+}
+
+body .ui-dialog .ui-dialog-footer {
+    border: 1px solid #c8c8c8;
+    background-color: #ffffff;
+    color: #333333;
+    padding: 0.571em 1em;
+    margin: 0;
+    text-align: left;
+    position: relative;
+    top: -1px;
+}
+
+.mydialog {
+    min-width: 200px;
+    z-index: 999999 !important;
+    transform: none;
+    opacity: 1;
+    top: 0px !important;
+    width: 96% !important;
+    margin-top: 5px !important;
+    margin-left: 2% !important;
+    margin-right: 2% !important;
+}

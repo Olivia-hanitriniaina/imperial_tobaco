@@ -1,4 +1,5 @@
 	<ion-content>
+		<p-toast [style]="{marginTop: '80px'}" position="top-right" key="invalid"></p-toast>
 	  <div *ngIf="edit == false" class = "container">
 		<div class = "container">
 			<!-- HEAD -->
@@ -36,7 +37,7 @@
 				<div class="breacumb ui-g">
 				  <div class="ui-g-4 dropdownworkflow">
 					  <!-- <button pButton type="button" label="VALIDÉE PAR SUPERVISEUR"  class="bt ui-button-secondary"></button> -->
-					  <p-dropdown [options]="itemsActions" [(ngModel)]="selectedAction" placeholder="ACTION" optionLabel="label" [showClear]="true"></p-dropdown>
+					  <p-dropdown [options]="itemsActions" [(ngModel)]="selectedAction" placeholder="ACTION" optionLabel="label" [showClear]="true" (onChange) = "itemsActionsChange(event)"></p-dropdown>
 				  </div>
 				  <div class="ui-g-8 dropdownworkflow noCLick">
 					  <!-- <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb> -->
@@ -66,14 +67,19 @@
 					   <h2 class="DataCLI">{{data_cli.name}}</h2>
 					</div>
 		  
-					<div class="cam ui-g-3">
-						<i class="pi pi-camera" style="font-size: 78px ; color: gray" (click)="takePicture()"></i> <br />
-						<div class="del_mod_btn">
-							<button pButton type="button" icon="pi pi-pencil" iconPos="center" class="bt ui-button-success"></button>
-							<button pButton type="button" icon="pi pi-trash" iconPos="center" class="bt ui-button-danger"></button>
-						</div>
-						
-					</div>
+					 
+
+            <div class="cam ui-g-3">
+              <div  *ngIf = "!data_cli.photo"> <i class="pi pi-camera" style="font-size: 78px ; color: gray" ></i> <br /></div>
+              <div *ngIf = "data_cli.photo" [style.background] = "'url('+ data_cli.photo +')'" class="contentAvatar"></div>
+              
+            </div>
+  
+            <!-- <div class="cam ui-g-3" *ngIf = "!data_cli.photo" >
+              <i class="pi pi-camera" style="font-size: 78px ; color: gray" (click)="showImageFromCamera()"></i> <br />
+            </div> -->
+        
+
 				</div>
 				
 				  
@@ -125,7 +131,7 @@
 						  <p> {{client_detail.emplacement}}</p>
 						  <ion-label position="floating">Proximité</ion-label>
 						  <p> {{client_detail.proximite}}</p>
-						  <ion-label position="floating">Type de quartier</ion-label>
+						  <ion-label position="floating">Type Quartier</ion-label>
 						  <p> {{client_detail.type_quartier}}</p>
 						<div class="gps">
 						  <p>Coordonnées GPS Latitude : {{client_detail.latitude}}</p>
@@ -143,7 +149,7 @@
 							<ion-label position="floating">Activité POS</ion-label>
 							<p> {{client_detail.activite_pos}}</p>
 							<ion-label position="floating">Canal</ion-label>
-							<p> {{client_detail.canal}}</p>
+							<p class="canal" >{{canal}}</p>
 							<ion-label position="floating">Enseigne d'appartenance</ion-label>
 							<p> {{client_detail.enseigne_appartenance}}</p>
 							<ion-label position="floating">Classification 1</ion-label>
@@ -289,34 +295,40 @@
 					 
 				  </div>
 		
-				  <div class="div_btn ui-g-5">
-					  <!-- <button pButton type="button" icon="pi pi-folder" iconPos="left" label="ARCHIVER"  class="bt ui-button-danger"></button> -->
-					  <ul class="CustomArchive">
-						  <li *ngIf="!OnClickInactif">
-							<i class="pi pi-folder"></i>
-							Actif
-						  </li>
-						  <li *ngIf="OnClickInactif">
-							<i class="pi pi-folder"></i>
-							Inactif
-						  </li>
-						</ul>
-				  </div>
+					<div class="div_btn ui-g-5" >
+							<!-- <button pButton type="button" icon="pi pi-folder" iconPos="left" label="ARCHIVER"  class="bt ui-button-danger"></button> -->
+							<ul class="CustomArchive">
+								<li *ngIf="data_cli.active == 0" (click)="ConvertStatut(1)">
+								<i class="pi pi-folder"></i>
+								Actif
+								</li>
+								<li *ngIf="data_cli.active == 1" (click)="ConvertStatut(0)">
+								<i class="pi pi-folder"></i>
+								Inactif
+								</li>
+							</ul>
+						</div>
 			  </div>
 
 			  <div class = "photo  ui-g">
 				  <div class="ui-g-9">
-					 
+					  <h2 class="DataCLI">{{data_cli.name}}</h2>
 				  </div>
 		
-				  <div class="cam ui-g-3" >
-					  <i class="pi pi-camera" style="font-size: 78px ; color: gray" (click)="takePicture()" *ngIf = "!base64Image"></i> <br />
-					  <img *ngIf = "base64Image" [src] = "base64Image">
-					  <div class="del_mod_btn">
-						  <button pButton type="button" icon="pi pi-pencil" iconPos="center" class="bt ui-button-success"></button>
-						  <button pButton type="button" icon="pi pi-trash" iconPos="center" class="bt ui-button-danger"></button>
-					  </div>
-				  </div>
+				
+            <div class="cam ui-g-3">
+              <div  *ngIf = "!data_cli.photo"> <i class="pi pi-camera" style="font-size: 78px ; color: gray" ></i> <br /></div>
+              <div *ngIf = "data_cli.photo" [style.background] = "'url('+ data_cli.photo +')'" class="contentAvatar"></div>
+              <div class="del_mod_btn">
+                <button pButton type="button" icon="pi pi-pencil" iconPos="center" class="bt ui-button-success" (click)="showImageFromCamera()"></button>
+                <button pButton type="button" icon="pi pi-trash" iconPos="center" class="bt ui-button-danger" (click)="removeImage()"></button>
+              </div>
+            </div>
+  
+            <!-- <div class="cam ui-g-3" *ngIf = "!data_cli.photo" >
+              <i class="pi pi-camera" style="font-size: 78px ; color: gray" (click)="showImageFromCamera()"></i> <br />
+            </div> -->
+        
 
 			  </div>
 
@@ -332,29 +344,29 @@
 
 					  <ion-item>
 						<ion-label position="floating">Région</ion-label>
-						<ion-select [(ngModel)] = "data_cli.region_id" [value]="data_cli.region_id" formControlName= "region_id" (ionCancel) = "cancel('region_id')" >
+						<ion-select [(ngModel)] = "data_cli.region_id" [value]="data_cli.region_id" formControlName= "region_id" (ionCancel) = "cancel('region_id')" (ionChange)="regionChange($event.detail.value)">
 						  <ion-select-option *ngFor = "let region of i_t_region" [value]= "region.id"> {{region.name}}</ion-select-option>
 						</ion-select>
 					  </ion-item>
 
 					  <ion-item>
 						<ion-label position="floating">Agence</ion-label>
-						<ion-select [(ngModel)] = "data_cli.agence_id" [value]="data_cli.agence_id" formControlName= "agence_id" (ionCancel) = "cancel('agence_id')" >
-						  <ion-select-option *ngFor = "let agence of i_t_agence" [value] = "agence.id" > {{agence.name}}</ion-select-option>
+						<ion-select [(ngModel)] = "data_cli.agence_id" [value]="data_cli.agence_id" formControlName= "agence_id" (ionCancel) = "cancel('agence_id')" (ionChange)="agenceChange($event.detail.value)">
+						  <ion-select-option *ngFor = "let agence of i_t_agence_filtered" [value] = "agence.id" > {{agence.name}}</ion-select-option>
 						</ion-select>
 					  </ion-item>
 
 					  <ion-item>
 						<ion-label position="floating">Zone</ion-label>
-						<ion-select [(ngModel)] = "data_cli.zone_id" [value]="data_cli.zone_id" formControlName= "zone_id" (ionCancel) = "cancel('zone_id')" >
-						  <ion-select-option *ngFor = "let zone of i_t_zone" [value] = "zone.id" > {{zone.name}}</ion-select-option>
+						<ion-select [(ngModel)] = "data_cli.zone_id" [value]="data_cli.zone_id" formControlName= "zone_id" (ionCancel) = "cancel('zone_id')" (ionChange)="zoneChange($event.detail.value)">
+						  <ion-select-option *ngFor = "let zone of i_t_zone_filtered" [value] = "zone.id" > {{zone.name}}</ion-select-option>
 						</ion-select>
 					  </ion-item>
 
 					  <ion-item>
 						<ion-label position="floating">Secteur</ion-label>
-						<ion-select [(ngModel)] = "data_cli.secteur_id" [value]="data_cli.secteur_id" formControlName= "secteur_id" (ionCancel) = "cancel('secteur_id')" >
-						  <ion-select-option *ngFor = "let secteur of i_t_secteur" [value] = "secteur.id" > {{secteur.name}}</ion-select-option>
+						<ion-select [(ngModel)] = "data_cli.secteur_id" [value]="data_cli.secteur_id" formControlName= "secteur_id" >
+						  <ion-select-option *ngFor = "let secteur of i_t_secteur_filtered" [value] = "secteur.id" > {{secteur.name}}</ion-select-option>
 						</ion-select>
 					  </ion-item>
 
@@ -465,10 +477,15 @@
 
 					  <ion-item>
 						  <ion-label position="floating">Activité POS</ion-label>
-						  <ion-select [(ngModel)] = "data_cli.activite_pos_id" [value]="data_cli.activite_pos_id" formControlName= "activite_pos_id" (ionCancel) = "cancel('activite_pos_id')">
+						  <ion-select [(ngModel)] = "data_cli.activite_pos_id" [value]="data_cli.activite_pos_id" formControlName= "activite_pos_id" (ionCancel) = "cancel('activite_pos_id')" (ionChange)="activite_pos_Change($event.detail.value)">
 							<ion-select-option *ngFor = "let activite_pos of i_t_activite_pos" [value] = "activite_pos.id" > {{activite_pos.name}}</ion-select-option>
 						  </ion-select>
 						</ion-item>
+
+						<ion-item>
+							<ion-label position="floating">Canal</ion-label>
+							<ion-input class="canal" [(ngModel)] = "data_cli.canal_id" [value]="canal" formControlName= "canal_id" type="text"></ion-input>
+            </ion-item>
 
 						<ion-item>
 							<ion-label position="floating">Enseigne d'appartenance</ion-label>
@@ -577,7 +594,7 @@
 						  <p-tabPanel header="CONTRAT">
 							<ion-item>
 								<ion-label position="floating">Contrat</ion-label>
-								<ion-select [(ngModel)] = "data_cli.i_t_contrat" [value]="data_cli.i_t_contrat" (ionCancel) = "cancel('contrat_id')" >
+								<ion-select [(ngModel)] = "data_cli.contrat_id" [value]="data_cli.contrat_id" formControlName= "contrat_id" (ionCancel) = "cancel('contrat_id')" >
 								  <ion-select-option *ngFor = "let contrat of i_t_contrat" [value] = "contrat.id" > {{contrat.name}}</ion-select-option>
 								</ion-select>
 							</ion-item>
@@ -585,12 +602,12 @@
 
 						  <ion-item>
 							<ion-label position="floating">Date debut contrat</ion-label>
-							<ion-datetime [(ngModel)] = "data_cli.date_debut_contrat" [value]="data_cli.date_debut_contrat" formControlName= "date_debut_contrat" display-format="YYYY-MM-DD" picker-format="YYYY-MM-DD" ></ion-datetime>
+							<ion-datetime [(ngModel)] = "client_detail.date_debut_contrat" [value] = "client_detail.date_debut_contrat" formControlName= "date_debut_contrat" display-format="YYYY-MM-DD" picker-format="YYYY-MM-DD" ></ion-datetime>
 						  </ion-item>
 
 						  <ion-item>
 							<ion-label position="floating">Date debut contrat</ion-label>
-							<ion-datetime [(ngModel)] = "data_cli.date_fin_contrat" [value]="data_cli.date_fin_contrat" formControlName= "date_fin_contrat" display-format="YYYY-MM-DD" picker-format="YYYY-MM-DD"></ion-datetime>
+							<ion-datetime [(ngModel)] = "client_detail.date_fin_contrat" [value] = "client_detail.date_fin_contrat" formControlName= "date_fin_contrat" display-format="YYYY-MM-DD" picker-format="YYYY-MM-DD"></ion-datetime>
 						  </ion-item>
 						  </p-tabPanel>
 

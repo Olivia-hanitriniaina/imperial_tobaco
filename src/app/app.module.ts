@@ -15,6 +15,9 @@ import { IonicStorageModule } from '@ionic/storage';
 import { HttpClientModule } from '@angular/common/http' ;
 import { Database_manager } from './model/DAO/database_manager.model';
 import { Data } from './model/data/data.model';
+import { Camera } from '@ionic-native/camera/ngx' ;
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
 
 @NgModule({
   declarations: [AppComponent],
@@ -36,6 +39,8 @@ import { Data } from './model/data/data.model';
     SplashScreen,
     SQLite,
     Data,
+    Camera,
+    Geolocation ,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]
