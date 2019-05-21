@@ -240,15 +240,11 @@ body .ui-dialog .ui-dialog-footer {
     position: relative;
     top: -1px;
 }
-
 .mydialog {
-    min-width: 200px;
-    z-index: 999999 !important;
-    transform: none;
-    opacity: 1;
-    top: 0px !important;
+    top: 10px !important;
     width: 96% !important;
-    margin-top: 5px !important;
-    margin-left: 2% !important;
-    margin-right: 2% !important;
+    left: 9px !important;
+}
+.ui-dialog-mask {
+    display: none !important;
 }

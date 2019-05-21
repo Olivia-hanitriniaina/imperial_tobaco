@@ -30,7 +30,7 @@
             <p-table #dt [columns]="cols" [value]="data" [paginator]="true" [paginatorPosition]="'top'" [rows]="10" [(selection)]="selected" dataKey="name" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)" class="tableau">
                 <ng-template pTemplate="caption">
                     <div style="text-align: right">        
-                        <i class="fas fa-search" style="margin: 4px 4px 0 0 ; color: gray; font-size: 20px;"></i>
+                        <i class="fas fa-search" style="margin: 4px 4px 0 0 ; color: #21b799; font-size: 20px;"></i>
                         <input type="text" pInputText size="20" placeholder="Filtrer" (input)="dt.filterGlobal($event.target.value, 'contains')" >
                     </div>
                 </ng-template>
@@ -40,7 +40,7 @@
                         <th style="width: 3em">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
-                        <th *ngFor="let col of columns" [pSortableColumn]="col.field" [style]="{'display': col.display}">
+                        <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'display': col.display}">
                             {{col.header}}
                             <p-sortIcon [field]="col.field"></p-sortIcon>
                         </th>
