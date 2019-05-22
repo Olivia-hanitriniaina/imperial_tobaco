@@ -245,6 +245,7 @@ body .ui-dialog .ui-dialog-footer {
     width: 96% !important;
     left: 9px !important;
 }
-.ui-dialog-mask {
-    display: none !important;
+body .ui-widget-overlay {
+    background-color: #000000;
+    opacity: 0.6;
 }
