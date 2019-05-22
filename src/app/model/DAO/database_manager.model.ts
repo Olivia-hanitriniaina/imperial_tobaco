@@ -814,6 +814,30 @@ export class Database_manager {
         })
     }
 
+    //TOURNEES
+
+    get_tournee_by_user() : Promise<any> {
+        return this.init_database().then((db : SQLiteObject) => {
+            let sql_select : string = "select res_partner.id as res_partner_id, res_partner.name as res_partner_name, res_partner.visite, i_t_tournee.id, i_t_tournee.name, i_t_tournee.start_date, i_t_tournee.end_date from res_partner inner join i_t_tournee on res_partner.user_id = i_t_tournee.commercial_id "
+            let data_return = [] ;
+            return db.executeSql(sql_select, [])
+                .then (data => {
+                    console.log(data) ;
+                    if(data.rows.length > 0) {
+                        for(var i = 0; i<data.rows.length; i++) {
+                            data_return.push(data.rows.item(i)) ;
+                        }
+                        console.log(JSON.stringify(data_return)) ;
+                        return data_return ;
+                    }
+                   
+                })
+                .catch(e => {
+                    console.log('Error on select \n' + JSON.stringify(e)) ;
+                })
+        }) ;
+    }
+
 
 
 }

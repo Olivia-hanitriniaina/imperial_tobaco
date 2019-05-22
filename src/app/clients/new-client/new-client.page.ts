@@ -240,8 +240,9 @@ export class NewClientPage implements OnInit {
       emplacement_id : ['', Validators.required] ,
       proximite_id : ['', Validators.required] ,
       type_quartier_id : ['', Validators.required] ,
-      latitude : ['0.000000000'] ,
-      longitude : ['0.000000000'] ,
+
+      latitude :  ['', Validators.required] ,
+      longitude : ['', Validators.required] ,
 
       type_client_id : ['', Validators.required] ,
       activite_pos_id : ['', Validators.required] ,
@@ -277,6 +278,8 @@ export class NewClientPage implements OnInit {
       source_approvisionnement_id : ['', Validators.required] ,
       fournisseur_principal_id : ['', Validators.required] ,
       fournisseur_secondaire_id : ['', Validators.required] ,
+
+      visite : [''] ,
 
       commentaire : [''] ,
    }) ;
@@ -317,14 +320,9 @@ export class NewClientPage implements OnInit {
     };
     console.log("mande") ;
     this.geolocation.getCurrentPosition(options).then((resp) => {
-      console.log('geolocation \n ' + JSON.stringify(resp.coords)) ;
-      this.fiche_client.controls['longitude'].setValue(resp.coords.longitude) ;
-      this.fiche_client.controls['latitude'].setValue(resp.coords.latitude) ;
 
-      this.fiche_client.controls['longitude'].disable();
-      this.fiche_client.controls['latitude'].disable();
-
-      
+      this.fiche_client.get('longitude').setValue(resp.coords.longitude) ;
+      this.fiche_client.get('latitude').setValue(resp.coords.latitude) ;
 
      }).catch((error) => {
        console.log('Error getting location', error);
@@ -371,6 +369,7 @@ export class NewClientPage implements OnInit {
    
     this.fiche_client.controls['photo'].setValue(this.filePath) ;
     this.fiche_client.controls['name'].setValue("/") ;
+    this.fiche_client.controls['visite'].setValue("Non") ;
     let q1 = "insert into res_partner " ;
     let q2 = "" ;
     let q3 = "" ;

@@ -106,7 +106,7 @@
          "is_today" :"" ,         
          "classification1_id" : 1 ,     
          "a_visiter_moved0" :"" ,  
-         "visite" :"" ,    
+         "visite" : "non" ,    
          "a_visite" :"" , 
          "a_visiter" :"" ,
          "canal_id" : 1
@@ -217,7 +217,7 @@
        "is_today" :"" ,         
        "classification1_id" : 1 ,     
        "a_visiter_moved0" :"" ,  
-       "visite" :"" ,    
+       "visite" : "non",    
        "a_visite" :"" , 
        "a_visiter" :"" ,
        "canal_id" : 1

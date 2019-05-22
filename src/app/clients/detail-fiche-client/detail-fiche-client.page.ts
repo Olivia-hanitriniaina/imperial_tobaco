@@ -422,9 +422,6 @@ async getMyLocation(){
       this.resp = resp.coords ;
       this.fiche_client.controls['longitude'].setValue(resp.coords.longitude) ;
       this.fiche_client.controls['latitude'].setValue(resp.coords.latitude) ;
-
-      this.fiche_client.controls['longitude'].disable();
-      this.fiche_client.controls['latitude'].disable();
       loading.dismiss() ;
      }).catch((error) => {
        console.log('Error getting location', error);
