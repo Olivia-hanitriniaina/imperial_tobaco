@@ -54,7 +54,6 @@ h3{
     width: 98%;
     margin-left: 1%;
     margin-right: 1%;
-	margin-bottom: 30px;
 }
 .gps {
     margin-top: 2px;
@@ -74,15 +73,14 @@ body .ui-widget-content p {
 }
 
 .label_nom {
-    color : #8f8f8f;
-    font-size: 14px;
-    text-align: left;
-	margin-top: 10px;
+    color : #8f8f8f ;
+    font-size: 12px ;
+    text-align: left ;
 }
 .nom_tournee {
     color : #666666 ;
-    font-size: 14px;
-	font-weight: bold;
+    font-size: 13px;
+    text-align: right ;
 }
 
 .message {
@@ -100,11 +98,14 @@ body .ui-widget-content p {
 }
 
 .first {
-	color: #875A7B;
-    text-decoration: none;
+    color: #875A7B;
+    text-decoration: underline;
     margin-bottom: 0px;
-    font-size: 16px;
-    padding: 0px 0px 10px 0px;
+    font-size: 13px;
+    padding: 0px 0px 0px 8px;
     margin-top: 10px;
-    border-bottom: 2px solid #875A7B;
+}
+
+.tableau th {
+    text-align: left ;
 }

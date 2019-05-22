@@ -21,7 +21,9 @@ import { TabViewModule } from 'primeng/tabview';
 import { CardModule } from 'primeng/card';
 import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
+import { MessageService, DialogService } from 'primeng/api';
 
 const routes: Routes = [
   {
@@ -52,8 +54,13 @@ const routes: Routes = [
     ToastModule,
     DialogModule,
     TableModule,
+    DynamicDialogModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [DetailTourneePage]
+  declarations: [DetailTourneePage] ,
+  providers : [
+    DialogService ,
+    MessageService ,
+  ]
 })
 export class DetailTourneePageModule {}

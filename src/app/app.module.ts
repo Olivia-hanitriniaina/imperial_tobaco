@@ -18,10 +18,18 @@ import { Data } from './model/data/data.model';
 import { Camera } from '@ionic-native/camera/ngx' ;
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { ToastModule } from 'primeng/toast';
+import { TableModule } from 'primeng/table';
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [
+    AppComponent,
+
+  ],
+  entryComponents: [
+
+  ],
   imports: [
     BrowserModule, 
     IonicModule.forRoot(),
@@ -41,6 +49,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
     Data,
     Camera,
     Geolocation ,
+    
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

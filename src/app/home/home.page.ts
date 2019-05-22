@@ -74,7 +74,7 @@ export class HomePage implements OnInit{
     }
 
     direct(){
-        this.router.navigate(['menu']) ; 
+        this.router.navigate(['detail-tournee']) ; 
     }
 
   
