@@ -85,11 +85,16 @@ export class DetailTourneePage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.dbm.get_tournee_by_user().then(data => {
-      this.data_pv = data ;
-      this.data_pvs = data ;
+    this.dbm.get_tournee_by_user().then( (data : Array<tournees_sc1>) => {
+      this.data_pv = data.filter(function (item) {
+        console.log('now\n' + Date.now() + 'start_date\n' + item.start_date) ;
+        return item.start_date <= new Date (Date.now()) ;
+      }) ;
+      this.data_pvs = data.filter(function(item){
+        console.log('now\n' + Date.now() + 'start_date\n' + item.start_date) ;
+        return item.start_date > new Date (Date.now()) ;
+      }) ;
       this.data_p = data ;
-      console.log('this.data_pv \n' + JSON.stringify(this.data_pv) ) ;
     });
 
     this.router.queryParams.subscribe(params => {
@@ -106,15 +111,7 @@ export class DetailTourneePage implements OnInit {
   
   }
 
-  onRowSelect(event) {
-    console.log(JSON.stringify(this.selected))
-  }
-
-  onRowUnselect(event) {
-    console.log(JSON.stringify(this.selected))
-  }
-
-  demarrer_tournee () {
+   demarrer_tournee () {
     /*this.itemsActionsChange().then(data => {
       console.log(data) ;
       this.items = this.items.filter(function (item) {
@@ -122,6 +119,8 @@ export class DetailTourneePage implements OnInit {
       }) ;
     this.display2 = false ;
     }) */
+
+    
    
   }
 
@@ -131,12 +130,26 @@ export class DetailTourneePage implements OnInit {
   }
 
   deleteWithButton(rowData) {
+    for(var i = 0; i < this.data_p.length ; i++ ) {
+      if(this.data_p[i].res_partner_name == rowData.res_partner_name) {
+        this.data_p[i].visite = 'non' ;
+        break;
+      }
+    }
+    rowData.visite = "non" ;
     this.selected = this.selected.filter(function (item) {
       return item.res_partner_name != rowData.res_partner_name ;
     }) ;
   }
 
   addWithButton(rowData) {
+    for(var i = 0; i < this.data_p.length ; i++ ) {
+      if(this.data_p[i].res_partner_name == rowData.res_partner_name) {
+        this.data_p[i].visite = 'oui' ;
+        break;
+      }
+    }
+    rowData.visite = "oui" ;
     this.selected.push(rowData) ;
   }
 
