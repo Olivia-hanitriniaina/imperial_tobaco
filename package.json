@@ -1,5 +1,5 @@
 {
-  "name": "primeng-satck",
+  "name": "tolotra",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
@@ -33,15 +33,16 @@
     "@nestjs/typeorm": "^6.0.0",
     "chart.js": "^2.8.0",
     "cordova-android": "7.1.4",
-    "cordova-plugin-camera": "4.0.3",
+    "cordova-plugin-camera": "^4.0.3",
     "cordova-plugin-device": "^2.0.2",
-    "cordova-plugin-geolocation": "4.0.1",
+    "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-ionic-keyboard": "^2.1.3",
     "cordova-plugin-ionic-webview": "^3.1.2",
     "cordova-plugin-splashscreen": "^5.0.2",
     "cordova-plugin-statusbar": "^2.4.2",
     "cordova-plugin-whitelist": "^1.3.3",
-    "cordova-sqlite-storage": "3.2.0",
+    "cordova-sqlite-storage": "^3.2.0",
+    "cordova-windows": "6.0.1",
     "core-js": "^2.5.4",
     "fullcalendar": "^4.0.0-alpha.2",
     "moment": "^2.24.0",
@@ -95,7 +96,17 @@
       "cordova-plugin-geolocation": {}
     },
     "platforms": [
-      "android"
+      "android",
+      "windows"
     ]
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Andriamanaja/imperial_tobacco.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Andriamanaja/imperial_tobacco/issues"
   }
 }
