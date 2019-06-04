@@ -79,8 +79,10 @@ body .ui-widget-content p {
 }
 .nom_tournee {
     color : #666666 ;
-    font-size: 13px;
-    text-align: right ;
+    font-size: 14px;
+    text-align: left ;
+	font-weight: bold;
+	margin-bottom: 10px;
 }
 
 .message {
@@ -98,12 +100,14 @@ body .ui-widget-content p {
 }
 
 .first {
-    color: #875A7B;
-    text-decoration: underline;
-    margin-bottom: 0px;
-    font-size: 13px;
+	color: #875A7B;
+    margin-bottom: 0;
+    font-size: 14px;
     padding: 0px 0px 0px 8px;
     margin-top: 10px;
+    font-weight: bold;
+    border-bottom: 1px solid #875A7B;
+    padding-bottom: 10px;
 }
 
 .tableau th {
