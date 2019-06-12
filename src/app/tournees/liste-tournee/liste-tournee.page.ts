@@ -21,6 +21,8 @@ export class ListeTourneePage implements OnInit {
       { field: 'id' , header: 'id', display : 'none' },
       { field: 'name' , header: 'Nom' , display: 'table-cell'},
       { field: 'state' , header: 'Etat', display: 'table-cell' },
+      { field: 'start_date' , header: 'start_date' , display: 'none'},
+      { field: 'end_date' , header: 'start_date', display: 'none' },
     ];
   }
 
@@ -47,11 +49,14 @@ export class ListeTourneePage implements OnInit {
 
   onRowClicked(rowData){
    let navigationExtras: NavigationExtras = {
-            queryParams: {
-                "id": rowData.id ,
-                "name" : rowData.name
-            }
-        };
+      queryParams: {
+        "id": rowData.id ,
+        "name" : rowData.name ,
+        "status" : rowData.state ,
+        "date_debut" : rowData.start_date,
+        "date_fin" : rowData.end_date
+      }
+    };
     //this.data_router.storage = rowData.id ;
     this.router.navigate(['detail-tournee'], navigationExtras) ; 
   }

@@ -1,6 +1,6 @@
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 import { Injectable } from '@angular/core';
-import { request_res_partner, request_res_users, request_i_t_activation_autorisee, request_i_t_activite_pos, request_i_t_agence, request_i_t_cible_activation, request_i_t_cible_installation_presentoirs, request_i_t_classification1, request_i_t_classification2, request_i_t_contrat, request_i_t_cooperation_itg, request_i_t_couverture_commerciale, request_i_t_emplacement, request_i_t_enseigne_appartenance, request_i_t_client_grossiste, request_i_t_frequence_approvisionnement, request_i_t_frequence_visite, request_i_t_permanent_posm, request_i_t_preference_animateur, request_i_t_proximite, request_i_t_region, request_i_t_secteur, request_i_t_source_approvisionnement, request_i_t_statut_client, request_i_t_type_client, request_i_t_type_quartier, request_i_t_ville, request_i_t_zone, request_i_t_fournisseur_principale, request_i_t_fournisseur_secondaire, request_i_t_canal, request_i_t_tournee } from 'src/environments/environment';
+import { request_res_partner, request_res_users, request_i_t_activation_autorisee, request_i_t_activite_pos, request_i_t_agence, request_i_t_cible_activation, request_i_t_cible_installation_presentoirs, request_i_t_classification1, request_i_t_classification2, request_i_t_contrat, request_i_t_cooperation_itg, request_i_t_couverture_commerciale, request_i_t_emplacement, request_i_t_enseigne_appartenance, request_i_t_client_grossiste, request_i_t_frequence_approvisionnement, request_i_t_frequence_visite, request_i_t_permanent_posm, request_i_t_preference_animateur, request_i_t_proximite, request_i_t_region, request_i_t_secteur, request_i_t_source_approvisionnement, request_i_t_statut_client, request_i_t_type_client, request_i_t_type_quartier, request_i_t_ville, request_i_t_zone, request_i_t_fournisseur_principale, request_i_t_fournisseur_secondaire, request_i_t_canal, request_i_t_tournee, request_visit_sheet, request_stock_line, request_itg_manufacturer, request_itg_product, request_price_line, request_res_currency, request_pos_audit_line, request_pos_audit_answer, request_pos_audit_criteria, request_plv_line } from 'src/environments/environment';
 import { base_data } from '../data/base_data.model';
 import { HttpClient } from '@angular/common/http';
 import { i_t_activation_autorisee } from '../data/i_t_activation_autorisee.model';
@@ -34,6 +34,8 @@ import { stringify } from '@angular/compiler/src/util';
 import { res_partner } from '../data/res_partner.model';
 import { i_t_canal } from '../data/i_t_canal.model';
 import { i_t_tournee } from '../data/i_t_tournee.model';
+import { visit_sheet } from '../data/visit_sheet.model';
+import { ThrowStmt } from '@angular/compiler';
 
 @Injectable()
 export class Database_manager {
@@ -179,6 +181,49 @@ export class Database_manager {
             db.executeSql(request_i_t_tournee, [])
             .then(()=>console.log("tafa le db request_i_t_tournee"))
             .catch(e=> console.log(e)) ;
+
+            db.executeSql(request_visit_sheet, [])
+            .then(()=>console.log("tafa le db request_visit_sheet"))
+            .catch(e=> console.log(e)) ;
+
+            db.executeSql(request_stock_line, [])
+            .then(()=>console.log("tafa le db request_stock_line"))
+            .catch(e=> console.log(e)) ;
+
+            db.executeSql(request_itg_manufacturer, [])
+            .then(()=>console.log("tafa le db request_itg_manufacturer"))
+            .catch(e=> console.log(e)) ;
+
+            db.executeSql(request_itg_product, [])
+            .then(()=>console.log("tafa le db request_itg_product"))
+            .catch(e=> console.log(e)) ;
+
+            db.executeSql(request_price_line, [])
+            .then(()=>console.log("tafa le db request_price_line"))
+            .catch(e=> console.log(e)) ;
+
+            db.executeSql(request_res_currency, [])
+            .then(()=>console.log("tafa le db request_res_currency"))
+            .catch(e=> console.log(e)) ;
+
+            db.executeSql(request_pos_audit_line, [])
+            .then(()=>console.log("tafa le db request_pos_audit_line"))
+            .catch(e=> console.log(e)) ;
+
+            db.executeSql(request_pos_audit_answer, [])
+            .then(()=>console.log("tafa le db request_pos_audit_answer"))
+            .catch(e=> console.log(e)) ;
+
+            db.executeSql(request_pos_audit_criteria, [])
+            .then(()=>console.log("tafa le db request_pos_audit_criteria"))
+            .catch(e=> console.log(e)) ;
+
+            db.executeSql(request_plv_line, [])
+            .then(()=>console.log("tafa le db request_plv_line"))
+            .catch(e=> console.log(e)) ;
+
+
+
             
         }) ;
     }
@@ -602,6 +647,41 @@ export class Database_manager {
                     })
                 }
             });
+
+            this.http.get("../../assets/json/visit_sheet.test.json").subscribe((data : Array<visit_sheet>) => {
+                let sql_insert : string = "insert into visit_sheet (create_uid, name, write_uid, page_number_total, show_btn_end_visit, visit_duration, partner_id, user_id, state, provider_longitude, begin_datetime, next_visit_goal, provider_latitude, end_datetime, hide_btn_next_next_page, tour_id, visit_duration_str, pos_initial, region_id, secteur_id, agence_id, zone_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " ;
+                for(var i = 0; i<data.length;i++){     
+                    db.executeSql (sql_insert, [
+                        data[i].create_uid ,
+                        data[i].name,
+                        data[i].write_uid ,
+                        data[i].page_number_total ,
+                        data[i].show_btn_end_visit ,
+                        data[i].visit_duration ,
+                        data[i].partner_id ,
+                        data[i].user_id ,
+                        data[i].state ,
+                        data[i].provider_longitude ,
+                        data[i].begin_datetime ,
+                        data[i].next_visit_goal ,
+                        data[i].provider_latitude ,
+                        data[i].end_datetime ,
+                        data[i].hide_btn_next_next_page ,
+                        data[i].tour_id ,
+                        data[i].visit_duration_str ,
+                        data[i].pos_initial ,
+                        data[i].region_id ,
+                        data[i].secteur_id ,
+                        data[i].agence_id ,
+                        data[i].zone_id ,
+                    ]) . then (() => {
+                        console.log ('insert visit_sheet with succes \n') ;
+                    })
+                    .catch (e => {
+                        console.log ('Error on insert visit_sheet \n' + JSON.stringify(e)) ;
+                    })
+                }
+            });
        
             
         });
@@ -781,7 +861,29 @@ export class Database_manager {
         })
     }
 
+    get_res_partner_data_for_visite() : Promise<any> {
+        return this.init_database().then ( (db : SQLiteObject) => {
 
+            let sql_select : string = "select res_partner.id, res_partner.name from res_partner" ;
+            let data_return = [] ;
+            return db.executeSql (sql_select, []).then((data) => {
+                
+                if(data.rows.length > 0) {
+                    for(var i = 0; i<data.rows.length; i++) {
+                        data_return.push(data.rows.item(i)) ;
+                    }
+                    return data_return ;
+                }
+                else {
+                    console.log("5") ;
+                }
+            }).catch(e => {
+                console.log('Error on select \n' + JSON.stringify(e)) ;
+            })
+        }).catch (e => {
+            console.log('Error on connexion \n' + JSON.stringify (e)) ;
+        })
+    }
 
 
     select_basic_data_with_id(nom_table : string, id : number) : Promise<any> {
@@ -838,6 +940,88 @@ export class Database_manager {
         }) ;
     }
 
+    update_tournee_by_id (id : number, status : string) {
+        return this.init_database().then((db : SQLiteObject) => {
+            let query = "update i_t_tournee set state = ? where id = ?" ;
+             return db.executeSql(query, [status,id]).then(data => {
+                if(data.rows.length > 0) {
+                    return data.rows.item(0) ;
+                }
+             }).catch(e => {
+                console.log('Error on update \n' + JSON.stringify (e) ) ;
+            })
+        }).catch(e => {
+            console.log('Error on connexion \n' + JSON.stringify (e) ) ;
+        });
+    }
 
+    update_visite_res_patrner_by_id(id : number, etat : string) {
+        return this.init_database().then((db : SQLiteObject) => {
+            let query = "update res_partner set visite = ? where id = ?" ;
+             return db.executeSql(query, [etat, id]).then(data => {
+                if(data.rows.length > 0) {
+                    return data.rows.item(0) ;
+                }
+             }).catch(e => {
+                console.log('Error on update \n' + JSON.stringify (e) ) ;
+            })
+        }).catch(e => {
+            console.log('Error on connexion \n' + JSON.stringify (e) ) ;
+        });
+    }
+
+    get_active_user(){
+        return this.init_database().then((db : SQLiteObject) => {
+            let sql_select : string = "select res_users.login, res_users.id from res_users where res_users.active = 1" ;
+            let data_return = [] ;
+            return db.executeSql(sql_select, [])
+                .then (data => {
+                    console.log(data) ;
+                    if(data.rows.length > 0) {
+                        for(var i = 0; i<data.rows.length; i++) {
+                            data_return.push(data.rows.item(i)) ;
+                        }
+                        return data_return ;
+                    }
+                   
+                })
+                .catch(e => {
+                    console.log('Error on select get_all_fiche_visite \n' + JSON.stringify(e)) ;
+                })
+        }) ;
+    }
+
+    get_all_fiche_visite() {
+        return this.init_database().then((db : SQLiteObject) => {
+            let sql_select : string = "select (select res_users.login from res_users where res_users.active = 1) as user_id, (select res_partner.name from res_partner where visit_sheet.partner_id = res_partner.id) as partner_id, visit_sheet.begin_datetime, visit_sheet.end_datetime, visit_sheet.state from visit_sheet" ;
+            let data_return = [] ;
+            return db.executeSql(sql_select, [])
+                .then (data => {
+                    console.log(data) ;
+                    if(data.rows.length > 0) {
+                        for(var i = 0; i<data.rows.length; i++) {
+                            data_return.push(data.rows.item(i)) ;
+                        }
+                        return data_return ;
+                    }
+                   
+                })
+                .catch(e => {
+                    console.log('Error on select get_all_fiche_visite \n' + JSON.stringify(e)) ;
+                })
+        }) ;
+    }
+
+    save_position(id : number, position : any) {
+        return this.init_database().then((db : SQLiteObject) => {
+            let query = "update visit_sheet set provider_latitude = ?, provider_longitude where id = ?" ;
+            return db.executeSql(query, [position.latitude, position.longitude, id]).then(()=> {
+                
+                console.log ('update res with succes \n') ;
+            }) .catch (e => {
+                console.log ('Error on update res \n' + JSON.stringify(e)) ;
+            });
+        });
+    }
 
 }

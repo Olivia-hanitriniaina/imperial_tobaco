@@ -2,16 +2,15 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MenuPage } from './menu.page';
+import { PageThreePage } from './page-three.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: MenuPage
+    component: PageThreePage
   }
 ];
 
@@ -20,9 +19,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    Ng2SearchPipeModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [MenuPage]
+  declarations: [PageThreePage]
 })
-export class MenuPageModule {}
+export class PageThreePageModule {}

@@ -26,35 +26,17 @@
       <div class="search_bar">
         <div class="ui-inputgroup ZoneSearchAccueil">
           <span class="ui-inputgroup-addon"><i class="fas fa-search"></i></span>
-          <input class="search" type="text" pInputText placeholder="Recherche">         
+          <input class="search" type="text" [(ngModel)]="term" pInputText placeholder="Recherche">         
         </div>
       </div>
        <!-- SEARCH-BAR -->
     
 
     <div class="body">
-        <div class="ui-g">
-            <div class="cmp ui-g-3" (click)="open_discussion()">
-              <img class = "mn_icn" src = "assets/image/discuter.png">
-              <span class="nom">Discuter</span>
-            </div>
-            <div class="cmp ui-g-3" (click)="open_fiches_client()">
-                <img class = "mn_icn" src = "assets/image/client.png">
-                <span class="nom">Fiches client</span>
-            </div>
-            <div class="cmp ui-g-3" (click)="open_tournees()">
-                <img class = "mn_icn" src = "assets/image/tournes.png">
-                <span class="nom">Tournées</span>
-            </div>
-            
-            <div class="cmp ui-g-3">
-              <img class = "mn_icn" src = "assets/image/parametrage.png">
-                <span class="nom">Paramétrage</span>
-            </div>
-
-            <div class="cmp ui-g-3">
-              <img class = "mn_icn" src = "assets/image/visite.png">
-                <span class="nom">Fiche de visite</span>
+        <div class="ui-g" >
+            <div class="cmp ui-g-3" *ngFor = "let menu of menus | filter:term" (click) = "open_menu(menu.name)">
+              <img class = "mn_icn" [src] = "menu.icone">
+              <span class="nom">{{menu.name}}</span>
             </div>
         </div>
     </div>

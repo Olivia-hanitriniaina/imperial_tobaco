@@ -7,11 +7,13 @@ import { Storage } from '@ionic/storage'
   templateUrl: './discussion.page.html',
   styleUrls: ['./discussion.page.scss'],
 })
+
 export class DiscussionPage implements OnInit {
 
   constructor(private router : Router, private storage : Storage) { }
 
   ngOnInit() {
+    
   }
 
   open_menu(){

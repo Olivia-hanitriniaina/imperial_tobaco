@@ -36,12 +36,10 @@ export class HomePage implements OnInit{
 
     ngOnInit(): void { 
         this.dbm.select_basic_data("i_t_region").then ((data) => {
-           
            this.region = data ;
            if(this.region.length == 0) {
             this.dbm.init_table_data() ;
            }
-               
           });
     }
 

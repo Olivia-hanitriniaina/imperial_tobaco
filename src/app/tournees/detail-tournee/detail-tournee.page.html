@@ -39,10 +39,17 @@
 				</div>
 
 				<div class = "photo  ui-g">
-					<div class="ui-g-12">
-						<p class="label_nom">Nom</p>
-						<p class="nom_tournee">{{name}}</p>
-					</div>
+					<div class="ui-g-3">
+            <p class="label_nom">Nom</p> 
+           <!--
+            <p class="label_nom" *ngIf = "from_liste.date_debut">Date de démarrage</p> 
+            <p class="label_nom" *ngIf = "from_liste.date_fin">Date de clôture</p> 
+           --> </div>
+          <div class="ui-g-9">
+              <p class="nom_tournee">{{from_liste.name}}</p>
+             <!-- <p class="nom_tournee" *ngIf = "from_liste.date_debut">{{from_liste.date_debut}}</p> 
+              <p class="nom_tournee" *ngIf = "from_liste.date_fin">{{from_listename.date_fin}}</p> -->
+          </div>
 				</div>
 				
 				  
@@ -109,12 +116,12 @@
 
       <div>
         <p class="label_nom">Nom</p>
-        <p class="nom_tournee">{{name}}</p>
+        <p class="nom_tournee">{{screen.res_partner_name}}</p>
       </div>
 
       <div>
         <p class="label_nom">Visité</p>
-        <p class="nom_tournee">{{name}}</p>
+        <p class="nom_tournee">{{screen.visite}}</p>
       </div>
 
         <p-footer>
@@ -170,6 +177,53 @@
         <p-footer>
             <button type="button" pButton (click)="valider_tournee()" label="VALIDER ET DÉMARRER LA TOURNÉE" class="ui-button-success"></button>
             <button type="button" pButton (click)="display2=false" label="CANCEL" class="ui-button-secondary"></button>
+        </p-footer>
+        
+    </p-dialog>
+
+
+
+
+    <p-dialog header="Odoo" [(visible)]="display3" [modal]="true" [responsive]="true" styleClass = "mydialog" appendTo="body">
+      
+      <div class="message">
+          Voici la liste des points de ventes non visité ce jour.
+      </div>
+
+      <div class = "form_inside">
+        <div class = "table">
+            <p class="first">POINTS DE VENTE</p>
+            <p-table #dt [columns]="cols_pn" [value]="data_pn"  class="tableau">
+                     
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'display': col.display}">
+                          {{col.header}}
+                          <p-sortIcon [field]="col.field"></p-sortIcon>
+                        </th>
+
+                        <th></th>
+
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr>    
+                        
+                        <td *ngFor="let col of columns" [ngStyle]="{'display': col.display}">
+                                {{rowData[col.field]}}
+                        </td>
+
+                    </tr>
+                </ng-template>
+            </p-table>
+
+        </div>
+    </div>
+      
+        <p-footer>
+            <button type="button" pButton (click)="cloturer_tournee()" label="FERMER ET CLÔTURER LA TOURNÉE" class="ui-button-success"></button>
+            <button type="button" pButton (click)="display3=false" label="CANCEL" class="ui-button-secondary"></button>
         </p-footer>
         
     </p-dialog>
