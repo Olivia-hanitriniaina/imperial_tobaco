@@ -14,10 +14,22 @@ export class NewFicheVisitePage implements OnInit {
   items: { id: number; label: string; } [];
   itemsActions: { id: number; label: string; } [];
   fg : FormGroup ;
-  commercial : any ;
+  login : string ;
+  id : number ;
   partner_id : Array<any> = [] ;
+  location : any ;
 
   constructor(private messageService : MessageService, private geolocation : Geolocation,private router : Router, private fb : FormBuilder, private dbm : Database_manager) { }
+
+  ionViewWillEnter(){
+    this.dbm.get_res_partner_data_for_visite().then(async data => {
+      this.partner_id = data ;
+    }) ;
+    this.dbm.select_res_user_active().then(async data => {
+      this.login = data.login ;
+      this.id = data.id
+    }) ;
+  }
 
   ngOnInit() {
     this.items = [
@@ -31,16 +43,16 @@ export class NewFicheVisitePage implements OnInit {
     ];
     this.fg = this.fb.group({
       partner_id : ['', Validators.required] ,
-      pos_initial : ['']
+      pos_initial : 0 ,
+      provider_latitude : 0 ,
+      provider_longitude : 0,
+      region_id : "" ,
+      secteur_id : "" ,
+      agence_id : "" ,
+      zone_id : ""
     }) ;
 
-    this.dbm.get_res_partner_data_for_visite().then(data => {
-      this.partner_id = data ;
-    }) ;
 
-    this.dbm.select_res_user_active().then(data => {
-      this.commercial = data ;
-    }) ;
   }
 
   demarrer_visite() {
@@ -49,7 +61,8 @@ export class NewFicheVisitePage implements OnInit {
     }
 
     else { 
-      console.log("mande");
+      this.getMyLocation() ;
+      console.log('value\n' + JSON.stringify(this.fg.value));
     }
   }
 
@@ -65,7 +78,6 @@ export class NewFicheVisitePage implements OnInit {
     var options = {
       enableHighAccuracy: true, timeout: 60000, maximumAge: 0
     };
-    console.log("mande") ;
     this.geolocation.getCurrentPosition(options).then((resp) => {
 
      }).catch((error) => {
@@ -74,3 +86,4 @@ export class NewFicheVisitePage implements OnInit {
   }
 
 }
+ 

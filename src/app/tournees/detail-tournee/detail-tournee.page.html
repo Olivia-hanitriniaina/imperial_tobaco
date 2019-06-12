@@ -25,7 +25,13 @@
 				  <h3>
 					  <i class="fas fa-arrow-left" style="font-size: 18px ; color: #21B799"></i> {{name}}
 				  </h3>
-				</div>
+                </div>
+                
+                <div class = "btn_nw_cr">
+                        <button pButton type="button" label="MODIFIER"  *ngIf="edit==false"   class="bt ui-button-success" (click)="edit_tournee()"></button>
+                    <button pButton type="button" label="SAUVEGARDER"  *ngIf="edit==true"   class="bt ui-button-success" (click)="save_tournee()"></button>
+                    <button pButton type="button" label="ANNULER"     class="bt ui-button-secondary" (click)="abort_tournee()"></button>
+              </div>
 				
 				<div class="breacumb ui-g">
 				  <div class="ui-g-4 dropdownworkflow">
@@ -127,6 +133,41 @@
         <p-footer>
             <button type="button" pButton (click)="display=false" label="Fermer" class="ui-button-secondary"></button>
         </p-footer>
+    </p-dialog>
+
+    <p-dialog [(header)]="name" [(visible)]="display4" [modal]="true" [responsive]="true" styleClass = "mydialog" appendTo="body">
+            <div class = "form">
+                    <form [formGroup]="tournees_fg">
+                      <div class = "form_inside">
+        
+                        <div class="form_item">
+          
+                          <ion-item>
+                            <ion-label position="floating">Séquence</ion-label>
+                            <ion-input formControlName= "sequence" type="text"> </ion-input>
+                          </ion-item>
+          
+                          <ion-item class="InputObligatoire">
+                            <ion-label position="floating">Nom</ion-label>
+                            <ion-input formControlName= "name" [(ngModel)] = "screen.name" type="text" > </ion-input>
+                          </ion-item>
+          
+                          <ion-item class="InputObligatoire">
+                            <ion-label position="floating">Visité</ion-label>
+                            <ion-select [(ngModel)] = "screen.visite" formControlName= "visite">
+                              <ion-select-option *ngFor = "let visite of visites" [value] = "visite.value" > {{visite.label}}</ion-select-option>
+                            </ion-select>
+                          </ion-item>
+                        </div>
+                     </div>
+                    </form>
+            </div>
+      
+        <p-footer>
+            <button type="button" pButton (click)="display4=false" label="SAUVEGARDER" class="ui-button-secondary"></button>
+            <button type="button" pButton (click)="display4=false" label="ANNULER" class="ui-button-secondary"></button>
+        </p-footer>
+
     </p-dialog>
 
     <p-dialog header="Odoo" [(visible)]="display2" [modal]="true" [responsive]="true" styleClass = "mydialog" appendTo="body">

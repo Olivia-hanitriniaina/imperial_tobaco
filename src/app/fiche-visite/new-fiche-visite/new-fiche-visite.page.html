@@ -56,7 +56,7 @@
 
                 <div class="ui-g off">
                     <p>Commercial</p>
-                    <p style="color: #21B799">{{commercial.login}}</p>
+                    <p style="color: #21B799">{{login}}</p>
                 </div>
                   
                 <div class="ui-g">
@@ -64,13 +64,9 @@
                       <p>POS initial</p>
                   </div>
                   <div class="ui-g-8 align">
-                      <p-checkbox [formControl]="fg.controls['pos_initial']"></p-checkbox>
+                      <p-checkbox binary="1" [formControl]="fg.controls['pos_initial']"></p-checkbox>
                   </div>
                 </div>
-
-                  
-                
-
           </form>
         </div>
       </div>

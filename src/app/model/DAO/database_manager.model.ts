@@ -864,7 +864,7 @@ export class Database_manager {
     get_res_partner_data_for_visite() : Promise<any> {
         return this.init_database().then ( (db : SQLiteObject) => {
 
-            let sql_select : string = "select res_partner.id, res_partner.name from res_partner" ;
+            let sql_select : string = "select res_partner.id, res_partner.name, res_partner.region_id, res_partner.secteur_id, res_partner.agence_id, res_partner.zone_id from res_partner" ;
             let data_return = [] ;
             return db.executeSql (sql_select, []).then((data) => {
                 
