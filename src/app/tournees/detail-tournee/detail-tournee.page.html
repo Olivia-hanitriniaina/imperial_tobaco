@@ -38,20 +38,24 @@
 				  </div> 
 				</div>
 
-				<div class = "photo  ui-g">
-					<div class="ui-g-3">
-            <p class="label_nom">Nom</p> 
-           <!--
-            <p class="label_nom" *ngIf = "from_liste.date_debut">Date de démarrage</p> 
-            <p class="label_nom" *ngIf = "from_liste.date_fin">Date de clôture</p> 
-           --> </div>
-          <div class="ui-g-9">
-              <p class="nom_tournee">{{from_liste.name}}</p>
-             <!-- <p class="nom_tournee" *ngIf = "from_liste.date_debut">{{from_liste.date_debut}}</p> 
-              <p class="nom_tournee" *ngIf = "from_liste.date_fin">{{from_listename.date_fin}}</p> -->
-          </div>
+        <div class="ban-gris">
+          <div class="fiche-visite">Fiche de visite</div>
+        </div>
+
+        <div class="photo ui-g show-detail-tourne">
+          <p class="label_nom">Nom</p>
+          <p class="nom_tournee">{{from_liste.name}}</p>
 				</div>
 				
+        <div class="photo ui-g show-detail-tourne" >
+          <p class="label_nom">Commercial</p>
+          <p class="nom_tournee"><span class="txt-blue">Administrateur</span></p>
+        </div>
+
+        <div class="photo ui-g show-detail-tourne" *ngIf="start_date">
+          <p class="label_nom">Date de démarrage</p>
+          <p class="nom_tournee">{{from_liste.start_date}}</p>
+        </div>
 				  
 				<div class = "form">
 					<div class = "form_inside">

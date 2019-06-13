@@ -32,4 +32,8 @@ export class FicheVisitePage implements OnInit {
     this.router.navigate(['new-fiche-visite']) ;
   }
 
+  onRowClicked(rowData){
+    this.router.navigate(['page-one']) ; 
+  }
+
 }
