@@ -10,6 +10,7 @@ import { MessageService } from 'primeng/api';
   templateUrl: './new-fiche-visite.page.html',
   styleUrls: ['./new-fiche-visite.page.scss'],
 })
+
 export class NewFicheVisitePage implements OnInit {
   items: { id: number; label: string; } [];
   itemsActions: { id: number; label: string; } [];
@@ -51,8 +52,6 @@ export class NewFicheVisitePage implements OnInit {
       agence_id : "" ,
       zone_id : ""
     }) ;
-
-
   }
 
   demarrer_visite() {
@@ -79,11 +78,9 @@ export class NewFicheVisitePage implements OnInit {
       enableHighAccuracy: true, timeout: 60000, maximumAge: 0
     };
     this.geolocation.getCurrentPosition(options).then((resp) => {
-
      }).catch((error) => {
        console.log('Error getting location', error);
      });
   }
 
 }
- 

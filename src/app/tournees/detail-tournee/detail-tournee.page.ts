@@ -104,25 +104,25 @@ export class DetailTourneePage implements OnInit {
         case "Nouveau" : {
           this.items = [
             {id : 1 , label:'NOUVEAU'},
-            {id : 2 , label:'DÉMARRER'},
-            {id : 3 , label:'CLÔTURER'},
+            {id : 2 , label:'DÉMARRÉ'},
+            {id : 3 , label:'CLÔTURÉ'},
           ];
       
           this.itemsActions = [
-            {id : 1 , label:'DÉMARRER LA TOURNÉE'},
-            {id : 2 , label:'CLÔTURER LA TOURNÉE'},
+            {id : 1 , label:'DÉMARRÉ LA TOURNÉE'},
+            {id : 2 , label:'CLÔTURÉ LA TOURNÉE'},
           ];
           break ;
         }
         
-        case "Démarrer" : {
+        case "Démarré" : {
           this.items = [
-            {id : 2 , label:'DÉMARRER'},
-            {id : 3 , label:'CLÔTURER'},
+            {id : 2 , label:'DÉMARRÉ'},
+            {id : 3 , label:'CLÔTURÉ'},
           ];
       
           this.itemsActions = [
-            {id : 2 , label:'CLÔTURER LA TOURNÉE'},
+            {id : 2 , label:'CLÔTURÉ LA TOURNÉE'},
           ];
 
           if(k != 0) {
@@ -132,7 +132,7 @@ export class DetailTourneePage implements OnInit {
           break ;
         }
 
-        case "Clôturer" : {
+        case "Clôturé" : {
           this.items = [
             {id : 3 , label:'CLOTURER'},
           ];
@@ -192,6 +192,7 @@ export class DetailTourneePage implements OnInit {
       this.display = true ;
     }
     else {
+      
       this.display4 = true
     }
   }
@@ -206,8 +207,12 @@ export class DetailTourneePage implements OnInit {
     this.filldata() ;
     this.display2 = false ;
     this.router.queryParams.subscribe(params => {
-      this.dbm.update_tournee_by_id(params['id'], "Démarrer") ;
+      this.dbm.update_tournee_by_id(params['id'], "Démarré") ;
     }) ;
+  }
+
+  abort_tournee() {
+    this.edit = false ;
   }
 
   deleteWithButton(rowData) {
@@ -248,7 +253,7 @@ export class DetailTourneePage implements OnInit {
   cloturer_tournee(){
     this.display3 = false ;
     this.router.queryParams.subscribe(params => {
-      this.dbm.update_tournee_by_id(params['id'], "Clôturer") ;
+      this.dbm.update_tournee_by_id(params['id'], "Clôturé") ;
     }) ;
   }
 
