@@ -3,6 +3,7 @@ import { Database_manager } from 'src/app/model/DAO/database_manager.model';
 import { ActivatedRoute } from '@angular/router';
 import { tournees_sc1 } from 'src/app/model/screen/tournnees.screen1';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-detail-tournee',
@@ -38,12 +39,20 @@ export class DetailTourneePage implements OnInit {
   selected : Array<tournees_sc1> = [];
   screen : any = {};
   from_liste : any ;
+  edit : boolean = false ;
+  display4: boolean = false;
+  tournees_fg : FormGroup ;
+  visites: { label: string; value: string; }[];
 
-  constructor(private geolocation : Geolocation, private dbm : Database_manager, private router : ActivatedRoute) { 
+  constructor(private fb : FormBuilder,private geolocation : Geolocation, private dbm : Database_manager, private router : ActivatedRoute) { 
 
   }
 
   ngOnInit() {
+    this.visites = [
+      {label : "oui", value : "oui"} ,
+      {label : "non", value : "non"} ,
+    ]
     this.cols_pv = [
       { field: 'res_partner_id' , header: 'res_partner_id', display : 'none' },
       { field: 'res_partner_name' , header: 'Nom' , display: 'table-cell'},
@@ -82,7 +91,12 @@ export class DetailTourneePage implements OnInit {
       { field: 'name' , header: 'name', display : 'none' },
       { field: 'start_date' , header: 'start_date', display : 'none' },
       { field: 'end_date' , header: 'end_date', display : 'none' }
-    ]
+    ] ;
+    this.tournees_fg = this.fb.group({
+      sequence : [''],
+      name : [''],
+      visite : ['']
+    })
   }
 
   checkstatus(status : string, k : number) {
@@ -90,25 +104,25 @@ export class DetailTourneePage implements OnInit {
         case "Nouveau" : {
           this.items = [
             {id : 1 , label:'NOUVEAU'},
-            {id : 2 , label:'DÉMARRER'},
-            {id : 3 , label:'CLÔTURER'},
+            {id : 2 , label:'DÉMARRÉ'},
+            {id : 3 , label:'CLÔTURÉ'},
           ];
       
           this.itemsActions = [
-            {id : 1 , label:'DÉMARRER LA TOURNÉE'},
-            {id : 2 , label:'CLÔTURER LA TOURNÉE'},
+            {id : 1 , label:'DÉMARRÉ LA TOURNÉE'},
+            {id : 2 , label:'CLÔTURÉ LA TOURNÉE'},
           ];
           break ;
         }
         
-        case "Démarrer" : {
+        case "Démarré" : {
           this.items = [
-            {id : 2 , label:'DÉMARRER'},
-            {id : 3 , label:'CLÔTURER'},
+            {id : 2 , label:'DÉMARRÉ'},
+            {id : 3 , label:'CLÔTURÉ'},
           ];
       
           this.itemsActions = [
-            {id : 2 , label:'CLÔTURER LA TOURNÉE'},
+            {id : 2 , label:'CLÔTURÉ LA TOURNÉE'},
           ];
 
           if(k != 0) {
@@ -118,7 +132,7 @@ export class DetailTourneePage implements OnInit {
           break ;
         }
 
-        case "Clôturer" : {
+        case "Clôturé" : {
           this.items = [
             {id : 3 , label:'CLOTURER'},
           ];
@@ -173,8 +187,14 @@ export class DetailTourneePage implements OnInit {
   }
 
   onRowClicked(rowData){
-    this.screen = rowData ;
-    this.display = true ;
+    if(this.edit == false) {
+      this.screen = rowData ;
+      this.display = true ;
+    }
+    else {
+      
+      this.display4 = true
+    }
   }
 
   itemsActionsChange(event)  {
@@ -187,8 +207,12 @@ export class DetailTourneePage implements OnInit {
     this.filldata() ;
     this.display2 = false ;
     this.router.queryParams.subscribe(params => {
-      this.dbm.update_tournee_by_id(params['id'], "Démarrer") ;
+      this.dbm.update_tournee_by_id(params['id'], "Démarré") ;
     }) ;
+  }
+
+  abort_tournee() {
+    this.edit = false ;
   }
 
   deleteWithButton(rowData) {
@@ -229,7 +253,7 @@ export class DetailTourneePage implements OnInit {
   cloturer_tournee(){
     this.display3 = false ;
     this.router.queryParams.subscribe(params => {
-      this.dbm.update_tournee_by_id(params['id'], "Clôturer") ;
+      this.dbm.update_tournee_by_id(params['id'], "Clôturé") ;
     }) ;
   }
 
@@ -245,6 +269,10 @@ export class DetailTourneePage implements OnInit {
      }).catch((error) => {
        console.log('Error getting location', error);
      });
+  }
+
+  edit_tournee() {
+    this.edit = true ;
   }
 
 }
