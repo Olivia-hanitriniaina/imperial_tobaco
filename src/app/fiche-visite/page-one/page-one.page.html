@@ -31,19 +31,48 @@
 		      	</div>			
 
 				<div class = "btn-action-general">
-		            <button pButton type="button" label="Modifier" class="bt ui-button-success">Modifier</button>
-		            <button pButton type="button" label="Créer" class="bt ui-button-secondary">Créer</button>
+		            <button pButton type="button" label="Modifier" class="bt"></button>
+		            <button pButton type="button" label="Créer" class="bt bt-no-bg"></button>
 		      	</div>
 
 		      	<div class="breacumb ui-g">
 			        <div class="ui-g-4 dropdownworkflow">
 			          
 			        </div>
-			        <div class="ui-g-8 dropdownworkflow noCLick"> 
-			          <!-- <p-dropdown [options]="items" [(ngModel)]="selectedWorkFlow" [placeholder]="items.label" optionLabel="label" [showClear]="true"></p-dropdown> -->
+			        <div class="ui-g-8 dropdownworkflow noCLick">
+			          <p-dropdown [options]="items" [(ngModel)]="selectedWorkFlow" [placeholder]="items.label" optionLabel="label" [showClear]="true"></p-dropdown>
 			        </div> 
 		      	</div>
+
+		      	<div class="real-content-page">
+		      		<h3>GRS0001</h3>
+		      		<div class="sho-data">
+		      			<label>Commercial</label>
+		      			<p>Administrateur</p>
+		      		</div>
+
+		      		<div class="sho-data">
+		      			<label>POS initial</label>
+		      			<p-checkbox [(ngModel)]="checked" ninary="true"></p-checkbox>
+		      		</div>
+
+		      		<div class="sho-data">
+		      			<label>Début de visite</label>
+		      			<p>13/06/2019 14:25:03</p>
+		      		</div>
+
+		      		<div class="sho-data">
+		      			<label>Durée de la visite</label>
+		      			<p>00H 04mn 31s</p>
+		      		</div>
+
+		      		<div class="btn-action-etapes">
+		      			<button pButton type="button" label="SUIVANT 1/7" class="bt" (click)="page_two()"></button>
+		      		</div>
+		      	</div>
+
 	      	</div>
+
 		</div>
 
 		<div class="footer"></div>

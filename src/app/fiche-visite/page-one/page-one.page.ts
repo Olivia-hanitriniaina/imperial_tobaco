@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-page-one',
@@ -8,7 +10,7 @@ import { Component, OnInit } from '@angular/core';
 export class PageOnePage implements OnInit {
 	items: { id: number; label: string; } [];
 
-  constructor() { }
+  constructor(private router : Router) { }
 
   ngOnInit() {
 	this.items = [
@@ -18,4 +20,7 @@ export class PageOnePage implements OnInit {
     ];
   }
 
+  page_two(){
+    this.router.navigate(['page-two']) ;
+  }
 }

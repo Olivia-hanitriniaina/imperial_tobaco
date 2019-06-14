@@ -20,4 +20,35 @@
 .bg-blanc {
     background: #ffffff;
     padding-top: 5px;
+    min-height: 94vh;
+}
+.breacumb.ui-g {
+    margin-top: 0;
+}
+.real-content-page {
+	padding: 15px;
+	h3 {
+	    margin-top: 40px;
+	    margin-bottom: 40px;
+	}
+	.sho-data {
+		label {
+			color: #5b5b5b;
+			font-size: 12px;
+		}
+		p {
+		    margin: 5px 0 15px;
+		    font-size: 14px;
+		}
+		p-checkbox.ng-pristine {
+		    margin-left: 20px;
+		    margin-top: 20px;
+		}
+	}
+}
+.btn-action-etapes {
+    text-align: right;
+    button.bt.ui-button-success {
+	    padding: 10px 15px;
+	}
 }
