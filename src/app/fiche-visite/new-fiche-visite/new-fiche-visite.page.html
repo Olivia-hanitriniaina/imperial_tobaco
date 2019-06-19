@@ -48,23 +48,23 @@
         <div class = "form_inside">
           <form [formGroup]="fg" (ngSubmit) = "demarrer_visite()">
               <button pButton type="submit" label="DÉMARRER LA VISITE" class="bt2 ui-button-success"></button>
-              <ion-item class="select-custom">
+              <ion-item>
                   <ion-select  formControlName= "partner_id" placeholder="Sélectionner un point de vente">
                     <ion-select-option *ngFor = "let partner of partner_id" [value]= "partner.id"> {{partner.name}}</ion-select-option>
                   </ion-select>
                 </ion-item>
 
                 <div class="ui-g off">
-                    <p style="margin: 5px 0;">Commercial</p>
-                    <p style="color: #21B799;margin: 0;">{{login}}</p>
+                    <p>Commercial</p>
+                    <p style="color: #21B799">{{login}}</p>
                 </div>
                   
                 <div class="ui-g">
                   <div class="ui-g-4">
                       <p>POS initial</p>
                   </div>
-                  <div class="ui-g-8" style="align:left">
-                      <p-checkbox binary="1" [formControl]="fg.controls['pos_initial']" style="top: 6px;position: relative;"></p-checkbox>
+                  <div class="ui-g-8 align">
+                      <p-checkbox binary="1" [formControl]="fg.controls['pos_initial']"></p-checkbox>
                   </div>
                 </div>
           </form>

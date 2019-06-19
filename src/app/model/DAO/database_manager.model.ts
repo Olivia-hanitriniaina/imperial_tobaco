@@ -969,7 +969,7 @@ export class Database_manager {
 
     get_tournee_by_user(table : string, tour_id : number) : Promise<any> {
         return this.init_database().then((db : SQLiteObject) => {
-            let query = "select res_partner.id as res_partner_id, res_partner.name as res_partner_name, " + table + ".visit , i_t_tournee.id, i_t_tournee.name, i_t_tournee.start_date, i_t_tournee.end_date from " + table + " inner join res_partner on " + table + ".partner_id = res_partner.id inner join i_t_tournee on " + table + ".tour_id = i_t_tournee.id where i_t_tournee.id = ?"
+            let query = "select res_partner.id as res_partner_id, res_partner.name as res_partner_name, " + table + ".visit, " + table + ".sequence , i_t_tournee.id, i_t_tournee.name, i_t_tournee.start_date, i_t_tournee.end_date from " + table + " inner join res_partner on " + table + ".partner_id = res_partner.id inner join i_t_tournee on " + table + ".tour_id = i_t_tournee.id where i_t_tournee.id = ?"
             //let sql_select : string = "select res_partner.id as res_partner_id, res_partner.name as res_partner_name, res_partner.visite, i_t_tournee.id, i_t_tournee.name, i_t_tournee.start_date, i_t_tournee.end_date from res_partner inner join i_t_tournee on res_partner.user_id = i_t_tournee.commercial_id "
             let data_return = [] ;
             return db.executeSql(query, [tour_id])

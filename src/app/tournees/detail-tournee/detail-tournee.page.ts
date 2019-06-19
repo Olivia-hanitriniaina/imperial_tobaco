@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Database_manager } from 'src/app/model/DAO/database_manager.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { tournees_sc1 } from 'src/app/model/screen/tournnees.screen1';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { FormGroup, FormBuilder } from '@angular/forms';
+
+interface safidy {
+  name: string;
+  code: string;
+}
 
 @Component({
   selector: 'app-detail-tournee',
@@ -19,6 +24,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
       };
   `]
 })
+
+
 export class DetailTourneePage implements OnInit {
 
   data_pv : Array<tournees_sc1> = [] ;
@@ -42,16 +49,16 @@ export class DetailTourneePage implements OnInit {
   edit : boolean = false ;
   display4: boolean = false;
   tournees_fg : FormGroup ;
-  visites: { label: string; value: string; }[];
+  visites: safidy[] ;
 
-  constructor(private fb : FormBuilder,private geolocation : Geolocation, private dbm : Database_manager, private router : ActivatedRoute) { 
+  constructor(private fb : FormBuilder,private geolocation : Geolocation, private dbm : Database_manager, private router : ActivatedRoute, private route : Router) { 
 
   }
 
   ngOnInit() {
     this.visites = [
-      {label : "oui", value : "oui"} ,
-      {label : "non", value : "non"} ,
+      {name : "oui", code : "oui"} ,
+      {name : "non", code : "non"} ,
     ]
     this.cols_pv = [
       { field: 'res_partner_id' , header: 'res_partner_id', display : 'none' },
@@ -60,7 +67,8 @@ export class DetailTourneePage implements OnInit {
       { field: 'id' , header: 'id', display : 'none' },
       { field: 'name' , header: 'name', display : 'none' },
       { field: 'start_date' , header: 'start_date', display : 'none' },
-      { field: 'end_date' , header: 'end_date', display : 'none' }
+      { field: 'end_date' , header: 'end_date', display : 'none' },
+      { field: 'sequence' , header: '', display : 'none' }
     ] ;
 
     this.cols_pvs = [
@@ -70,7 +78,8 @@ export class DetailTourneePage implements OnInit {
       { field: 'id' , header: 'id', display : 'none' },
       { field: 'name' , header: 'name', display : 'none' },
       { field: 'start_date' , header: 'start_date', display : 'none' },
-      { field: 'end_date' , header: 'end_date', display : 'none' }
+      { field: 'end_date' , header: 'end_date', display : 'none' },
+      { field: 'sequence' , header: '', display : 'none' }
     ]
 
     this.cols_p = [
@@ -80,7 +89,8 @@ export class DetailTourneePage implements OnInit {
       { field: 'id' , header: 'id', display : 'none' },
       { field: 'name' , header: 'name', display : 'none' },
       { field: 'start_date' , header: 'start_date', display : 'none' },
-      { field: 'end_date' , header: 'end_date', display : 'none' }
+      { field: 'end_date' , header: 'end_date', display : 'none' },
+      { field: 'sequence' , header: '', display : 'none' }
     ]
 
     this.cols_pn = [
@@ -90,8 +100,10 @@ export class DetailTourneePage implements OnInit {
       { field: 'id' , header: 'id', display : 'none' },
       { field: 'name' , header: 'name', display : 'none' },
       { field: 'start_date' , header: 'start_date', display : 'none' },
-      { field: 'end_date' , header: 'end_date', display : 'none' }
+      { field: 'end_date' , header: 'end_date', display : 'none' },
+      { field: 'sequence' , header: '', display : 'none' }
     ] ;
+
     this.tournees_fg = this.fb.group({
       sequence : [''],
       name : [''],
@@ -163,19 +175,19 @@ export class DetailTourneePage implements OnInit {
 
       this.dbm.get_tournee_by_user("i_t_pos_additional", params['id']).then( (data : Array<tournees_sc1>) => {
         this.data_pvs = data ;
+        this.dbm.get_tournee_by_user("i_t_pos_initial", params['id']).then((data : Array<tournees_sc1>) => {
+          this.data_pv = data ;
+          this.data_p = this.data_pvs.concat(this.data_pv) ;
+        }) ; 
       }); 
-  
-      this.dbm.get_tournee_by_user("i_t_pos_initial", params['id']).then((data : Array<tournees_sc1>) => {
-        this.data_pv = data ;
-      }) ; 
-
     });
 
   }
 
   onRowClicked(rowData){
+    this.screen = rowData ;
+
     if(this.edit == false) {
-      this.screen = rowData ;
       this.display = true ;
     }
     else {
@@ -190,50 +202,22 @@ export class DetailTourneePage implements OnInit {
   }
 
   valider_tournee(){
-    this.filldata() ;
     this.display2 = false ;
     this.router.queryParams.subscribe(params => {
       this.dbm.update_tournee_by_id(params['id'], "Démarré") ;
-    }) ;
+    });
   }
 
   abort_tournee() {
-    this.edit = false ;
-  }
-
-  deleteWithButton(rowData) {
-    for(var i = 0; i < this.data_p.length ; i++ ) {
-      if(this.data_p[i].res_partner_name == rowData.res_partner_name) {
-        this.data_p[i].visite = 'non' ;
-        this.dbm.update_visite_res_patrner_by_id(rowData.res_partner_id, "non") ;
-        break;
-      }
+    if(this.edit == false) {
+      this.route.navigate(['liste-tournee']) ;
     }
-    rowData.visite = "non" ;
-  }
-
-  addWithButton(rowData) {
-    for(var i = 0; i < this.data_p.length ; i++ ) {
-      if(this.data_p[i].res_partner_name == rowData.res_partner_name) {
-        this.data_p[i].visite = 'oui' ;
-        this.dbm.update_visite_res_patrner_by_id(rowData.res_partner_id, "oui") ;
-        break;
-      }
+    else {
+      this.edit = false ;
+      this.ionViewWillEnter() ;
     }
-    rowData.visite = "oui" ;
   }
 
-  filldata(){ 
-
-    this.data_pv = this.data_p.filter(function(item){
-      return item.visite == "oui" ;
-    }) ;
-
-    this.data_pvs = this.data_p.filter(function(item){
-      return item.visite == "non" ;
-    }) ;
-
-  }
 
   cloturer_tournee(){
     this.display3 = false ;
@@ -248,9 +232,6 @@ export class DetailTourneePage implements OnInit {
     };
     console.log("mande") ;
     this.geolocation.getCurrentPosition(options).then((resp) => {
-
-     
-
      }).catch((error) => {
        console.log('Error getting location', error);
      });
@@ -258,6 +239,20 @@ export class DetailTourneePage implements OnInit {
 
   edit_tournee() {
     this.edit = true ;
+  }
+
+  save_tournee() {
+
+  }
+
+  visite_change(visite : string){
+    for(var i = 0; i < this.data_p.length ; i++ ) {
+      if(this.data_p[i].res_partner_name == this.screen.res_partner_name) {
+        this.data_p[i].visite = visite ;
+        break;
+      }
+    }
+  //  this.screen.visite = visite ;
   }
 
 }
@@ -285,3 +280,25 @@ export class DetailTourneePage implements OnInit {
 
     this.router.queryParams.subscribe(params => {
       this.name = params["name"] ;*/
+
+        /*deleteWithButton(rowData) {
+    for(var i = 0; i < this.data_p.length ; i++ ) {
+      if(this.data_p[i].res_partner_name == rowData.res_partner_name) {
+        this.data_p[i].visite = 'non' ;
+        this.dbm.update_visite_res_patrner_by_id(rowData.res_partner_id, "non") ;
+        break;
+      }
+    }
+    rowData.visite = "non" ;
+  }
+
+  addWithButton(rowData) {
+    for(var i = 0; i < this.data_p.length ; i++ ) {
+      if(this.data_p[i].res_partner_name == rowData.res_partner_name) {
+        this.data_p[i].visite = 'oui' ;
+        this.dbm.update_visite_res_patrner_by_id(rowData.res_partner_id, "oui") ;
+        break;
+      }
+    }
+    rowData.visite = "oui" ;
+  }*/

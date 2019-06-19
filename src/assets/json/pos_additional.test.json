@@ -6,16 +6,7 @@
         "sequence" : 1 ,
         "visit" : "non",
         "tour_id" : 1 ,
-        "partner_id" : 1
-    }, 
-    {
-        "create_uid" : 1, 
-        "name" : "", 
-        "write_uid" : 1, 
-        "sequence" : 1 ,
-        "visit" : "non" ,
-        "tour_id" : 1 ,
-        "partner_id" : 2
+        "partner_id" : 3
     }
     
 ]

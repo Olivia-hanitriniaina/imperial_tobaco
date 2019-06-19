@@ -46,10 +46,7 @@
 				</div>
 
         <div class="ban-gris">
-          <div class="fiche-visite">
-            <i class="fas fa-edit"></i>
-            Fiche de visite
-          </div>
+          <div class="fiche-visite">Fiche de visite</div>
         </div>
 
         <div class="photo ui-g show-detail-tourne">
@@ -157,7 +154,7 @@
           
                           <ion-item>
                             <ion-label position="floating">Séquence</ion-label>
-                            <ion-input formControlName= "sequence" type="text"> </ion-input>
+                            <ion-input formControlName= "sequence" [(ngModel)] = "screen.sequence" type="text"> </ion-input>
                           </ion-item>
           
                           <ion-item class="InputObligatoire">
@@ -167,10 +164,13 @@
           
                           <ion-item class="InputObligatoire">
                             <ion-label position="floating">Visité</ion-label>
-                            <ion-select [(ngModel)] = "screen.visite" formControlName= "visite">
-                              <ion-select-option *ngFor = "let visite of visites" [value] = "visite.value" > {{visite.label}}</ion-select-option>
+                            <ion-select [(ngModel)] = "screen.visit" formControlName= "visite" (ionChange) = "visite_change()">
+                              <ion-select-option *ngFor = "let visite of visites" [value] = "visite.code" > {{visite.name}}</ion-select-option>
                             </ion-select>
                           </ion-item>
+                          <!--
+                            <p-dropdown [(ngModel)] = "screen.visite" [options]="visites" formControlName="visite"></p-dropdown>
+                          -->
                         </div>
                      </div>
                     </form>
