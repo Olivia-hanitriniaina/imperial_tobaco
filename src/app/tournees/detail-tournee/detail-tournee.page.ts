@@ -56,7 +56,7 @@ export class DetailTourneePage implements OnInit {
     this.cols_pv = [
       { field: 'res_partner_id' , header: 'res_partner_id', display : 'none' },
       { field: 'res_partner_name' , header: 'Nom' , display: 'table-cell'},
-      { field: 'visite' , header: 'Visité', display: 'table-cell' },
+      { field: 'visit' , header: 'Visité', display: 'table-cell' },
       { field: 'id' , header: 'id', display : 'none' },
       { field: 'name' , header: 'name', display : 'none' },
       { field: 'start_date' , header: 'start_date', display : 'none' },
@@ -66,7 +66,7 @@ export class DetailTourneePage implements OnInit {
     this.cols_pvs = [
       { field: 'res_partner_id' , header: 'res_partner_id', display : 'none' },
       { field: 'res_partner_name' , header: 'Nom' , display: 'table-cell'},
-      { field: 'visite' , header: 'Visité', display: 'table-cell' },
+      { field: 'visit' , header: 'Visité', display: 'table-cell' },
       { field: 'id' , header: 'id', display : 'none' },
       { field: 'name' , header: 'name', display : 'none' },
       { field: 'start_date' , header: 'start_date', display : 'none' },
@@ -76,7 +76,7 @@ export class DetailTourneePage implements OnInit {
     this.cols_p = [
       { field: 'res_partner_id' , header: 'res_partner_id', display : 'none' },
       { field: 'res_partner_name' , header: 'Nom' , display: 'table-cell'},
-      { field: 'visite' , header: 'Visité', display: 'table-cell' },
+      { field: 'visit' , header: 'Visité', display: 'table-cell' },
       { field: 'id' , header: 'id', display : 'none' },
       { field: 'name' , header: 'name', display : 'none' },
       { field: 'start_date' , header: 'start_date', display : 'none' },
@@ -86,7 +86,7 @@ export class DetailTourneePage implements OnInit {
     this.cols_pn = [
       { field: 'res_partner_id' , header: 'res_partner_id', display : 'none' },
       { field: 'res_partner_name' , header: 'Nom' , display: 'table-cell'},
-      { field: 'visite' , header: 'Visité', display: 'none' },
+      { field: 'visit' , header: 'Visité', display: 'none' },
       { field: 'id' , header: 'id', display : 'none' },
       { field: 'name' , header: 'name', display : 'none' },
       { field: 'start_date' , header: 'start_date', display : 'none' },
@@ -153,37 +153,24 @@ export class DetailTourneePage implements OnInit {
       }
   }
 
-  async ionViewWillEnter() {
-
-    await  this.router.queryParams.subscribe(params => {
-      this.checkstatus(params['status'], 0) ;
-      this.from_liste = params ;
-    });
-
-    this.dbm.get_tournee_by_user().then( (data : Array<tournees_sc1>) => {
-      var androany = new Date () ;
-      var dd = String(androany.getDate()).padStart(2, '0');
-      var mm = String(androany.getMonth() + 1).padStart(2, '0');
-      var yyyy = androany.getFullYear();
-      var hh = androany.getHours() ;
-      var MM = androany.getMinutes() ;
-      var ss = androany.getSeconds() ;
-      var daty_andoany_string = yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + MM + ':' + ss; 
-  
-      androany = new Date (daty_andoany_string);
-      
-      this.data_pv = data.filter(function (item) {
-        return new Date (item.start_date) <= androany ;
-      }) ;
-      this.data_pvs = data.filter(function(item){
-        return new Date (item.start_date) > androany ;
-      }) ;
-      this.data_p = data ;
-    });
+  ionViewWillEnter() {
 
     this.router.queryParams.subscribe(params => {
+      
+      this.checkstatus(params['status'], 0) ;
+      this.from_liste = params ;
       this.name = params["name"] ;
+
+      this.dbm.get_tournee_by_user("i_t_pos_additional", params['id']).then( (data : Array<tournees_sc1>) => {
+        this.data_pvs = data ;
+      }); 
+  
+      this.dbm.get_tournee_by_user("i_t_pos_initial", params['id']).then((data : Array<tournees_sc1>) => {
+        this.data_pv = data ;
+      }) ; 
+
     });
+
   }
 
   onRowClicked(rowData){
@@ -192,7 +179,6 @@ export class DetailTourneePage implements OnInit {
       this.display = true ;
     }
     else {
-      
       this.display4 = true
     }
   }
@@ -247,7 +233,6 @@ export class DetailTourneePage implements OnInit {
       return item.visite == "non" ;
     }) ;
 
-    
   }
 
   cloturer_tournee(){
@@ -276,3 +261,27 @@ export class DetailTourneePage implements OnInit {
   }
 
 }
+
+
+      /*var androany = new Date () ;
+      var dd = String(androany.getDate()).padStart(2, '0');
+      var mm = String(androany.getMonth() + 1).padStart(2, '0');
+      var yyyy = androany.getFullYear();
+      var hh = androany.getHours() ;
+      var MM = androany.getMinutes() ;
+      var ss = androany.getSeconds() ;
+      var daty_andoany_string = yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + MM + ':' + ss; 
+  
+      androany = new Date (daty_andoany_string); 
+      
+      this.data_pv = data.filter(function (item) {
+        return new Date (item.start_date) <= androany ;
+      }) ;
+      this.data_pvs = data.filter(function(item){
+        return new Date (item.start_date) > androany ;
+      }) ;
+      this.data_p = data ;
+    }); 
+
+    this.router.queryParams.subscribe(params => {
+      this.name = params["name"] ;*/

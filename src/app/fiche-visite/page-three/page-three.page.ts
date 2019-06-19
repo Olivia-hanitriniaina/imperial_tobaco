@@ -32,10 +32,10 @@ export class PageThreePage implements OnInit {
 
 	page_two(){
 	    this.router.navigate(['page-two']) ;
-  	}
+	  }
 
-  	page_four(){
+	  page_four(){
 	    this.router.navigate(['page-four']) ;
-  	}
+	  }
 
 }

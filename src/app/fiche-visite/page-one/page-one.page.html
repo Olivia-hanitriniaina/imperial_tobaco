@@ -26,13 +26,13 @@
 			<div class="bg-blanc">
 				<div class="title_body" > 
 		          	<h3>
-		              <i class="fas fa-arrow-left" style="font-size: 18px ; color: #21B799"></i> C00002
+		              <i class="fas fa-arrow-left" style="font-size: 18px ; color: #21B799"></i> {{res_partner_name}}
 		            </h3>
 		      	</div>			
 
 				<div class = "btn-action-general">
-		            <button pButton type="button" label="Modifier" class="bt bt-vert"></button>
-		            <button pButton type="button" label="Créer" class="bt bt-no-bg"></button>
+		            <button pButton type="button" label="MODIFIER" class="bt"></button>
+		            <button pButton type="button" label="CRÉER" class="bt bt-no-bg"></button>
 		      	</div>
 
 		      	<div class="breacumb ui-g">
@@ -45,29 +45,29 @@
 		      	</div>
 
 		      	<div class="real-content-page">
-		      		<h3>GRS0001</h3>
+		      		<h3>{{res_partner_name}}</h3>
 		      		<div class="sho-data">
 		      			<label>Commercial</label>
-		      			<p>Administrateur</p>
+		      			<p>{{name}}</p>
 		      		</div>
 
 		      		<div class="sho-data">
 		      			<label>POS initial</label>
-		      			<p-checkbox [(ngModel)]="checked" ninary="true"></p-checkbox>
+		      			<p-checkbox [(ngModel)]="checked" binary="true"></p-checkbox>
 		      		</div>
 
 		      		<div class="sho-data">
 		      			<label>Début de visite</label>
-		      			<p>13/06/2019 14:25:03</p>
+		      			<p>{{date_debut}}</p>
 		      		</div>
 
-		      		<div class="sho-data">
+		      		<div class="sho-data" *ngIf = "duree != 0">
 		      			<label>Durée de la visite</label>
-		      			<p>00H 04mn 31s</p>
+		      			<p>{{duree}}</p>
 		      		</div>
 
 		      		<div class="btn-action-etapes">
-		      			<button pButton type="button" label="SUIVANT 1/7" class="bt btn-suivant" (click)="page_two()"></button>
+		      			<button pButton type="button" label="SUIVANT 1/7" class="bt" (click)="page_two()"></button>
 		      		</div>
 		      	</div>
 

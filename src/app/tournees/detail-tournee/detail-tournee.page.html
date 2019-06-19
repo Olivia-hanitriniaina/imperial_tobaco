@@ -37,7 +37,7 @@
 				<div class="breacumb ui-g">
 				  <div class="ui-g-4 dropdownworkflow">
 					  <!-- <button pButton type="button" label="VALIDÉE PAR SUPERVISEUR"  class="bt ui-button-secondary"></button> -->
-					  <p-dropdown [options]="itemsActions" [(ngModel)]="selectedAction" [placeholder]="itemsActions[0].label" optionLabel="label" [showClear]="true" (onChange) = "itemsActionsChange($event.value)"></p-dropdown>
+					  <p-dropdown [options]="itemsActions" [(ngModel)]="selectedAction" placeholder="ACTION" optionLabel="label" [showClear]="true" (onChange) = "itemsActionsChange($event.value)"></p-dropdown>
 				  </div>
 				  <div class="ui-g-8 dropdownworkflow noCLick"> 
 					  <!-- <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb> -->

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Database_manager } from 'src/app/model/DAO/database_manager.model';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { MessageService } from 'primeng/api';
 
@@ -42,6 +42,7 @@ export class NewFicheVisitePage implements OnInit {
     this.itemsActions = [
       {id : 1 , label:''},
     ];
+
     this.fg = this.fb.group({
       partner_id : ['', Validators.required] ,
       pos_initial : 0 ,
@@ -60,8 +61,7 @@ export class NewFicheVisitePage implements OnInit {
     }
 
     else { 
-      this.getMyLocation() ;
-      console.log('value\n' + JSON.stringify(this.fg.value));
+      this.save_with_location() ;
     }
   }
 
@@ -70,17 +70,54 @@ export class NewFicheVisitePage implements OnInit {
   }
 
   save_nouveau_fiche_visite() {
-
+    this.save_without_location() ;
   }
 
-  getMyLocation(){
+  save_with_location(){
     var options = {
       enableHighAccuracy: true, timeout: 60000, maximumAge: 0
     };
     this.geolocation.getCurrentPosition(options).then((resp) => {
+      this.fg.controls['provider_latitude'].setValue(resp.coords.latitude) ;
+      this.fg.controls['provider_longitude'].setValue(resp.coords.longitude) ;
+      let k = this.fg.get('partner_id').value ;
+      let data_checked = this.partner_id.filter(function(x) {
+        return x.id == k ;
+      }) ;
+      this.fg.controls['region_id'].setValue(data_checked[0].region_id) ;
+      this.fg.controls['secteur_id'].setValue(data_checked[0].secteur_id) ;
+      this.fg.controls['agence_id'].setValue(data_checked[0].agence_id) ;
+      this.fg.controls['zone_id'].setValue(data_checked[0].zone_id) ;
+      this.dbm.insert_data_visit_sheet(this.fg.value, "Démarré") ;
+      this.dbm.select_max_basic_data("visit_sheet").then(max_id => {
+        console.log(max_id) ;
+        let extra : NavigationExtras = {
+          queryParams : {
+            visit_sheet_id : max_id.max - 1,
+            res_partner_name : data_checked[0].name 
+          }
+        }
+        this.router.navigate(['page-one'], extra) ;
+      });
+      
      }).catch((error) => {
        console.log('Error getting location', error);
      });
   }
 
-}
+  save_without_location() {
+    let k = this.fg.get('partner_id').value ;
+    let data_checked = this.partner_id.filter(function(x) {
+      console.log(JSON.stringify(x));
+      return x.id == k ;
+    }) ;
+    console.log(JSON.stringify(data_checked));
+    this.fg.controls['region_id'].setValue(data_checked[0].region_id) ;
+    this.fg.controls['secteur_id'].setValue(data_checked[0].secteur_id) ;
+    this.fg.controls['agence_id'].setValue(data_checked[0].agence_id) ;
+    this.fg.controls['zone_id'].setValue(data_checked[0].zone_id) ;
+    this.dbm.insert_data_visit_sheet(this.fg.value, "Nouveau") ;
+    this.router.navigate(['fiche-visite']) ;
+  }
+
+} 
