@@ -47,7 +47,6 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
     Data,
     Camera,
     Geolocation ,
-    
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

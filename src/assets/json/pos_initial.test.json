@@ -1,0 +1,39 @@
+[
+    {
+        "create_uid" : 1, 
+        "name" : "", 
+        "write_uid" : 1, 
+        "sequence" : 1 ,
+        "visit" : "oui",
+        "tour_id" : 1 ,
+        "partner_id" : 1
+    }, 
+    {
+        "create_uid" : 1, 
+        "name" : "", 
+        "write_uid" : 1, 
+        "sequence" : 1 ,
+        "visit" : "oui" ,
+        "tour_id" : 1 ,
+        "partner_id" : 2
+    }, 
+    {
+        "create_uid" : 1, 
+        "name" : "", 
+        "write_uid" : 1, 
+        "sequence" : 2 ,
+        "visit" : "non" ,
+        "tour_id" : 2 ,
+        "partner_id" : 1
+    }, 
+    {
+        "create_uid" : 1, 
+        "name" : "", 
+        "write_uid" : 1, 
+        "sequence" : 2 ,
+        "visit" : "non" ,
+        "tour_id" : 2 ,
+        "partner_id" : 2
+    }
+    
+]

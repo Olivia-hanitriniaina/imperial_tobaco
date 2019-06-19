@@ -3,6 +3,7 @@ import { Database_manager } from 'src/app/model/DAO/database_manager.model';
 import { ActivatedRoute } from '@angular/router';
 import { tournees_sc1 } from 'src/app/model/screen/tournnees.screen1';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-detail-tournee',
@@ -38,16 +39,24 @@ export class DetailTourneePage implements OnInit {
   selected : Array<tournees_sc1> = [];
   screen : any = {};
   from_liste : any ;
+  edit : boolean = false ;
+  display4: boolean = false;
+  tournees_fg : FormGroup ;
+  visites: { label: string; value: string; }[];
 
-  constructor(private geolocation : Geolocation, private dbm : Database_manager, private router : ActivatedRoute) { 
+  constructor(private fb : FormBuilder,private geolocation : Geolocation, private dbm : Database_manager, private router : ActivatedRoute) { 
 
   }
 
   ngOnInit() {
+    this.visites = [
+      {label : "oui", value : "oui"} ,
+      {label : "non", value : "non"} ,
+    ]
     this.cols_pv = [
       { field: 'res_partner_id' , header: 'res_partner_id', display : 'none' },
       { field: 'res_partner_name' , header: 'Nom' , display: 'table-cell'},
-      { field: 'visite' , header: 'Visité', display: 'table-cell' },
+      { field: 'visit' , header: 'Visité', display: 'table-cell' },
       { field: 'id' , header: 'id', display : 'none' },
       { field: 'name' , header: 'name', display : 'none' },
       { field: 'start_date' , header: 'start_date', display : 'none' },
@@ -57,7 +66,7 @@ export class DetailTourneePage implements OnInit {
     this.cols_pvs = [
       { field: 'res_partner_id' , header: 'res_partner_id', display : 'none' },
       { field: 'res_partner_name' , header: 'Nom' , display: 'table-cell'},
-      { field: 'visite' , header: 'Visité', display: 'table-cell' },
+      { field: 'visit' , header: 'Visité', display: 'table-cell' },
       { field: 'id' , header: 'id', display : 'none' },
       { field: 'name' , header: 'name', display : 'none' },
       { field: 'start_date' , header: 'start_date', display : 'none' },
@@ -67,7 +76,7 @@ export class DetailTourneePage implements OnInit {
     this.cols_p = [
       { field: 'res_partner_id' , header: 'res_partner_id', display : 'none' },
       { field: 'res_partner_name' , header: 'Nom' , display: 'table-cell'},
-      { field: 'visite' , header: 'Visité', display: 'table-cell' },
+      { field: 'visit' , header: 'Visité', display: 'table-cell' },
       { field: 'id' , header: 'id', display : 'none' },
       { field: 'name' , header: 'name', display : 'none' },
       { field: 'start_date' , header: 'start_date', display : 'none' },
@@ -77,12 +86,17 @@ export class DetailTourneePage implements OnInit {
     this.cols_pn = [
       { field: 'res_partner_id' , header: 'res_partner_id', display : 'none' },
       { field: 'res_partner_name' , header: 'Nom' , display: 'table-cell'},
-      { field: 'visite' , header: 'Visité', display: 'none' },
+      { field: 'visit' , header: 'Visité', display: 'none' },
       { field: 'id' , header: 'id', display : 'none' },
       { field: 'name' , header: 'name', display : 'none' },
       { field: 'start_date' , header: 'start_date', display : 'none' },
       { field: 'end_date' , header: 'end_date', display : 'none' }
-    ]
+    ] ;
+    this.tournees_fg = this.fb.group({
+      sequence : [''],
+      name : [''],
+      visite : ['']
+    })
   }
 
   checkstatus(status : string, k : number) {
@@ -90,25 +104,25 @@ export class DetailTourneePage implements OnInit {
         case "Nouveau" : {
           this.items = [
             {id : 1 , label:'NOUVEAU'},
-            {id : 2 , label:'DÉMARRER'},
-            {id : 3 , label:'CLÔTURER'},
+            {id : 2 , label:'DÉMARRÉ'},
+            {id : 3 , label:'CLÔTURÉ'},
           ];
       
           this.itemsActions = [
-            {id : 1 , label:'DÉMARRER LA TOURNÉE'},
-            {id : 2 , label:'CLÔTURER LA TOURNÉE'},
+            {id : 1 , label:'DÉMARRÉ LA TOURNÉE'},
+            {id : 2 , label:'CLÔTURÉ LA TOURNÉE'},
           ];
           break ;
         }
         
-        case "Démarrer" : {
+        case "Démarré" : {
           this.items = [
-            {id : 2 , label:'DÉMARRER'},
-            {id : 3 , label:'CLÔTURER'},
+            {id : 2 , label:'DÉMARRÉ'},
+            {id : 3 , label:'CLÔTURÉ'},
           ];
       
           this.itemsActions = [
-            {id : 2 , label:'CLÔTURER LA TOURNÉE'},
+            {id : 2 , label:'CLÔTURÉ LA TOURNÉE'},
           ];
 
           if(k != 0) {
@@ -118,7 +132,7 @@ export class DetailTourneePage implements OnInit {
           break ;
         }
 
-        case "Clôturer" : {
+        case "Clôturé" : {
           this.items = [
             {id : 3 , label:'CLOTURER'},
           ];
@@ -139,42 +153,34 @@ export class DetailTourneePage implements OnInit {
       }
   }
 
-  async ionViewWillEnter() {
-
-    await  this.router.queryParams.subscribe(params => {
-      this.checkstatus(params['status'], 0) ;
-      this.from_liste = params ;
-    });
-
-    this.dbm.get_tournee_by_user().then( (data : Array<tournees_sc1>) => {
-      var androany = new Date () ;
-      var dd = String(androany.getDate()).padStart(2, '0');
-      var mm = String(androany.getMonth() + 1).padStart(2, '0');
-      var yyyy = androany.getFullYear();
-      var hh = androany.getHours() ;
-      var MM = androany.getMinutes() ;
-      var ss = androany.getSeconds() ;
-      var daty_andoany_string = yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + MM + ':' + ss; 
-  
-      androany = new Date (daty_andoany_string);
-      
-      this.data_pv = data.filter(function (item) {
-        return new Date (item.start_date) <= androany ;
-      }) ;
-      this.data_pvs = data.filter(function(item){
-        return new Date (item.start_date) > androany ;
-      }) ;
-      this.data_p = data ;
-    });
+  ionViewWillEnter() {
 
     this.router.queryParams.subscribe(params => {
+      
+      this.checkstatus(params['status'], 0) ;
+      this.from_liste = params ;
       this.name = params["name"] ;
+
+      this.dbm.get_tournee_by_user("i_t_pos_additional", params['id']).then( (data : Array<tournees_sc1>) => {
+        this.data_pvs = data ;
+      }); 
+  
+      this.dbm.get_tournee_by_user("i_t_pos_initial", params['id']).then((data : Array<tournees_sc1>) => {
+        this.data_pv = data ;
+      }) ; 
+
     });
+
   }
 
   onRowClicked(rowData){
-    this.screen = rowData ;
-    this.display = true ;
+    if(this.edit == false) {
+      this.screen = rowData ;
+      this.display = true ;
+    }
+    else {
+      this.display4 = true
+    }
   }
 
   itemsActionsChange(event)  {
@@ -187,8 +193,12 @@ export class DetailTourneePage implements OnInit {
     this.filldata() ;
     this.display2 = false ;
     this.router.queryParams.subscribe(params => {
-      this.dbm.update_tournee_by_id(params['id'], "Démarrer") ;
+      this.dbm.update_tournee_by_id(params['id'], "Démarré") ;
     }) ;
+  }
+
+  abort_tournee() {
+    this.edit = false ;
   }
 
   deleteWithButton(rowData) {
@@ -223,13 +233,12 @@ export class DetailTourneePage implements OnInit {
       return item.visite == "non" ;
     }) ;
 
-    
   }
 
   cloturer_tournee(){
     this.display3 = false ;
     this.router.queryParams.subscribe(params => {
-      this.dbm.update_tournee_by_id(params['id'], "Clôturer") ;
+      this.dbm.update_tournee_by_id(params['id'], "Clôturé") ;
     }) ;
   }
 
@@ -247,4 +256,32 @@ export class DetailTourneePage implements OnInit {
      });
   }
 
+  edit_tournee() {
+    this.edit = true ;
+  }
+
 }
+
+
+      /*var androany = new Date () ;
+      var dd = String(androany.getDate()).padStart(2, '0');
+      var mm = String(androany.getMonth() + 1).padStart(2, '0');
+      var yyyy = androany.getFullYear();
+      var hh = androany.getHours() ;
+      var MM = androany.getMinutes() ;
+      var ss = androany.getSeconds() ;
+      var daty_andoany_string = yyyy + '-' + mm + '-' + dd + ' ' + hh + ':' + MM + ':' + ss; 
+  
+      androany = new Date (daty_andoany_string); 
+      
+      this.data_pv = data.filter(function (item) {
+        return new Date (item.start_date) <= androany ;
+      }) ;
+      this.data_pvs = data.filter(function(item){
+        return new Date (item.start_date) > androany ;
+      }) ;
+      this.data_p = data ;
+    }); 
+
+    this.router.queryParams.subscribe(params => {
+      this.name = params["name"] ;*/

@@ -1,3 +1,4 @@
+
 	<ion-content>
 		<div class = "container">
 			<!-- HEAD -->
@@ -25,12 +26,18 @@
 				  <h3>
 					  <i class="fas fa-arrow-left" style="font-size: 18px ; color: #21B799"></i> {{name}}
 				  </h3>
-				</div>
+                </div>
+                
+                <div class = "btn_nw_cr">
+                        <button pButton type="button" label="MODIFIER"  *ngIf="edit==false"   class="bt ui-button-success" (click)="edit_tournee()"></button>
+                    <button pButton type="button" label="SAUVEGARDER"  *ngIf="edit==true"   class="bt ui-button-success" (click)="save_tournee()"></button>
+                    <button pButton type="button" label="ANNULER"     class="bt ui-button-secondary" (click)="abort_tournee()"></button>
+              </div>
 				
 				<div class="breacumb ui-g">
 				  <div class="ui-g-4 dropdownworkflow">
 					  <!-- <button pButton type="button" label="VALIDÉE PAR SUPERVISEUR"  class="bt ui-button-secondary"></button> -->
-					  <p-dropdown [options]="itemsActions" [(ngModel)]="selectedAction" [placeholder]="itemsActions[0].label" optionLabel="label" [showClear]="true" (onChange) = "itemsActionsChange($event.value)"></p-dropdown>
+					  <p-dropdown [options]="itemsActions" [(ngModel)]="selectedAction" placeholder="ACTION" optionLabel="label" [showClear]="true" (onChange) = "itemsActionsChange($event.value)"></p-dropdown>
 				  </div>
 				  <div class="ui-g-8 dropdownworkflow noCLick"> 
 					  <!-- <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb> -->
@@ -38,19 +45,24 @@
 				  </div> 
 				</div>
 
-				<div class = "photo  ui-g">
-					<div class="ui-g-3">
-            <p class="label_nom">Nom</p> 
-           <!--
-            <p class="label_nom" *ngIf = "from_liste.date_debut">Date de démarrage</p> 
-            <p class="label_nom" *ngIf = "from_liste.date_fin">Date de clôture</p> 
-           --> </div>
-          <div class="ui-g-9">
-              <p class="nom_tournee">{{from_liste.name}}</p>
-             <!-- <p class="nom_tournee" *ngIf = "from_liste.date_debut">{{from_liste.date_debut}}</p> 
-              <p class="nom_tournee" *ngIf = "from_liste.date_fin">{{from_listename.date_fin}}</p> -->
-          </div>
-				</div>
+        <div class="ban-gris">
+          <div class="fiche-visite">Fiche de visite</div>
+        </div>
+
+        <div class="photo ui-g show-detail-tourne">
+          <p class="label_nom">Nom</p>
+          <p class="nom_tournee">{{from_liste.name}}</p>
+        </div>
+        
+        <div class="photo ui-g show-detail-tourne" >
+          <p class="label_nom">Commercial</p>
+          <p class="nom_tournee"><span class="txt-blue">Administrateur</span></p>
+        </div>
+
+        <div class="photo ui-g show-detail-tourne" *ngIf="start_date">
+          <p class="label_nom">Date de démarrage</p>
+          <p class="nom_tournee">{{from_liste.start_date}}</p>
+        </div>
 				
 				  
 				<div class = "form">
@@ -65,6 +77,7 @@
                                   {{col.header}}
                                   <p-sortIcon [field]="col.field"></p-sortIcon>
                               </th>
+                            <th *ngIf ="edit==true"></th>
                           </tr>
                       </ng-template>
                       <ng-template pTemplate="body" let-rowData let-columns="columns">
@@ -72,6 +85,9 @@
                               <td *ngFor="let col of columns" (click) = "onRowClicked(rowData)" [ngStyle]="{'display': col.display}">
                                       {{rowData[col.field]}}
                               </td>
+                              <td *ngIf = "edit == true" class="icn">
+                                <i class="fas fa-trash-alt" style="font-size: 18px ; color: gray"></i>
+                            </td>
                           </tr>
                       </ng-template>
                   </p-table>
@@ -127,6 +143,41 @@
         <p-footer>
             <button type="button" pButton (click)="display=false" label="Fermer" class="ui-button-secondary"></button>
         </p-footer>
+    </p-dialog>
+
+    <p-dialog [(header)]="name" [(visible)]="display4" [modal]="true" [responsive]="true" styleClass = "mydialog" appendTo="body">
+            <div class = "form">
+                    <form [formGroup]="tournees_fg">
+                      <div class = "form_inside">
+        
+                        <div class="form_item">
+          
+                          <ion-item>
+                            <ion-label position="floating">Séquence</ion-label>
+                            <ion-input formControlName= "sequence" type="text"> </ion-input>
+                          </ion-item>
+          
+                          <ion-item class="InputObligatoire">
+                            <ion-label position="floating">Nom</ion-label>
+                            <ion-input formControlName= "name" [(ngModel)] = "screen.name" type="text" > </ion-input>
+                          </ion-item>
+          
+                          <ion-item class="InputObligatoire">
+                            <ion-label position="floating">Visité</ion-label>
+                            <ion-select [(ngModel)] = "screen.visite" formControlName= "visite">
+                              <ion-select-option *ngFor = "let visite of visites" [value] = "visite.value" > {{visite.label}}</ion-select-option>
+                            </ion-select>
+                          </ion-item>
+                        </div>
+                     </div>
+                    </form>
+            </div>
+      
+        <p-footer>
+            <button type="button" pButton (click)="display4=false" label="SAUVEGARDER" class="ui-button-secondary"></button>
+            <button type="button" pButton (click)="display4=false" label="ANNULER" class="ui-button-secondary"></button>
+        </p-footer>
+
     </p-dialog>
 
     <p-dialog header="Odoo" [(visible)]="display2" [modal]="true" [responsive]="true" styleClass = "mydialog" appendTo="body">
@@ -233,9 +284,6 @@
       </div>
 			
 		  </div>
-	  </div>
-
-
-
-	</ion-content>
-	<!--EDIT-->
+    </div>
+    
+</ion-content>
