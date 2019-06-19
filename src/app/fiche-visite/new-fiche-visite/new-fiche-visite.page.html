@@ -55,16 +55,16 @@
                 </ion-item>
 
                 <div class="ui-g off">
-                    <p>Commercial</p>
-                    <p style="color: #21B799">{{login}}</p>
+                    <p style="margin: 5px 0;">Commercial</p>
+                    <p style="color: #21B799;margin: 0;">{{login}}</p>
                 </div>
                   
                 <div class="ui-g">
                   <div class="ui-g-4">
                       <p>POS initial</p>
                   </div>
-                  <div class="ui-g-8 align">
-                      <p-checkbox binary="1" [formControl]="fg.controls['pos_initial']"></p-checkbox>
+                  <div class="ui-g-8" style="align:left">
+                      <p-checkbox binary="1" [formControl]="fg.controls['pos_initial']" style="top: 6px;position: relative;"></p-checkbox>
                   </div>
                 </div>
           </form>

@@ -81,7 +81,9 @@ body .ui-widget-content p {
 .nom_tournee {
     color : #666666 ;
     font-size: 13px;
-    text-align: right ;
+    text-align: left;
+    font-size: 14px;
+    margin-bottom: 10px;
 }
 
 .message {
@@ -102,7 +104,7 @@ body .ui-widget-content p {
     color: #875A7B;
     text-decoration: underline;
     margin-bottom: 0px;
-    font-size: 13px;
+    font-size: 14px;
     padding: 0px 0px 0px 8px;
     margin-top: 10px;
 }
@@ -123,6 +125,8 @@ body .ui-widget-content p {
     clear: both;
     width: 100%;
     margin: 4px 10px 0px;
+    text-align: left;
+    font-size: 14px;
 }
 .show-detail-tourne p.label_nom {
     font-weight: 600;
@@ -143,6 +147,12 @@ body .ui-widget-content p {
     margin-top: 6px;
     color: #5c5b5d;
     position: relative;
-    padding-left: 30px;
+    padding-left: 40px;
     border-left: 1px solid #5C5C5C;
+}
+svg.svg-inline--fa.fa-edit.fa-w-18 {
+    font-size: 28px;
+    position: absolute;
+    left: 5px;
+    top: 5px;
 }
