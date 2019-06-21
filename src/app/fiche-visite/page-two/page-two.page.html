@@ -1,9 +1,92 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>page-two</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+	<div class = "container">
 
-<ion-content padding>
+		<!-- HEAD -->
+		<div class = "head">
+		  <div class="back_button" (click) = "open_menu()" >
+		    <i class="fas fa-th" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		  </div>
 
+		  <div class = "menu">
+		    <div class="list_icon">
+		      <i class="fas fa-at" style="color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		      <i class="fas fa-comments" style=" color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		      <i class="fas fa-ban on fa-camera" style=" color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		    </div> 
+		  </div>
+
+		  <div class= "menu_icon">
+		      <i class="fas fa-bars" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		  </div>
+		</div>
+		<!-- HEAD -->
+
+
+		<div class="body">
+			<div class="bg-blanc">
+				<div class="title_body" > 
+		          	<h3>
+		              <i class="fas fa-arrow-left" style="font-size: 18px ; color: #21B799"></i> C00002
+		            </h3>
+		      	</div>			
+
+				<div class = "btn-action-general">
+		            <button pButton type="button" label="Modifier" class="bt"></button>
+		            <button pButton type="button" label="Créer" class="bt bt-no-bg"></button>
+		      	</div>
+
+		      	<div class="breacumb ui-g">
+			        <div class="ui-g-4 dropdownworkflow">
+			          
+			        </div>
+			        <div class="ui-g-8 dropdownworkflow noCLick">
+			          <p-dropdown [options]="items" [(ngModel)]="selectedWorkFlow" [placeholder]="items.label" optionLabel="label" [showClear]="true"></p-dropdown>
+			        </div> 
+		      	</div>
+
+		      	<div class="real-content-page">
+		      		<h3>GRS0001</h3>
+		      		
+		      		<h5>Relevé de stocks et Placement</h5>
+		      		<div class="table">
+			      		<p-table [value]="cars" class="standart-tableau">
+						    <ng-template pTemplate="header">
+						        <tr>
+						            <th>Vin</th>
+						            <th>Year</th>
+						            <th>Brand</th>
+						            <th>Color</th>
+						        </tr>
+						    </ng-template>
+						    <ng-template pTemplate="body" let-car>
+						        <tr>
+						            <td>azeaa</td>
+						            <td>azeaa</td>
+						            <td>azeaa</td>
+						            <td>azeaa</td>
+						        </tr>
+						        <tr>
+						            <td>azeaa</td>
+						            <td>azeaa</td>
+						            <td>azeaa</td>
+						            <td>azeaa</td>
+						        </tr>
+						    </ng-template>
+						</p-table>
+		      		</div>
+		      	</div>
+
+		      	<div class="btn-action-etapes">
+	      			<button pButton type="button" label="RETOUR" class="bt btn-retour" (click)="page_one()"></button>
+	      			<span style="margin-left: 5px;margin-right: 5px;">ou</span>
+	      			<button pButton type="button" label="SUIVANT 2/7" class="bt" (click)="page_three()"></button>
+	      		</div>
+
+	      	</div>
+
+		</div>
+
+		<div class="footer"></div>
+
+	</div>
 </ion-content>

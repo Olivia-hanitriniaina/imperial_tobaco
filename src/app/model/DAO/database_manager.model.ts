@@ -1044,8 +1044,9 @@ export class Database_manager {
     get_all_fiche_visite() {
         return this.init_database().then((db : SQLiteObject) => {
             let sql_select : string = "select id as visit_sheet_id, (select res_users.login from res_users where res_users.active = 1) as user_id, (select res_partner.name from res_partner where visit_sheet.partner_id = res_partner.id) as partner_id, visit_sheet.begin_datetime, visit_sheet.end_datetime, visit_sheet.state from visit_sheet" ;
+            let sql : string = "select visit_sheet.id as visit_sheet_id, (select res_users.login from res_users where res_users.active = 1) as user_id, res_partner.id as res_partner_id, res_partner.name as partner_id, i_t_tournee.start_date as tournee_begin, i_t_tournee.end_date as tournee_end, visit_sheet.begin_datetime as visit_sheet_date_begin, visit_sheet.end_datetime as visit_sheet_date_end, visit_sheet.state from visit_sheet inner join res_partner on visit_sheet.partner_id = res_partner.id inner join i_t_tournee on visit_sheet.tour_id = i_t_tournee.id where i_t_tournee.state != 'clôturer' " ;
             let data_return = [] ;
-            return db.executeSql(sql_select, [])
+            return db.executeSql(sql, [])
                 .then (data => {
                     console.log(data) ;
                     if(data.rows.length > 0) {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Database_manager } from 'src/app/model/DAO/database_manager.model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { tournees_sc1 } from 'src/app/model/screen/tournnees.screen1';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -50,6 +50,7 @@ export class DetailTourneePage implements OnInit {
   display4: boolean = false;
   tournees_fg : FormGroup ;
   visites: safidy[] ;
+  id_tournee : number ;
 
   constructor(private fb : FormBuilder,private geolocation : Geolocation, private dbm : Database_manager, private router : ActivatedRoute, private route : Router) { 
 
@@ -172,10 +173,11 @@ export class DetailTourneePage implements OnInit {
       this.checkstatus(params['status'], 0) ;
       this.from_liste = params ;
       this.name = params["name"] ;
+      this.id_tournee = params['id'] ;
 
-      this.dbm.get_tournee_by_user("i_t_pos_additional", params['id']).then( (data : Array<tournees_sc1>) => {
+      this.dbm.get_tournee_by_user("i_t_pos_additional", this.id_tournee).then( (data : Array<tournees_sc1>) => {
         this.data_pvs = data ;
-        this.dbm.get_tournee_by_user("i_t_pos_initial", params['id']).then((data : Array<tournees_sc1>) => {
+        this.dbm.get_tournee_by_user("i_t_pos_initial", this.id_tournee).then((data : Array<tournees_sc1>) => {
           this.data_pv = data ;
           this.data_p = this.data_pvs.concat(this.data_pv) ;
         }) ; 
@@ -253,6 +255,15 @@ export class DetailTourneePage implements OnInit {
       }
     }
   //  this.screen.visite = visite ;
+  }
+
+  go_fiche_visite() {
+    let navigation_extra : NavigationExtras = {
+      queryParams : {
+        id_tournee : this.id_tournee 
+      }
+    }
+    this.route.navigate(['fiche-visite'], navigation_extra) ;
   }
 
 }
