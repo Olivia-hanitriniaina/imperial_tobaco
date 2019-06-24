@@ -137,7 +137,7 @@
 
       <div>
         <p class="label_nom">Visité</p>
-        <p class="nom_tournee">{{screen.visite}}</p>
+        <p class="nom_tournee">{{screen.visit}}</p>
       </div>
 
         <p-footer>
@@ -213,13 +213,13 @@
                                 {{rowData[col.field]}}
                         </td>
 
-                        <td *ngIf = "rowData.visite == 'non' ">
+                       <!-- <td *ngIf = "rowData.visite == 'non' ">
                             <button pButton icon="fas fa-check" (click)="addWithButton(rowData)"></button>
                         </td>
 
                         <td *ngIf =  "rowData.visite == 'oui' ">
                             <button pButton icon="fas fa-times" (click)="deleteWithButton(rowData)"></button>
-                        </td>
+                        </td> -->
 
                     </tr>
                 </ng-template>

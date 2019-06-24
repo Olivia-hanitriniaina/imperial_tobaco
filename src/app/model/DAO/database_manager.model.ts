@@ -1,6 +1,6 @@
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 import { Injectable } from '@angular/core';
-import { request_res_partner, request_res_users, request_i_t_activation_autorisee, request_i_t_activite_pos, request_i_t_agence, request_i_t_cible_activation, request_i_t_cible_installation_presentoirs, request_i_t_classification1, request_i_t_classification2, request_i_t_contrat, request_i_t_cooperation_itg, request_i_t_couverture_commerciale, request_i_t_emplacement, request_i_t_enseigne_appartenance, request_i_t_client_grossiste, request_i_t_frequence_approvisionnement, request_i_t_frequence_visite, request_i_t_permanent_posm, request_i_t_preference_animateur, request_i_t_proximite, request_i_t_region, request_i_t_secteur, request_i_t_source_approvisionnement, request_i_t_statut_client, request_i_t_type_client, request_i_t_type_quartier, request_i_t_ville, request_i_t_zone, request_i_t_fournisseur_principale, request_i_t_fournisseur_secondaire, request_i_t_canal, request_i_t_tournee, request_visit_sheet, request_stock_line, request_itg_manufacturer, request_itg_product, request_price_line, request_res_currency, request_pos_audit_line, request_pos_audit_answer, request_pos_audit_criteria, request_plv_line, request_i_t_pos_additional, request_i_t_pos_initial } from 'src/environments/environment';
+import { request_res_partner, request_res_users, request_i_t_activation_autorisee, request_i_t_activite_pos, request_i_t_agence, request_i_t_cible_activation, request_i_t_cible_installation_presentoirs, request_i_t_classification1, request_i_t_classification2, request_i_t_contrat, request_i_t_cooperation_itg, request_i_t_couverture_commerciale, request_i_t_emplacement, request_i_t_enseigne_appartenance, request_i_t_client_grossiste, request_i_t_frequence_approvisionnement, request_i_t_frequence_visite, request_i_t_permanent_posm, request_i_t_preference_animateur, request_i_t_proximite, request_i_t_region, request_i_t_secteur, request_i_t_source_approvisionnement, request_i_t_statut_client, request_i_t_type_client, request_i_t_type_quartier, request_i_t_ville, request_i_t_zone, request_i_t_fournisseur_principale, request_i_t_fournisseur_secondaire, request_i_t_canal, request_i_t_tournee, request_visit_sheet, request_stock_line, request_itg_manufacturer, request_itg_product, request_price_line, request_res_currency, request_pos_audit_line, request_pos_audit_answer, request_pos_audit_criteria, request_plv_line, request_i_t_pos_additional, request_i_t_pos_initial, request_itg_product_type } from 'src/environments/environment';
 import { base_data } from '../data/base_data.model';
 import { HttpClient } from '@angular/common/http';
 import { i_t_activation_autorisee } from '../data/i_t_activation_autorisee.model';
@@ -39,6 +39,11 @@ import { ThrowStmt } from '@angular/compiler';
 import { i_t_pos_initial } from '../data/i_t_pos_initial.model';
 import { i_t_pos_additional } from '../data/i_t_pos_additional.model';
 import { promise } from 'protractor';
+import { itg_product_type } from '../data/itg_product_type.model';
+import { itg_product } from '../data/itg_product.model';
+import { stock_line } from '../data/stock_line.model';
+import { price_line } from '../data/price_line.model';
+import { itg_manufacturer } from '../data/itg_manufacturer.model';
 
 @Injectable()
 export class Database_manager {
@@ -207,6 +212,10 @@ export class Database_manager {
 
             db.executeSql(request_itg_product, [])
             .then(()=>console.log("tafa le db request_itg_product"))
+            .catch(e=> console.log(e)) ;
+
+            db.executeSql(request_itg_product_type, [])
+            .then(()=>console.log("tafa le db request_itg_product_type"))
             .catch(e=> console.log(e)) ;
 
             db.executeSql(request_price_line, [])
@@ -420,7 +429,52 @@ export class Database_manager {
                 //MANDE
                     
                     
-            
+                this.http.get("../../assets/json/itg_product_type.test.json").subscribe((data : Array<itg_product_type>) => {
+                    let sql_insert : string = "insert into i_t_secteur (create_uid, name, write_uid, code) values (?, ?, ?, ?) " ;
+                    for(var i = 0; i<data.length;i++){   
+                        db.executeSql (sql_insert, [
+                            data[i].create_uid ,
+                            data[i].name ,
+                            data[i].write_uid ,
+                            data[i].code
+                        ]) . then (() => {
+                            console.log ('insert i_t_secteur with succes \n') ;
+                        }).catch (e => {
+                            console.log ('Error on insert itg_product_type \n' + JSON.stringify (e) ) ;
+                        }) 
+                    }
+                });
+
+                this.http.get("../../assets/json/itg_product.test.json").subscribe((data : Array<itg_product>) => {
+                    let sql_insert : string = "insert into itg_product (id, create_uid, name, write_uid, begin_date, end_date, retailer_unit_sale_price, retailer_pqt_sale_price, grs_cost_price, tax_status_id, dmg_sale_price, brand_id, dmg_cost_price, active, grs_sale_price, manufacturer_id, ref, product_type_code, product_type) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " ;
+                    for(var i = 0; i<data.length;i++){   
+                        db.executeSql (sql_insert, [
+                            data[i].id,
+                            data[i].create_uid ,
+                            data[i].name ,
+                            data[i].write_uid ,
+                            data[i].begin_date,
+                            data[i].end_date ,
+                            data[i].retailer_unit_sale_price ,
+                            data[i].retailer_pqt_sale_price ,
+                            data[i].grs_cost_price,
+                            data[i].tax_status_id ,
+                            data[i].dmg_sale_price ,
+                            data[i].brand_id,
+                            data[i].dmg_cost_price ,
+                            data[i].active ,
+                            data[i].grs_sale_price ,
+                            data[i].manufacturer_id,
+                            data[i].ref ,
+                            data[i].product_type_code ,
+                            data[i].product_type
+                        ]) . then (() => {
+                            console.log ('insert itg_product with succes \n') ;
+                        }).catch (e => {
+                            console.log ('Error on insert itg_product \n' + JSON.stringify (e) ) ;
+                        }) 
+                    }
+                });
 
 
         this.http.get("../../assets/json/secteur.test.json").subscribe((data : Array<i_t_secteur>) => {
@@ -693,6 +747,67 @@ export class Database_manager {
                         data[i].sale_team ,
                         data[i].target_sales_done ,
                         data[i].target_sales_won ,
+                    ]) . then (() => {
+                        console.log ('insert res_user with succes \n') ;
+                    })
+                    .catch (e => {
+                        console.log ('Error on insert res_user \n' + JSON.stringify(e)) ;
+                    })
+                }
+            });
+
+            this.http.get("../../assets/json/stock_line.test.json").subscribe((data : Array<stock_line>) => {
+                let sql_insert : string = "insert into stock_line (id, create_uid, write_uid, placement, product_id, visit_sheet_id, available_stock, manufacturer_id, last_visit_stock) values (?, ?, ?, ?, ?, ?, ?, ?, ?) " ;
+                for(var i = 0; i<data.length;i++){     
+                    db.executeSql (sql_insert, [
+                    data[i].id,
+                    data[i].create_uid ,
+                    data[i].write_uid ,
+                    data[i].placement ,
+                    data[i].product_id,
+                    data[i].visit_sheet_id,
+                    data[i].available_stock,
+                    data[i].manufacturer_id,
+                    data[i].last_visit_stock
+                    ]) . then (() => {
+                        console.log ('insert res_user with succes \n') ;
+                    })
+                    .catch (e => {
+                        console.log ('Error on insert res_user \n' + JSON.stringify(e)) ;
+                    })
+                }
+            });
+
+            this.http.get("../../assets/json/itg_manufacturer.test.json").subscribe((data : Array<itg_manufacturer>) => {
+                let sql_insert : string = "insert into itg_manufacturer (id, create_uid, name, write_uid, sequence) values (?, ?, ?, ?, ?)" ;
+                for(var i = 0; i<data.length;i++){     
+                    db.executeSql (sql_insert, [
+                    data[i].id,
+                    data[i].create_uid ,
+                    data[i].name ,
+                    data[i].write_uid ,
+                    data[i].sequence
+                    ]) . then (() => {
+                        console.log ('insert res_user with succes \n') ;
+                    })
+                    .catch (e => {
+                        console.log ('Error on insert res_user \n' + JSON.stringify(e)) ;
+                    })
+                }
+            });
+
+            this.http.get("../../assets/json/price_line.test.json").subscribe((data : Array<price_line>) => {
+                let sql_insert : string = "insert into price_line (id, create_uid, name, write_uid, product_id, current_price, visit_sheet_id, manufacturer_id) values (?, ?, ?, ?, ?, ?, ?, ?) " ;
+                for(var i = 0; i<data.length;i++){     
+                    db.executeSql (sql_insert, [
+                    data[i].id,
+                    data[i].create_uid ,
+                    data[i].name ,
+                    data[i].write_uid ,
+                    data[i].product_id ,
+                    data[i].current_price,
+                    data[i].visit_sheet_id,
+                    data[i].manufacturer_id
                     ]) . then (() => {
                         console.log ('insert res_user with succes \n') ;
                     })
@@ -1074,8 +1189,8 @@ export class Database_manager {
 
     get_all_fiche_visite() {
         return this.init_database().then((db : SQLiteObject) => {
-            let sql_select : string = "select id as visit_sheet_id, (select res_users.login from res_users where res_users.active = 1) as user_id, (select res_partner.name from res_partner where visit_sheet.partner_id = res_partner.id) as partner_id, visit_sheet.begin_datetime, visit_sheet.end_datetime, visit_sheet.state from visit_sheet" ;
-            let sql : string = "select visit_sheet.id as visit_sheet_id, (select res_users.login from res_users where res_users.active = 1) as user_id, res_partner.id as res_partner_id, res_partner.name as partner_id, i_t_tournee.start_date as tournee_begin, i_t_tournee.end_date as tournee_end, visit_sheet.begin_datetime as visit_sheet_date_begin, visit_sheet.end_datetime as visit_sheet_date_end, visit_sheet.state from visit_sheet left join res_partner on visit_sheet.partner_id = res_partner.id left join i_t_tournee on visit_sheet.tour_id = i_t_tournee.id where i_t_tournee.state != 'Clôturé' and visit_sheet.state != 'Clôturé'" ;
+            let sql_select : string = "select id as visit_sheet_id, provider_latitude, provider_longitude, (select res_users.login from res_users where res_users.active = 1) as user_id, (select res_partner.name from res_partner where visit_sheet.partner_id = res_partner.id) as partner_id, visit_sheet.begin_datetime, visit_sheet.end_datetime, visit_sheet.state from visit_sheet" ;
+            let sql : string = "select visit_sheet.id as visit_sheet_id, provider_latitude, provider_longitude, (select res_users.login from res_users where res_users.active = 1) as user_id, res_partner.id as res_partner_id, res_partner.name as partner_id, i_t_tournee.start_date as tournee_begin, i_t_tournee.end_date as tournee_end, visit_sheet.begin_datetime as visit_sheet_date_begin, visit_sheet.end_datetime as visit_sheet_date_end, visit_sheet.state from visit_sheet left join res_partner on visit_sheet.partner_id = res_partner.id left join i_t_tournee on visit_sheet.tour_id = i_t_tournee.id where i_t_tournee.state != 'Clôturé' and visit_sheet.state != 'Clôturé'" ;
             let data_return = [] ;
             return db.executeSql(sql, [])
                 .then (data => {
@@ -1096,8 +1211,8 @@ export class Database_manager {
 
     get_all_fiche_visite_by_id_tournee(id_tournee : number) {
         return this.init_database().then((db : SQLiteObject) => {
-            let sql_select : string = "select id as visit_sheet_id, (select res_users.login from res_users where res_users.active = 1) as user_id, (select res_partner.name from res_partner where visit_sheet.partner_id = res_partner.id) as partner_id, visit_sheet.begin_datetime, visit_sheet.end_datetime, visit_sheet.state from visit_sheet" ;
-            let sql : string = "select visit_sheet.id as visit_sheet_id, (select res_users.login from res_users where res_users.active = 1) as user_id, res_partner.id as res_partner_id, res_partner.name as partner_id, i_t_tournee.start_date as tournee_begin, i_t_tournee.end_date as tournee_end, visit_sheet.begin_datetime as visit_sheet_date_begin, visit_sheet.end_datetime as visit_sheet_date_end, visit_sheet.state from visit_sheet left join res_partner on visit_sheet.partner_id = res_partner.id left join i_t_tournee on visit_sheet.tour_id = i_t_tournee.id where i_t_tournee.state != 'Clôturé' and visit_sheet.state != 'Clôturé' and i_t_tournee.id = ? " ;
+            let sql_select : string = "select id as visit_sheet_id, provider_latitude, provider_longitude, (select res_users.login from res_users where res_users.active = 1) as user_id, (select res_partner.name from res_partner where visit_sheet.partner_id = res_partner.id) as partner_id, visit_sheet.begin_datetime, visit_sheet.end_datetime, visit_sheet.state from visit_sheet" ;
+            let sql : string = "select visit_sheet.id as visit_sheet_id, provider_latitude, provider_longitude, (select res_users.login from res_users where res_users.active = 1) as user_id, res_partner.id as res_partner_id, res_partner.name as partner_id, i_t_tournee.start_date as tournee_begin, i_t_tournee.end_date as tournee_end, visit_sheet.begin_datetime as visit_sheet_date_begin, visit_sheet.end_datetime as visit_sheet_date_end, visit_sheet.state from visit_sheet left join res_partner on visit_sheet.partner_id = res_partner.id left join i_t_tournee on visit_sheet.tour_id = i_t_tournee.id where i_t_tournee.state != 'Clôturé' and visit_sheet.state != 'Clôturé' and i_t_tournee.id = ? " ;
             let data_return = [] ;
             return db.executeSql(sql, [id_tournee])
                 .then (data => {

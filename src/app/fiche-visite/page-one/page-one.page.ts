@@ -30,7 +30,7 @@ export class PageOnePage implements OnInit {
   
 
   this.activeroute.queryParams.subscribe(qp => {
-    this.res_partner_name = qp['data'] ;
+    this.res_partner_name = JSON.parse(qp['data']) ;
     console.log('data => ' + qp['data']) ;
   }) ;
 
