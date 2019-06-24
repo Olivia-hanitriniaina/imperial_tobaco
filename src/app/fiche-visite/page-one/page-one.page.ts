@@ -32,9 +32,6 @@ export class PageOnePage implements OnInit {
   this.activeroute.queryParams.subscribe(qp => {
     this.res_partner_name = qp['data'] ;
     console.log('data => ' + qp['data']) ;
-    /*this.dbm.select_basic_data_with_id( "visit_sheet" , qp['visit_sheet_id']).then( async data => {
-      console.log(JSON.stringify(data) );
-    }) ; */
   }) ;
 
 

@@ -38,6 +38,7 @@ import { visit_sheet } from '../data/visit_sheet.model';
 import { ThrowStmt } from '@angular/compiler';
 import { i_t_pos_initial } from '../data/i_t_pos_initial.model';
 import { i_t_pos_additional } from '../data/i_t_pos_additional.model';
+import { promise } from 'protractor';
 
 @Injectable()
 export class Database_manager {
@@ -487,9 +488,10 @@ export class Database_manager {
         });
 
         this.http.get("../../assets/json/tournee.test.json").subscribe((data : Array<i_t_tournee>) => {
-            let sql_insert : string = "insert into i_t_tournee (create_uid, name, write_uid, commercial_id, start_date, end_date, date, state) values (?, ?, ?, ?, ?, ?, ?, ?) " ;
+            let sql_insert : string = "insert into i_t_tournee (id, create_uid, name, write_uid, commercial_id, start_date, end_date, date, state) values (?, ?, ?, ?, ?, ?, ?, ?, ?) " ;
             for(var i = 0; i<data.length;i++){     
                 db.executeSql (sql_insert, [
+                    data[i].id,
                     data[i].create_uid ,
                     data[i].name ,
                     data[i].write_uid ,
@@ -508,9 +510,10 @@ export class Database_manager {
         });
 
         this.http.get("../../assets/json/pos_initial.test.json").subscribe((data : Array<i_t_pos_initial>) => {
-            let sql_insert : string = "insert into i_t_pos_initial (create_uid, name, write_uid, sequence, visit, tour_id, partner_id) values (?, ?, ?, ?, ?, ?, ?) " ;
+            let sql_insert : string = "insert into i_t_pos_initial (id, create_uid, name, write_uid, sequence, visit, tour_id, partner_id) values (?, ?, ?, ?, ?, ?, ?, ?) " ;
             for(var i = 0; i<data.length;i++){     
                 db.executeSql (sql_insert, [
+                    data[i].id,
                     data[i].create_uid ,
                     data[i].name ,
                     data[i].write_uid ,
@@ -529,9 +532,10 @@ export class Database_manager {
 
 
         this.http.get("../../assets/json/pos_additional.test.json").subscribe((data : Array<i_t_pos_additional>) => {
-            let sql_insert : string = "insert into i_t_pos_additional (create_uid, name, write_uid, sequence, visit, tour_id, partner_id) values (?, ?, ?, ?, ?, ?, ?) " ;
+            let sql_insert : string = "insert into i_t_pos_additional (id, create_uid, name, write_uid, sequence, visit, tour_id, partner_id) values (?, ?, ?, ?, ?, ?, ?, ?) " ;
             for(var i = 0; i<data.length;i++){     
                 db.executeSql (sql_insert, [
+                    data[i].id,
                     data[i].create_uid ,
                     data[i].name ,
                     data[i].write_uid ,
@@ -551,9 +555,10 @@ export class Database_manager {
 
         
         this.http.get("../../assets/json/res_partner.test.json").subscribe((data : Array<res_partner>) => {
-            let sql_insert : string = "insert into res_partner (canal_id, name , company_id , comment , website , color , active 	, street , supplier 	, city , display_name , zip ,title , country_id , commercial_company_name , parent_id , company_name , employee 	, ref , email , is_company 	, function , lang , fax , street2 , barcode , phone , daty, tz , write_uid , customer , create_uid , credit_limit , user_id , mobile , type , partner_share , vat , state_id , commercial_partner_id , date_localization, partner_latitude,partner_longitude, notify_email  , message_last_post  , opt_out 	, message_bounce ,signup_type , signup_expiration  , signup_token , team_id , calendar_last_notif_ack  , type_quartier_id , source_approvisionnement_id , cible_installation_presentoirs_id , numero_telephone2 , numero_telephone3 ,numero_telephone1 ,couverture_commerciale_id , classification2_id , nom_gerant , frequence_approvisionnement_id , enseigne_appartenance_id ,agence_id , activite_pos_id , fournisseur_principal_id , contrat_id , fournisseur_secondaire_id ,  nom_agent_commercial_id , cible_activation_id , state , statut_client_id , permanent_POSM5_id , point_de_vente 	, repere , emplacement_id , cooperation_itg_id ,  proximite_id , frequence_visite_id , permanent_POSM3_id , permanent_POSM1_id , adresse , preference_animateur_id , provider_latitude, zone_id , latitude  , commentaire , longitude , message_warning , permanent_POSM4_id , region_id , nom_pos ,   quartier ,  ville_id , type_client_id , utilisateur_associe_id , permanent_POSM2_id ,   secteur_id , provider_longitude,     code_client , activation_autorisee_id , is_today 	,         classification1_id ,     a_visiter_moved0 ,  visite ,    a_visite 	, a_visiter) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " ;
+            let sql_insert : string = "insert into res_partner (id, canal_id, name , company_id , comment , website , color , active 	, street , supplier 	, city , display_name , zip ,title , country_id , commercial_company_name , parent_id , company_name , employee 	, ref , email , is_company 	, function , lang , fax , street2 , barcode , phone , daty, tz , write_uid , customer , create_uid , credit_limit , user_id , mobile , type , partner_share , vat , state_id , commercial_partner_id , date_localization, partner_latitude,partner_longitude, notify_email  , message_last_post  , opt_out 	, message_bounce ,signup_type , signup_expiration  , signup_token , team_id , calendar_last_notif_ack  , type_quartier_id , source_approvisionnement_id , cible_installation_presentoirs_id , numero_telephone2 , numero_telephone3 ,numero_telephone1 ,couverture_commerciale_id , classification2_id , nom_gerant , frequence_approvisionnement_id , enseigne_appartenance_id ,agence_id , activite_pos_id , fournisseur_principal_id , contrat_id , fournisseur_secondaire_id ,  nom_agent_commercial_id , cible_activation_id , state , statut_client_id , permanent_POSM5_id , point_de_vente 	, repere , emplacement_id , cooperation_itg_id ,  proximite_id , frequence_visite_id , permanent_POSM3_id , permanent_POSM1_id , adresse , preference_animateur_id , provider_latitude, zone_id , latitude  , commentaire , longitude , message_warning , permanent_POSM4_id , region_id , nom_pos ,   quartier ,  ville_id , type_client_id , utilisateur_associe_id , permanent_POSM2_id ,   secteur_id , provider_longitude,     code_client , activation_autorisee_id , is_today 	,         classification1_id ,     a_visiter_moved0 ,  visite ,    a_visite 	, a_visiter) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " ;
             for(var i = 0; i<data.length;i++){
                 db.executeSql (sql_insert, [
+                    data[i].id,
                     data[i].canal_id,
                     data[i].name  ,
                     data[i].company_id  ,
@@ -698,9 +703,10 @@ export class Database_manager {
             });
 
             this.http.get("../../assets/json/visit_sheet.test.json").subscribe((data : Array<visit_sheet>) => {
-                let sql_insert : string = "insert into visit_sheet (create_uid, name, write_uid, page_number_total, show_btn_end_visit, visit_duration, partner_id, user_id, state, provider_longitude, begin_datetime, next_visit_goal, provider_latitude, end_datetime, hide_btn_next_next_page, tour_id, visit_duration_str, pos_initial, region_id, secteur_id, agence_id, zone_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " ;
+                let sql_insert : string = "insert into visit_sheet (id, create_uid, name, write_uid, page_number_total, show_btn_end_visit, visit_duration, partner_id, user_id, state, provider_longitude, begin_datetime, next_visit_goal, provider_latitude, end_datetime, hide_btn_next_next_page, tour_id, visit_duration_str, pos_initial, region_id, secteur_id, agence_id, zone_id) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " ;
                 for(var i = 0; i<data.length;i++){     
                     db.executeSql (sql_insert, [
+                        data[i].id,
                         data[i].create_uid ,
                         data[i].name,
                         data[i].write_uid ,
@@ -784,9 +790,10 @@ export class Database_manager {
 
     get_res_partner() {
         return this.init_database().then((db : SQLiteObject) => {
-            let sql_select = "select res_partner.id, res_partner.name as name, i_t_region.name as region_id, i_t_agence.name as agence_id, i_t_zone.name as zone_id, i_t_secteur.name as secteur_id, res_users.signature as nom_agent_commercial_id, res_partner.nom_pos as nom_pos, res_partner.nom_gerant as nom_gerant, res_partner.adresse as adresse, res_partner.state_id as state_id from res_partner inner join i_t_region on res_partner.region_id = i_t_region.id inner join i_t_agence on res_partner.agence_id = i_t_agence.id inner join i_t_zone on res_partner.zone_id = i_t_zone.id inner join i_t_secteur on res_partner.secteur_id = i_t_secteur.id inner join res_users on res_partner.user_id = res_users.id" ;
+            let sql_select = "select res_partner.id, res_partner.name as name, i_t_region.name as region_id, i_t_agence.name as agence_id, i_t_zone.name as zone_id, i_t_secteur.name as secteur_id, res_users.signature as nom_agent_commercial_id, res_partner.nom_pos as nom_pos, res_partner.nom_gerant as nom_gerant, res_partner.adresse as adresse, res_partner.state_id as state_id from res_partner left join i_t_region on res_partner.region_id = i_t_region.id left join i_t_agence on res_partner.agence_id = i_t_agence.id left join i_t_zone on res_partner.zone_id = i_t_zone.id left join i_t_secteur on res_partner.secteur_id = i_t_secteur.id left join res_users on res_partner.user_id = res_users.id" ;
+            let sql2 = "select res_partner.id, res_partner.name as name, i_t_region.name as region_id, i_t_agence.name as agence_id, i_t_zone.name as zone_id, i_t_secteur.name as secteur_id, res_users.signature as nom_agent_commercial_id, res_partner.nom_pos as nom_pos, res_partner.nom_gerant as nom_gerant, res_partner.adresse as adresse, res_partner.state_id as state_id from res_partner left join i_t_region on res_partner.region_id = i_t_region.id left join i_t_agence on res_partner.agence_id = i_t_agence.id left join i_t_zone on res_partner.zone_id = i_t_zone.id left join i_t_secteur on res_partner.secteur_id = i_t_secteur.id left join res_users on res_partner.user_id = res_users.id" ;
             let data_return = [] ;
-            return db.executeSql(sql_select, [])
+            return db.executeSql(sql2, [])
                 .then (data => {
                     console.log(data) ;
                     if(data.rows.length > 0) {
@@ -889,7 +896,7 @@ export class Database_manager {
         console.log("1") ;
         return this.init_database().then ( (db : SQLiteObject) => {
             console.log("2") ;
-            let sql_select : string = "select res_partner.photo, res_partner.name, i_t_region.name as region, i_t_agence.name as agence, i_t_zone.name as zone, res_users.signature as signature, i_t_secteur.name as secteur, res_partner.nom_pos, res_partner.nom_gerant, res_partner.adresse, res_partner.repere, res_partner.quartier, i_t_ville.name as ville, res_partner.numero_telephone1, res_partner.numero_telephone2, res_partner.numero_telephone3, i_t_emplacement.name as emplacement, i_t_proximite.name as proximite, i_t_type_quartier.name as type_quartier, res_partner.latitude, res_partner.longitude, i_t_type_client.name as type_client, i_t_activite_pos.name as activite_pos, i_t_enseigne_appartenance.name as enseigne_appartenance, i_t_classification1.name as classification1, i_t_classification2.name as classification2, i_t_couverture_commerciale.name as couverture_commerciale , i_t_frequence_visite.name as frequence_visite, i_t_cible_installation_presentoirs.name as cible_installation_presentoirs, (select i_t_permanent_posm.name from i_t_permanent_posm where i_t_permanent_posm.id = res_partner.permanent_POSM1_id) as permanent_POSM1_id, (select i_t_permanent_posm.name from i_t_permanent_posm where i_t_permanent_posm.id = res_partner.permanent_POSM2_id) as permanent_POSM2_id, (select i_t_permanent_posm.name from i_t_permanent_posm where i_t_permanent_posm.id = res_partner.permanent_POSM3_id) as permanent_POSM3_id, (select i_t_permanent_posm.name from i_t_permanent_posm where i_t_permanent_posm.id = res_partner.permanent_POSM4_id) as permanent_POSM4_id, (select i_t_permanent_posm.name from i_t_permanent_posm where i_t_permanent_posm.id = res_partner.permanent_POSM5_id) as permanent_POSM5_id, i_t_contrat.name as contrat, i_t_contrat.date_debut_contrat as date_debut_contrat , i_t_contrat.date_fin_contrat as date_fin_contrat, i_t_cooperation_itg.name as cooperation_itg, i_t_activation_autorisee.name as activation_autorisee, i_t_preference_animateur.name as preference_animateur, i_t_canal.name as canal_id ,i_t_frequence_approvisionnement.name as frequence_approvisionnement, i_t_source_approvisionnement.name as source_approvisionnement, i_t_fournisseur_principale.name as fournisseur_principale, i_t_fournisseur_secondaire.name as fournisseur_secondaire, res_partner.commentaire from res_partner  inner join i_t_region on res_partner.region_id = i_t_region.id inner join i_t_agence on res_partner.agence_id = i_t_agence.id inner join i_t_zone on res_partner.zone_id = i_t_zone.id inner join i_t_secteur on res_partner.secteur_id = i_t_secteur.id inner join i_t_ville on res_partner.ville_id = i_t_ville.id inner join i_t_emplacement on res_partner.emplacement_id = i_t_emplacement.id inner join i_t_proximite on res_partner.proximite_id = i_t_proximite.id inner join i_t_type_quartier on res_partner.type_quartier_id = i_t_type_quartier.id inner join i_t_type_client on res_partner.type_client_id = i_t_type_client.id inner join i_t_activite_pos on res_partner.activite_pos_id = i_t_activite_pos.id inner join i_t_enseigne_appartenance on res_partner.enseigne_appartenance_id = i_t_enseigne_appartenance.id inner join i_t_classification1 on res_partner.classification1_id = i_t_classification1.id inner join i_t_classification2 on res_partner.classification2_id = i_t_classification2.id inner join i_t_couverture_commerciale on res_partner.couverture_commerciale_id = i_t_couverture_commerciale.id inner join i_t_frequence_visite on res_partner.frequence_visite_id = i_t_frequence_visite.id inner join i_t_cible_installation_presentoirs on res_partner.cible_installation_presentoirs_id = i_t_cible_installation_presentoirs.id inner join i_t_permanent_posm on res_partner.permanent_POSM1_id = i_t_permanent_posm.id inner join i_t_contrat on res_partner.contrat_id = i_t_contrat.id inner join i_t_cooperation_itg on res_partner.cooperation_itg_id = i_t_cooperation_itg.id inner join i_t_activation_autorisee on res_partner.activation_autorisee_id = i_t_activation_autorisee.id inner join i_t_preference_animateur on res_partner.preference_animateur_id = i_t_preference_animateur.id inner join i_t_frequence_approvisionnement on res_partner.frequence_approvisionnement_id = i_t_frequence_approvisionnement.id inner join i_t_source_approvisionnement on res_partner.source_approvisionnement_id = i_t_source_approvisionnement.id inner join i_t_fournisseur_principale on res_partner.fournisseur_principal_id = i_t_fournisseur_principale.id inner join i_t_fournisseur_secondaire on res_partner.fournisseur_secondaire_id = i_t_fournisseur_secondaire.id inner join res_users on res_partner.user_id = res_users.id inner join i_t_canal on res_partner.canal_id = i_t_canal.id where res_partner.id = " + id ;
+            let sql_select : string = "select res_partner.photo, res_partner.name, i_t_region.name as region, i_t_agence.name as agence, i_t_zone.name as zone, res_users.signature as signature, i_t_secteur.name as secteur, res_partner.nom_pos, res_partner.nom_gerant, res_partner.adresse, res_partner.repere, res_partner.quartier, i_t_ville.name as ville, res_partner.numero_telephone1, res_partner.numero_telephone2, res_partner.numero_telephone3, i_t_emplacement.name as emplacement, i_t_proximite.name as proximite, i_t_type_quartier.name as type_quartier, res_partner.latitude, res_partner.longitude, i_t_type_client.name as type_client, i_t_activite_pos.name as activite_pos, i_t_enseigne_appartenance.name as enseigne_appartenance, i_t_classification1.name as classification1, i_t_classification2.name as classification2, i_t_couverture_commerciale.name as couverture_commerciale , i_t_frequence_visite.name as frequence_visite, i_t_cible_installation_presentoirs.name as cible_installation_presentoirs, (select i_t_permanent_posm.name from i_t_permanent_posm where i_t_permanent_posm.id = res_partner.permanent_POSM1_id) as permanent_POSM1_id, (select i_t_permanent_posm.name from i_t_permanent_posm where i_t_permanent_posm.id = res_partner.permanent_POSM2_id) as permanent_POSM2_id, (select i_t_permanent_posm.name from i_t_permanent_posm where i_t_permanent_posm.id = res_partner.permanent_POSM3_id) as permanent_POSM3_id, (select i_t_permanent_posm.name from i_t_permanent_posm where i_t_permanent_posm.id = res_partner.permanent_POSM4_id) as permanent_POSM4_id, (select i_t_permanent_posm.name from i_t_permanent_posm where i_t_permanent_posm.id = res_partner.permanent_POSM5_id) as permanent_POSM5_id, i_t_contrat.name as contrat, i_t_contrat.date_debut_contrat as date_debut_contrat , i_t_contrat.date_fin_contrat as date_fin_contrat, i_t_cooperation_itg.name as cooperation_itg, i_t_activation_autorisee.name as activation_autorisee, i_t_preference_animateur.name as preference_animateur, i_t_canal.name as canal_id ,i_t_frequence_approvisionnement.name as frequence_approvisionnement, i_t_source_approvisionnement.name as source_approvisionnement, i_t_fournisseur_principale.name as fournisseur_principale, i_t_fournisseur_secondaire.name as fournisseur_secondaire, res_partner.commentaire from res_partner  left join i_t_region on res_partner.region_id = i_t_region.id left join i_t_agence on res_partner.agence_id = i_t_agence.id left join i_t_zone on res_partner.zone_id = i_t_zone.id left join i_t_secteur on res_partner.secteur_id = i_t_secteur.id left join i_t_ville on res_partner.ville_id = i_t_ville.id left join i_t_emplacement on res_partner.emplacement_id = i_t_emplacement.id left join i_t_proximite on res_partner.proximite_id = i_t_proximite.id left join i_t_type_quartier on res_partner.type_quartier_id = i_t_type_quartier.id left join i_t_type_client on res_partner.type_client_id = i_t_type_client.id left join i_t_activite_pos on res_partner.activite_pos_id = i_t_activite_pos.id left join i_t_enseigne_appartenance on res_partner.enseigne_appartenance_id = i_t_enseigne_appartenance.id left join i_t_classification1 on res_partner.classification1_id = i_t_classification1.id left join i_t_classification2 on res_partner.classification2_id = i_t_classification2.id left join i_t_couverture_commerciale on res_partner.couverture_commerciale_id = i_t_couverture_commerciale.id left join i_t_frequence_visite on res_partner.frequence_visite_id = i_t_frequence_visite.id left join i_t_cible_installation_presentoirs on res_partner.cible_installation_presentoirs_id = i_t_cible_installation_presentoirs.id left join i_t_permanent_posm on res_partner.permanent_POSM1_id = i_t_permanent_posm.id left join i_t_contrat on res_partner.contrat_id = i_t_contrat.id left join i_t_cooperation_itg on res_partner.cooperation_itg_id = i_t_cooperation_itg.id left join i_t_activation_autorisee on res_partner.activation_autorisee_id = i_t_activation_autorisee.id left join i_t_preference_animateur on res_partner.preference_animateur_id = i_t_preference_animateur.id left join i_t_frequence_approvisionnement on res_partner.frequence_approvisionnement_id = i_t_frequence_approvisionnement.id left join i_t_source_approvisionnement on res_partner.source_approvisionnement_id = i_t_source_approvisionnement.id left join i_t_fournisseur_principale on res_partner.fournisseur_principal_id = i_t_fournisseur_principale.id left join i_t_fournisseur_secondaire on res_partner.fournisseur_secondaire_id = i_t_fournisseur_secondaire.id left join res_users on res_partner.user_id = res_users.id left join i_t_canal on res_partner.canal_id = i_t_canal.id where res_partner.id = " + id ;
             let data_return : any ;
             return db.executeSql (sql_select, []).then((data) => {
                 console.log("3") ;
@@ -898,6 +905,30 @@ export class Database_manager {
                    data_return = data.rows.item(0) ;
                    console.log('data : \n' + JSON.stringify( data_return))
                    return data_return ;
+                }
+                else {
+                    console.log("5") ;
+                }
+            }).catch(e => {
+                console.log('Error on select \n' + JSON.stringify(e)) ;
+            })
+        }).catch (e => {
+            console.log('Error on connexion \n' + JSON.stringify (e)) ;
+        })
+    }
+
+    get_all_tournee(state : string) : Promise<any> {
+        return this.init_database().then ( (db : SQLiteObject) => {
+
+            let sql_select : string = "select * from i_t_tournee where state != ? " ;
+            let data_return = [] ;
+            return db.executeSql (sql_select, [state]).then((data) => {
+                
+                if(data.rows.length > 0) {
+                    for(var i = 0; i<data.rows.length; i++) {
+                        data_return.push(data.rows.item(i)) ;
+                    }
+                    return data_return ;
                 }
                 else {
                     console.log("5") ;
@@ -969,8 +1000,8 @@ export class Database_manager {
 
     get_tournee_by_user(table : string, tour_id : number) : Promise<any> {
         return this.init_database().then((db : SQLiteObject) => {
-            let query = "select res_partner.id as res_partner_id, res_partner.name as res_partner_name, " + table + ".visit, " + table + ".sequence , i_t_tournee.id, i_t_tournee.name, i_t_tournee.start_date, i_t_tournee.end_date from " + table + " inner join res_partner on " + table + ".partner_id = res_partner.id inner join i_t_tournee on " + table + ".tour_id = i_t_tournee.id where i_t_tournee.id = ?"
-            //let sql_select : string = "select res_partner.id as res_partner_id, res_partner.name as res_partner_name, res_partner.visite, i_t_tournee.id, i_t_tournee.name, i_t_tournee.start_date, i_t_tournee.end_date from res_partner inner join i_t_tournee on res_partner.user_id = i_t_tournee.commercial_id "
+            let query = "select res_partner.id as res_partner_id, res_partner.name as res_partner_name, " + table + ".visit, " + table + ".sequence , i_t_tournee.id, i_t_tournee.name, i_t_tournee.start_date, i_t_tournee.end_date from " + table + " left join res_partner on " + table + ".partner_id = res_partner.id left join i_t_tournee on " + table + ".tour_id = i_t_tournee.id where i_t_tournee.id = ?"
+            //let sql_select : string = "select res_partner.id as res_partner_id, res_partner.name as res_partner_name, res_partner.visite, i_t_tournee.id, i_t_tournee.name, i_t_tournee.start_date, i_t_tournee.end_date from res_partner left join i_t_tournee on res_partner.user_id = i_t_tournee.commercial_id "
             let data_return = [] ;
             return db.executeSql(query, [tour_id])
                 .then (data => {
@@ -1044,9 +1075,31 @@ export class Database_manager {
     get_all_fiche_visite() {
         return this.init_database().then((db : SQLiteObject) => {
             let sql_select : string = "select id as visit_sheet_id, (select res_users.login from res_users where res_users.active = 1) as user_id, (select res_partner.name from res_partner where visit_sheet.partner_id = res_partner.id) as partner_id, visit_sheet.begin_datetime, visit_sheet.end_datetime, visit_sheet.state from visit_sheet" ;
-            let sql : string = "select visit_sheet.id as visit_sheet_id, (select res_users.login from res_users where res_users.active = 1) as user_id, res_partner.id as res_partner_id, res_partner.name as partner_id, i_t_tournee.start_date as tournee_begin, i_t_tournee.end_date as tournee_end, visit_sheet.begin_datetime as visit_sheet_date_begin, visit_sheet.end_datetime as visit_sheet_date_end, visit_sheet.state from visit_sheet inner join res_partner on visit_sheet.partner_id = res_partner.id inner join i_t_tournee on visit_sheet.tour_id = i_t_tournee.id where i_t_tournee.state != 'clôturer' " ;
+            let sql : string = "select visit_sheet.id as visit_sheet_id, (select res_users.login from res_users where res_users.active = 1) as user_id, res_partner.id as res_partner_id, res_partner.name as partner_id, i_t_tournee.start_date as tournee_begin, i_t_tournee.end_date as tournee_end, visit_sheet.begin_datetime as visit_sheet_date_begin, visit_sheet.end_datetime as visit_sheet_date_end, visit_sheet.state from visit_sheet left join res_partner on visit_sheet.partner_id = res_partner.id left join i_t_tournee on visit_sheet.tour_id = i_t_tournee.id where i_t_tournee.state != 'Clôturé' and visit_sheet.state != 'Clôturé'" ;
             let data_return = [] ;
             return db.executeSql(sql, [])
+                .then (data => {
+                    console.log(data) ;
+                    if(data.rows.length > 0) {
+                        for(var i = 0; i<data.rows.length; i++) {
+                            data_return.push(data.rows.item(i)) ;
+                        }
+                        return data_return ;
+                    }
+                   
+                })
+                .catch(e => {
+                    console.log('Error on select get_all_fiche_visite \n' + JSON.stringify(e)) ;
+                })
+        }) ;
+    }
+
+    get_all_fiche_visite_by_id_tournee(id_tournee : number) {
+        return this.init_database().then((db : SQLiteObject) => {
+            let sql_select : string = "select id as visit_sheet_id, (select res_users.login from res_users where res_users.active = 1) as user_id, (select res_partner.name from res_partner where visit_sheet.partner_id = res_partner.id) as partner_id, visit_sheet.begin_datetime, visit_sheet.end_datetime, visit_sheet.state from visit_sheet" ;
+            let sql : string = "select visit_sheet.id as visit_sheet_id, (select res_users.login from res_users where res_users.active = 1) as user_id, res_partner.id as res_partner_id, res_partner.name as partner_id, i_t_tournee.start_date as tournee_begin, i_t_tournee.end_date as tournee_end, visit_sheet.begin_datetime as visit_sheet_date_begin, visit_sheet.end_datetime as visit_sheet_date_end, visit_sheet.state from visit_sheet left join res_partner on visit_sheet.partner_id = res_partner.id left join i_t_tournee on visit_sheet.tour_id = i_t_tournee.id where i_t_tournee.state != 'Clôturé' and visit_sheet.state != 'Clôturé' and i_t_tournee.id = ? " ;
+            let data_return = [] ;
+            return db.executeSql(sql, [id_tournee])
                 .then (data => {
                     console.log(data) ;
                     if(data.rows.length > 0) {
