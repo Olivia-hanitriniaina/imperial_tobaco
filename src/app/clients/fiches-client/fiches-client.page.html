@@ -30,7 +30,7 @@
           </div>
           <div class = "table">
 
-              <p-table #dt [columns]="cols" [value]="data" [paginator]="true" [paginatorPosition]="'top'" [rows]="10" [(selection)]="selected" dataKey="name" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+              <p-table #dt [columns]="cols" [value]="data" [paginator]="true" [paginatorPosition]="'top'" [rows]="20" [(selection)]="selected" dataKey="name" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
                   <ng-template pTemplate="caption">
                       <div style="text-align: right">        
                           <i class="fas fa-search" style="margin: 4px 4px 0 0 ; color: gray; font-size: 20px;"></i>
@@ -40,9 +40,11 @@
 
                   <ng-template pTemplate="header" let-columns>
                       <tr>
-                          <th style="width: 3em">
+                         <!--
+                            <th style="width: 3em">
                               <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                           </th>
+                         --> 
                           <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'display': col.display}">
                               {{col.header}}
                               <p-sortIcon [field]="col.field"></p-sortIcon>
@@ -52,9 +54,12 @@
                   
                   <ng-template pTemplate="body" let-rowData let-columns="columns">
                       <tr [pSelectableRow]="rowData">
-                          <td>
+                        <!--
+ <td>
                               <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
                           </td>
+                        -->
+                         
 
                           <td *ngFor="let col of columns" (click) = "onRowClicked(rowData)" [ngStyle]="{'display': col.display}">
                                   {{rowData[col.field]}}

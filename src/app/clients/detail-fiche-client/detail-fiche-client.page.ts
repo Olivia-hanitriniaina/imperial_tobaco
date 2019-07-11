@@ -437,10 +437,10 @@ async getMyLocation(){
       this.dbm.update_status_res_partner(params["id"], status).then(() => {
         this.data_cli.active = status ;
         if(status == 0) {
-          this.make_toast("Client active...") ;
+          this.make_toast("Client activé...") ;
         }
         else {
-          this.make_toast("Client inactive...") ;
+          this.make_toast("Client inactivé...") ;
         }
       }) ;
     });

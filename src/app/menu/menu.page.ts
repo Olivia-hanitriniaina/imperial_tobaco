@@ -29,7 +29,7 @@ export class MenuPage implements OnInit {
       { name : "Fiches client", icone : "assets/image/client.png"} ,
       { name : "Tournées", icone : "assets/image/tournes.png"} ,
       { name : "Paramétrage", icone : "assets/image/parametrage.png"} ,
-      { name : "Fiche de visite", icone : "assets/image/visite.png"}
+      //{ name : "Fiche de visite", icone : "assets/image/visite.png"}
     ]
     this.storage.get("last").then(last => {
       this.root = last ;

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { Database_manager } from 'src/app/model/DAO/database_manager.model';
+import { Storage}  from '@ionic/storage'
 
 @Component({
   selector: 'app-page-one',
@@ -15,9 +16,10 @@ export class PageOnePage implements OnInit {
   duree : number = 0 ;
   checked : boolean = false ;
   id : number = 0 ;
-  res_partner_name : string = ""
+  res_partner_name : string = "" ;
+  data : string = "" ;
 
-  constructor(private dbm : Database_manager, private router : Router, private activeroute : ActivatedRoute) { 
+  constructor(private storage : Storage, private dbm : Database_manager, private router : Router, private activeroute : ActivatedRoute) { 
 
   }
 
@@ -30,6 +32,7 @@ export class PageOnePage implements OnInit {
   
 
   this.activeroute.queryParams.subscribe(qp => {
+    this.data = qp['data'] ;
     this.res_partner_name = JSON.parse(qp['data']) ;
     console.log('data => ' + qp['data']) ;
   }) ;
@@ -43,7 +46,21 @@ export class PageOnePage implements OnInit {
   }
 
   page_two(){
-    this.router.navigate(['page-two']) ;
+    let navigation_extra : NavigationExtras = {
+      queryParams : {
+        data : this.data
+      }
+    }
+    this.router.navigate(['page-two'], navigation_extra) ;
+  }
+
+  open_menu() {
+    this.storage.set("last" , "tournees") ;
+    this.router.navigate(['menu']) ;
+  }
+
+  page_fiche_visite(){
+    this.router.navigate(['fiche-visite']) ;
   }
 
 }

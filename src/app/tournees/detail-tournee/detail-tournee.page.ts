@@ -16,12 +16,16 @@ interface safidy {
   styleUrls: ['./detail-tournee.page.scss'],
   styles : 
   [ `
-      .id : {
-        display : none ;
-      };
-      .res_partner_id : {
-        display : none ;
-      };
+  .non {
+            
+    color: green !important;
+}
+
+.oui {
+    
+    color: red !important;
+}
+
   `]
 })
 
@@ -63,8 +67,8 @@ export class DetailTourneePage implements OnInit {
     ]
     this.cols_pv = [
       { field: 'res_partner_id' , header: 'res_partner_id', display : 'none' },
-      { field: 'res_partner_name' , header: 'Nom' , display: 'table-cell'},
-      { field: 'visit' , header: 'Visité', display: 'table-cell' },
+      { field: 'res_partner_name' , header: 'Code client' , display: 'table-cell'},
+      { field: 'visite' , header: 'Visité', display: 'table-cell' },
       { field: 'id' , header: 'id', display : 'none' },
       { field: 'name' , header: 'name', display : 'none' },
       { field: 'start_date' , header: 'start_date', display : 'none' },
@@ -74,8 +78,8 @@ export class DetailTourneePage implements OnInit {
 
     this.cols_pvs = [
       { field: 'res_partner_id' , header: 'res_partner_id', display : 'none' },
-      { field: 'res_partner_name' , header: 'Nom' , display: 'table-cell'},
-      { field: 'visit' , header: 'Visité', display: 'table-cell' },
+      { field: 'res_partner_name' , header: 'Code client' , display: 'table-cell'},
+      { field: 'visite' , header: 'Visité', display: 'table-cell' },
       { field: 'id' , header: 'id', display : 'none' },
       { field: 'name' , header: 'name', display : 'none' },
       { field: 'start_date' , header: 'start_date', display : 'none' },
@@ -85,8 +89,8 @@ export class DetailTourneePage implements OnInit {
 
     this.cols_p = [
       { field: 'res_partner_id' , header: 'res_partner_id', display : 'none' },
-      { field: 'res_partner_name' , header: 'Nom' , display: 'table-cell'},
-      { field: 'visit' , header: 'Visité', display: 'table-cell' },
+      { field: 'res_partner_name' , header: 'Code client' , display: 'table-cell'},
+      { field: 'visite' , header: 'Visité', display: 'table-cell' },
       { field: 'id' , header: 'id', display : 'none' },
       { field: 'name' , header: 'name', display : 'none' },
       { field: 'start_date' , header: 'start_date', display : 'none' },
@@ -96,8 +100,8 @@ export class DetailTourneePage implements OnInit {
 
     this.cols_pn = [
       { field: 'res_partner_id' , header: 'res_partner_id', display : 'none' },
-      { field: 'res_partner_name' , header: 'Nom' , display: 'table-cell'},
-      { field: 'visit' , header: 'Visité', display: 'none' },
+      { field: 'res_partner_name' , header: 'Code client' , display: 'table-cell'},
+      { field: 'visite' , header: 'Visité', display: 'none' },
       { field: 'id' , header: 'id', display : 'none' },
       { field: 'name' , header: 'name', display : 'none' },
       { field: 'start_date' , header: 'start_date', display : 'none' },
@@ -122,20 +126,20 @@ export class DetailTourneePage implements OnInit {
           ];
       
           this.itemsActions = [
-            {id : 1 , label:'DÉMARRÉ LA TOURNÉE'},
-            {id : 2 , label:'CLÔTURÉ LA TOURNÉE'},
+            {id : 1 , label:'DÉMARRER LA TOURNÉE'},
+            {id : 2 , label:'CLÔTURER LA TOURNÉE'},
           ];
           break ;
         }
         
         case "Démarré" : {
           this.items = [
-            {id : 2 , label:'DÉMARRÉ'},
-            {id : 3 , label:'CLÔTURÉ'},
+            {id : 2 , label:'DÉMARRER'},
+            {id : 3 , label:'CLÔTURER'},
           ];
       
           this.itemsActions = [
-            {id : 2 , label:'CLÔTURÉ LA TOURNÉE'},
+            {id : 2 , label:'CLÔTURER LA TOURNÉE'},
           ];
 
           if(k != 0) {
@@ -175,11 +179,23 @@ export class DetailTourneePage implements OnInit {
       this.name = params["name"] ;
       this.id_tournee = params['id'] ;
 
-      this.dbm.get_tournee_by_user("i_t_pos_additional", this.id_tournee).then( (data : Array<tournees_sc1>) => {
-        this.data_pvs = data ;
-        this.dbm.get_tournee_by_user("i_t_pos_initial", this.id_tournee).then((data : Array<tournees_sc1>) => {
-          this.data_pv = data ;
-          this.data_p = this.data_pvs.concat(this.data_pv) ;
+      this.dbm.get_tournee_by_user("i_t_pos_additional", this.id_tournee).then( (data_i_t_pos_additional : Array<tournees_sc1>) => {
+        this.data_pvs = data_i_t_pos_additional ;
+        console.log("i_t_pos_additional => " + JSON.stringify(data_i_t_pos_additional))
+        this.dbm.get_tournee_by_user("i_t_pos_initial", this.id_tournee).then((data_i_t_pos_initial : Array<tournees_sc1>) => {
+          console.log("i_t_pos_initial => " + JSON.stringify(data_i_t_pos_initial))
+          this.data_pv = data_i_t_pos_initial ;
+
+          if(this.data_pv && this.data_pvs) {
+            this.data_p = this.data_pvs.concat(this.data_pv) ;
+          }
+          else if (this.data_pv && !this.data_pvs) {
+            this.data_p = this.data_pv
+          }
+          else {
+            this.data_p = this.data_pvs ;
+          }
+          
         }) ; 
       }); 
     });
@@ -264,6 +280,10 @@ export class DetailTourneePage implements OnInit {
       }
     }
     this.route.navigate(['fiche-visite'], navigation_extra) ;
+  }
+
+  open_menu(){
+    this.route.navigate(['liste-tournee'])
   }
 
 }

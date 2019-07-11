@@ -7,6 +7,10 @@ import { Storage } from '@ionic/storage' ;
   selector: 'app-liste-tournee',
   templateUrl: './liste-tournee.page.html',
   styleUrls: ['./liste-tournee.page.scss'],
+  styles: [`
+        
+    `
+    ]
 })
 export class ListeTourneePage implements OnInit {
 

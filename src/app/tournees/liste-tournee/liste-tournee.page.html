@@ -72,9 +72,12 @@
 
                       <ng-template pTemplate="header" let-columns>
                         <tr>
+                          <!--
                           <th style="width: 3em">
                               <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                           </th>
+                          -->
+                          
                           <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'display': col.display}">
                               {{col.header}}
                               <p-sortIcon [field]="col.field"></p-sortIcon>
@@ -83,11 +86,14 @@
                       </ng-template>
                       
                       <ng-template pTemplate="body" let-rowData let-columns="columns">
-                          <tr [pSelectableRow]="rowData">
-                            <td>
+                          <tr [pSelectableRow]="rowData" >
+                            <!--
+<td>
                               <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
                             </td>
-                              <td *ngFor="let col of columns" (click) = "onRowClicked(rowData)" [ngStyle]="{'display': col.display}">
+                            -->
+                            
+                              <td *ngFor="let col of columns" (click) = "onRowClicked(rowData)"  [ngStyle]="{'display': col.display}">
                                       {{rowData[col.field]}}
                               </td>
                           </tr>

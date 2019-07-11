@@ -45,18 +45,32 @@
 				  </div> 
 				</div>
 
-        <div class="ban-gris">
-          <div class="fiche-visite" (click) = "go_fiche_visite()">Fiche de visite</div>
+        <div class="ban-gris ui-g">
+            <div class="ui-g-7">
+               
+            </div>
+
+          <div class="fiche-visite ui-g-5" (click) = "go_fiche_visite()">Fiche de visite</div>
         </div>
 
+        <!--
         <div class="photo ui-g show-detail-tourne">
           <p class="label_nom">Nom</p>
           <p class="nom_tournee">{{from_liste.name}}</p>
         </div>
         
+        -->
+        
         <div class="photo ui-g show-detail-tourne" >
-          <p class="label_nom">Commercial</p>
-          <p class="nom_tournee"><span class="txt-blue">Administrateur</span></p>
+          <div class = "ui-g-6">
+              <p class="label_nom">Commercial</p>
+          </div>
+
+          <div class = "ui-g-6">
+              <p class="nom_tournee"><span class="txt-blue">Administrateur</span></p>
+          </div>
+          
+         
         </div>
 
         <div class="photo ui-g show-detail-tourne" *ngIf="start_date">
@@ -81,8 +95,8 @@
                           </tr>
                       </ng-template>
                       <ng-template pTemplate="body" let-rowData let-columns="columns">
-                          <tr [pSelectableRow]="rowData">
-                              <td *ngFor="let col of columns" (click) = "onRowClicked(rowData)" [ngStyle]="{'display': col.display}">
+                          <tr [pSelectableRow]="rowData" [ngClass]="rowData.state == 'oui' ? 'non' : null">
+                              <td *ngFor="let col of columns" (click) = "onRowClicked(rowData)" [ngClass]="rowData[col.field] == 'non' ? 'oui' : null" [ngStyle]="{'display': col.display}">
                                       {{rowData[col.field]}}
                               </td>
                               <td *ngIf = "edit == true" class="icn">
@@ -109,8 +123,8 @@
                           </tr>
                       </ng-template>
                       <ng-template pTemplate="body" let-rowData let-columns="columns">
-                          <tr [pSelectableRow]="rowData">    
-                              <td *ngFor="let col of columns" (click) = "onRowClicked(rowData)" [ngStyle]="{'display': col.display}">
+                          <tr [pSelectableRow]="rowData" [ngClass]="rowData.state == 'oui' ? 'non' : null">    
+                              <td *ngFor="let col of columns" (click) = "onRowClicked(rowData)" [ngClass]="rowData[col.field] == 'non' ? 'oui' : null" [ngStyle]="{'display': col.display}">
                                       {{rowData[col.field]}}
                               </td>
                           </tr>

@@ -18,6 +18,7 @@ import { Database_manager } from './model/DAO/database_manager.model';
 import { Data } from './model/data/data.model';
 import { Camera } from '@ionic-native/camera/ngx' ;
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Ng6OdooRPCService } from 'angular6-odoo-jsonrpc';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
     })
   ],
   providers: [
+    Ng6OdooRPCService,
     Database_manager,
     StatusBar,
     SplashScreen,

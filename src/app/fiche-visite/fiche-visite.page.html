@@ -24,9 +24,11 @@
       <div class="body">
         <div class = "title_body">
           <h3>Fiches de visite</h3>
-          <div class = "btn_nw_cr">
+          <!--
+<div class = "btn_nw_cr">
             <button pButton type="button" label="CRÉER"     class="bt ui-button-success" (click)="open_nouveau_fiche_visite()"></button>
           </div>
+          -->
         </div>
         <div class = "table">
 
@@ -39,11 +41,11 @@
                 </ng-template>
 
                 <ng-template pTemplate="header" let-columns>
-                    <tr>
+                    <tr >
                         <th style="width: 3em">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
-                        <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'display': col.display}">
+                        <th *ngFor="let col of columns"  [pSortableColumn]="col.field" [ngStyle]="{'display': col.display}">
                             {{col.header}}
                             <p-sortIcon [field]="col.field"></p-sortIcon>
                         </th>

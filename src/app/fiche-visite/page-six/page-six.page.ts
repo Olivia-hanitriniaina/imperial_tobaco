@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
+import { Storage } from '@ionic/storage'
 
 @Component({
   selector: 'app-page-six',
@@ -10,10 +11,17 @@ export class PageSixPage implements OnInit {
 
   	items: { id: number; label: string; } [];
 	cols: any[];
+	data_from_route : any ;
+	dt : any ;
 
-	constructor(private router : Router) { }
+	constructor(private router : Router, private activatedRoute : ActivatedRoute, private storage : Storage) { }
 
 	ngOnInit() {
+		this.activatedRoute.queryParams.subscribe(data => {
+			this.dt = data['data'] ;
+			this.data_from_route = JSON.parse(data['data']) ;
+		}) ;
+
 		this.items = [
 	      {id : 1 , label:'NOUVEAU'},
 	      {id : 2 , label:'OUVERTE'},
@@ -31,11 +39,21 @@ export class PageSixPage implements OnInit {
 	}
 
 	page_seven(){
-	    this.router.navigate(['page-seven']) ;
+		let navigation_extra : NavigationExtras = {
+			queryParams : {
+				data : this.dt
+			}
+		}
+	    this.router.navigate(['page-seven'], navigation_extra) ;
 	}
 
-	page_six(){
-	    this.router.navigate(['page-six']) ;
+	page_five(){
+	    this.router.navigate(['page_five']) ;
+	}
+
+	open_menu() {
+		this.storage.set("last" , "tournees") ;
+		this.router.navigate(['menu']) ;
 	}
 
 }

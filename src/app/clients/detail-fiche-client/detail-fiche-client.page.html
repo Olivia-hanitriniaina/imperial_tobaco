@@ -70,13 +70,13 @@
 					 
 
             <div class="cam ui-g-3">
-              <div  *ngIf = "!data_cli.photo"> <i class="pi pi-camera" style="font-size: 78px ; color: gray" ></i> <br /></div>
+              <div  *ngIf = "!data_cli.photo"> <i class="pi pi-camera" style="font-size: 100px ; color: gray" ></i> <br /></div>
               <div *ngIf = "data_cli.photo" [style.background] = "'url('+ data_cli.photo +')'" class="contentAvatar"></div>
               
             </div>
   
             <!-- <div class="cam ui-g-3" *ngIf = "!data_cli.photo" >
-              <i class="pi pi-camera" style="font-size: 78px ; color: gray" (click)="showImageFromCamera()"></i> <br />
+              <i class="pi pi-camera" style="font-size: 100px ; color: gray" (click)="showImageFromCamera()"></i> <br />
             </div> -->
         
 
@@ -125,8 +125,8 @@
 					  </div>
 							
 					  <div class="form_item">
-						<!--Coordonnées complémentaire du Point de Vente-->
-						<h3>Coordonnées complémentaire du Point de Vente</h3>
+						<!--Coordonnées complémentaires du Point de Vente-->
+						<h3>Coordonnées complémentaires du Point de Vente</h3>
 						  <ion-label position="floating">Emplacement</ion-label>
 						  <p> {{client_detail.emplacement}}</p>
 						  <ion-label position="floating">Proximité</ion-label>
@@ -137,7 +137,7 @@
 						  <p>Coordonnées GPS Latitude : {{client_detail.latitude}}</p>
 						  <p>Coordonnées GPS Longitude : {{client_detail.longitude}} </p>
 						</div>
-						  <!--Coordonnées complémentaire du Poin de Vente-->
+						  <!--Coordonnées complémentaires du Poin de Vente-->
 					  </div>
 						   
 
@@ -152,10 +152,21 @@
 							<p class="canal" >{{canal}}</p>
 							<ion-label position="floating">Enseigne d'appartenance</ion-label>
 							<p> {{client_detail.enseigne_appartenance}}</p>
-							<ion-label position="floating">Classification 1</ion-label>
-							<p> {{client_detail.classification1}}</p>
-							<ion-label position="floating">Classification 2</ion-label>
-							<p> {{client_detail.classification2}}</p>
+
+							<div class="ui-g">
+
+								<div class="ui-g-6">
+										<ion-label position="floating">Classification 1</ion-label>
+										<p> {{client_detail.classification1}}</p>
+								</div>
+									
+								<div class="ui-g-6">
+										<ion-label position="floating">Classification 2</ion-label>
+										<p> {{client_detail.classification2}}</p>
+								</div>
+									
+							</div>
+							
 							  <!--Typologie de Point de Vente-->
 					  </div>
 						
@@ -317,7 +328,7 @@
 		
 				
             <div class="cam ui-g-3">
-              <div  *ngIf = "!data_cli.photo"> <i class="pi pi-camera" style="font-size: 78px ; color: gray" ></i> <br /></div>
+              <div  *ngIf = "!data_cli.photo"> <i class="pi pi-camera" style="font-size: 100px ; color: gray" ></i> <br /></div>
               <div *ngIf = "data_cli.photo" [style.background] = "'url('+ data_cli.photo +')'" class="contentAvatar"></div>
               <div class="del_mod_btn">
                 <button pButton type="button" icon="pi pi-pencil" iconPos="center" class="bt ui-button-success" (click)="showImageFromCamera()"></button>
@@ -326,7 +337,7 @@
             </div>
   
             <!-- <div class="cam ui-g-3" *ngIf = "!data_cli.photo" >
-              <i class="pi pi-camera" style="font-size: 78px ; color: gray" (click)="showImageFromCamera()"></i> <br />
+              <i class="pi pi-camera" style="font-size: 100px ; color: gray" (click)="showImageFromCamera()"></i> <br />
             </div> -->
         
 
@@ -429,8 +440,8 @@
 					</div>
 						  
 					<div class="form_item">
-					  <!--Coordonnées complémentaire du Point de Vente-->
-					  <h3>Coordonnées complémentaire du Point de Vente</h3>
+					  <!--Coordonnées complémentaires du Point de Vente-->
+					  <h3>Coordonnées complémentaires du Point de Vente</h3>
 
 					  <ion-item>
 						<ion-label position="floating">Emplacement</ion-label>
@@ -460,7 +471,7 @@
 					  </div>
 
 
-						<!--Coordonnées complémentaire du Poin de Vente-->
+						<!--Coordonnées complémentaires du Poin de Vente-->
 					</div>
 						 
 
@@ -494,19 +505,29 @@
 							</ion-select>
 						  </ion-item>
 
-						  <ion-item>
-							  <ion-label position="floating">Classification 1</ion-label>
-							  <ion-select [(ngModel)] = "data_cli.classification1_id" [value]="data_cli.classification1_id" formControlName= "classification1_id" (ionCancel) = "cancel('classification1_id')" >
-								<ion-select-option *ngFor = "let classification1 of i_t_classification1" [value] = "classification1.id" > {{classification1.name}}</ion-select-option>
-							  </ion-select>
-							</ion-item>
+							<div class="ui-g">
+								<div class = "ui-g-6">
+										<ion-item>
+												<ion-label position="floating">Classification 1</ion-label>
+												<ion-select [(ngModel)] = "data_cli.classification1_id" [value]="data_cli.classification1_id" formControlName= "classification1_id" (ionCancel) = "cancel('classification1_id')" >
+												<ion-select-option *ngFor = "let classification1 of i_t_classification1" [value] = "classification1.id" > {{classification1.name}}</ion-select-option>
+												</ion-select>
+											</ion-item>
+								</div>
 
-							<ion-item>
-								<ion-label position="floating">Classification 2</ion-label>
-								<ion-select [(ngModel)] = "data_cli.classification2_id" [value]="data_cli.classification2_id" formControlName= "classification2_id" (ionCancel) = "cancel('classification2_id')" >
-								  <ion-select-option *ngFor = "let classification2 of i_t_classification2" [value] = "classification2.id" > {{classification2.name}}</ion-select-option>
-								</ion-select>
-							  </ion-item>
+								<div class = "ui-g-6">
+										<ion-item>
+												<ion-label position="floating">Classification 2</ion-label>
+												<ion-select [(ngModel)] = "data_cli.classification2_id" [value]="data_cli.classification2_id" formControlName= "classification2_id" (ionCancel) = "cancel('classification2_id')" >
+													<ion-select-option *ngFor = "let classification2 of i_t_classification2" [value] = "classification2.id" > {{classification2.name}}</ion-select-option>
+												</ion-select>
+												</ion-item>
+									</div>
+							</div>
+
+						  
+
+							
 
 
 							<!--Typologie de Point de Vente-->
@@ -644,7 +665,7 @@
 						  </ion-item>
 							
 						  <ion-item>
-							  <ion-label position="floating">Source d'approvisionnemen</ion-label>
+							  <ion-label position="floating">Source d'approvisionnement</ion-label>
 							  <ion-select [(ngModel)] = "data_cli.source_approvisionnement_id" [value]="data_cli.source_approvisionnement_id" formControlName= "source_approvisionnement_id" (ionCancel) = "cancel('source_approvisionnement_id')">
 								<ion-select-option *ngFor = "let source_appro of i_t_source_approvisionnement" [value] = "source_appro.id" > {{source_appro.name}}</ion-select-option>
 							  </ion-select>

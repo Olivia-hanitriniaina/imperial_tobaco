@@ -465,6 +465,10 @@ export class NewClientPage implements OnInit {
       }
   }
 
+  open_menu() {
+    this.router.navigate(['fiches-client'])
+  }
+
   //this.posts.filter(post => post.nomCategorie === m_categorie) ; (selectionChange)="selectChangeSigle($event)"
 
 }

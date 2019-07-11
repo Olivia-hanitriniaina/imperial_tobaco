@@ -7,7 +7,10 @@ import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
   selector: 'app-fiche-visite',
   templateUrl: './fiche-visite.page.html',
   styleUrls: ['./fiche-visite.page.scss'],
+  
 })
+
+
 export class FicheVisitePage implements OnInit {
 
   data_fv : any = [] ;
@@ -57,5 +60,7 @@ export class FicheVisitePage implements OnInit {
     }
     this.router.navigate(['page-one'], navigation_extra) ;
   }
+
+  open_menu
 
 }
