@@ -33,16 +33,41 @@
             ],
             "styles": [
               {
+                "input": "node_modules/@fortawesome/fontawesome-free/css/all.min.css"
+              },
+              {
+                "input": "node_modules/primeng/resources/primeng.css"
+              },
+              {
+                "input": "node_modules/primeng/resources/themes/nova-dark/theme.css"
+              },
+              {
+                "input": "node_modules/primeicons/primeicons.css"
+              },
+              {
+                "input": "node_modules/chart.js/dist/chart.css"
+              },
+              {
+                "input": "node_modules/fullcalendar/dist/fullcalendar.min.css"
+              },  
+              {
                 "input": "src/theme/variables.scss"
               },
               {
                 "input": "src/global.scss"
-              },
-              {
-                "input": "src/app/app.scss"
               }
             ],
-            "scripts": [],
+            "scripts": [
+              {
+                "input": "node_modules/@fortawesome/fontawesome-free/js/all.min.js"
+              },
+              {
+                "input": "node_modules/chart.js/dist/chart.js"
+              },
+              {
+                "input": "node_modules/fullcalendar/dist/fullcalendar.min.js"
+              }
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {
@@ -134,7 +159,7 @@
         "ionic-cordova-build": {
           "builder": "@ionic/angular-toolkit:cordova-build",
           "options": {
-            "browserTarget": "app:build"
+          "browserTarget": "app:build"
           },
           "configurations": {
             "production": {
@@ -168,9 +193,6 @@
             "devServerTarget": "app:serve"
           },
           "configurations": {
-            "production": {
-              "devServerTarget": "app:serve:production"
-            },
             "ci": {
               "devServerTarget": "app:serve:ci"
             }

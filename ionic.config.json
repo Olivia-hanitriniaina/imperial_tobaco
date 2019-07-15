@@ -1,5 +1,7 @@
 {
   "name": "imperial",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
