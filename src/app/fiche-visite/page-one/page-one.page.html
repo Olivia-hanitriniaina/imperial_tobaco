@@ -1,0 +1,84 @@
+<ion-content>
+	<div class = "container">
+
+		<!-- HEAD -->
+		<div class = "head">
+		  <div class="back_button" (click) = "open_menu()" >
+		    <i class="fas fa-th" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		  </div>
+
+		  <div class = "menu">
+		    <div class="list_icon">
+		      <i class="fas fa-at" style="color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		      <i class="fas fa-comments" style=" color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		      <i class="fas fa-ban on fa-camera" style=" color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		    </div> 
+		  </div>
+
+		  <div class= "menu_icon">
+		      <i class="fas fa-bars" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		  </div>
+		</div>
+		<!-- HEAD -->
+
+
+		<div class="body">
+			<div class="bg-blanc">
+				<div class="title_body" > 
+		          	<h3>
+		              <i class="fas fa-arrow-left" style="font-size: 18px ; color: #21B799" (click)="page_fiche_visite()"></i> {{res_partner_name.partner_id}}
+		            </h3>
+		      	</div>
+
+				<div class = "btn-action-general">
+		            <button pButton type="button" label="MODIFIER" class="bt"></button>
+		      	</div>
+
+		      	<div class="breacumb ui-g">
+			        <div class="ui-g-4 dropdownworkflow">
+			          
+			        </div>
+			        <div class="ui-g-8 dropdownworkflow noCLick">
+			          <p-dropdown [options]="items" [(ngModel)]="selectedWorkFlow" [placeholder]="items.label" optionLabel="label" [showClear]="true"></p-dropdown>
+			        </div> 
+						</div>
+						
+						<div class="bouton_visite" *ngIf="res_partner_name.state == 'new' ">
+							<button pButton type="button" label="DÉMARRER LA VISITE" class="bt2 ui-button-success" (click)="demarrer_visite()"></button>
+						</div>
+
+		      	<div class="real-content-page">
+		      		<h3>{{res_partner_name.partner_id}}</h3>
+		      		<div class="sho-data">
+		      			<label>Commercial</label>
+		      			<p>{{name}}</p>
+		      		</div>
+
+		      		<div class="sho-data">
+		      			<label>POS initial</label>
+		      			<p-checkbox [(ngModel)]="checked" binary="true"></p-checkbox>
+		      		</div>
+
+		      		<div class="sho-data">
+		      			<label>Début de visite</label>
+		      			<p>{{res_partner_name.tournee_begin}}</p>
+		      		</div>
+
+		      		<div class="sho-data" *ngIf = "duree != 0">
+		      			<label>Durée de la visite</label>
+		      			<p>{{duree}}</p>
+		      		</div>
+
+		      		<div class="btn-action-etapes">
+		      			<button pButton type="button" label="SUIVANT 1/7" class="bt" (click)="page_two()"></button>
+		      		</div>
+		      	</div>
+
+	      	</div>
+
+		</div>
+
+		<div class="footer"></div>
+
+	</div>
+</ion-content>

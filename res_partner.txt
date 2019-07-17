@@ -1,0 +1,432 @@
+-- Table: public.res_partner
+
+-- DROP TABLE public.res_partner;
+
+CREATE TABLE public.res_partner
+(
+  id integer NOT NULL DEFAULT nextval('res_partner_id_seq'::regclass),
+  name character varying,
+  company_id integer,
+  comment text, -- Notes
+  website character varying, -- Website
+  create_date timestamp without time zone, -- Created on
+  color integer, -- Color Index
+  active boolean, -- Active
+  street character varying, -- Street
+  supplier boolean, -- Is a Vendor
+  city character varying, -- City
+  display_name character varying, -- Display Name
+  zip character varying, -- Zip
+  title integer, -- Title
+  country_id integer, -- Country
+  commercial_company_name character varying, -- Company Name Entity
+  parent_id integer, -- Related Company
+  company_name character varying, -- Company Name
+  employee boolean, -- Employee
+  ref character varying, -- Internal Reference
+  email character varying, -- Email
+  is_company boolean, -- Is a Company
+  function character varying, -- Job Position
+  lang character varying, -- Language
+  fax character varying, -- Fax
+  street2 character varying, -- Street2
+  barcode character varying, -- Barcode
+  phone character varying, -- Phone
+  write_date timestamp without time zone, -- Last Updated on
+  date date, -- Date
+  tz character varying, -- Timezone
+  write_uid integer, -- Last Updated by
+  customer boolean, -- Is a Customer
+  create_uid integer, -- Created by
+  credit_limit double precision, -- Credit Limit
+  user_id integer, -- Salesperson
+  mobile character varying, -- Mobile
+  type character varying, -- Address Type
+  partner_share boolean, -- Share Partner
+  vat character varying, -- TIN
+  state_id integer, -- State
+  commercial_partner_id integer, -- Commercial Entity
+  date_localization date, -- Geolocation Date
+  partner_latitude numeric, -- Geo Latitude
+  partner_longitude numeric, -- Geo Longitude
+  notify_email character varying NOT NULL, -- Email Messages and Notifications
+  message_last_post timestamp without time zone, -- Last Message Date
+  opt_out boolean, -- Opt-Out
+  message_bounce integer, -- Bounce
+  signup_type character varying, -- Signup Token Type
+  signup_expiration timestamp without time zone, -- Signup expiration
+  signup_token character varying, -- Signup token
+  team_id integer, -- Sales Team
+  calendar_last_notif_ack timestamp without time zone, -- Last notification marked as read from base Calendar
+  type_quartier_id integer, -- Type Quartier
+  source_approvisionnement_id integer, -- Source d'approvisionnement
+  cible_installation_presentoirs_id integer, -- Cible installation pr�sentoirs
+  numero_telephone2 character varying, -- N� de t�l�phone 2
+  numero_telephone3 character varying, -- N� de t�l�phone 3
+  numero_telephone1 character varying, -- N� de t�l�phone 1
+  couverture_commerciale_id integer, -- Couverture Commerciale
+  classification2_id integer, -- Classification 2
+  nom_gerant character varying, -- Nom du G�rant
+  frequence_approvisionnement_id integer, -- Fr�quence d'approvisionnement
+  enseigne_appartenance_id integer, -- Enseigne d'appartenance
+  agence_id integer, -- Agence
+  activite_pos_id integer, -- Activit� POS
+  fournisseur_principal_id integer, -- Fournisseur principal
+  contrat_id integer, -- Contrat
+  fournisseur_secondaire_id integer, -- Fournisseur secondaire
+  nom_agent_commercial_id integer, -- Nom Agent Commercial
+  cible_activation_id integer, -- Cible Activation
+  state character varying, -- Etat
+  statut_client_id integer, -- Statut Client
+  "permanent_POSM5_id" integer, -- Permanent POSM 5
+  point_de_vente boolean, -- Est un point de vente
+  repere character varying, -- Rep�re
+  emplacement_id integer, -- Emplacement
+  cooperation_itg_id integer, -- Coop�ration ITG
+  proximite_id integer, -- Proximit�
+  frequence_visite_id integer, -- Fr�quence de visite
+  "permanent_POSM3_id" integer, -- Permanent POSM 3
+  "permanent_POSM1_id" integer, -- Permanent POSM 1
+  adresse character varying, -- Adresse
+  preference_animateur_id integer, -- Pr�f�rence animateur
+  provider_latitude numeric, -- Coordonn�es GPS Latitude
+  zone_id integer, -- Zone
+  latitude double precision, -- Coordonn�es GPS Latitude
+  commentaire text, -- Commentaires
+  longitude double precision, -- Coordonn�es GPS Longitude
+  message_warning text, -- Message warning
+  "permanent_POSM4_id" integer, -- Permanent POSM 4
+  region_id integer, -- R�gion
+  nom_pos character varying, -- Nom du POS
+  quartier character varying, -- Quartier
+  ville_id integer, -- Ville
+  type_client_id integer, -- Type Client
+  utilisateur_associe_id integer, -- Utilisateur associ�
+  "permanent_POSM2_id" integer, -- Permanent POSM 2
+  secteur_id integer, -- Secteur
+  provider_longitude numeric, -- Coordonn�es GPS Longitude
+  code_client character varying, -- Code Client
+  activation_autorisee_id integer, -- Activation autoris�e
+  is_today boolean, -- Is today
+  classification1_id integer, -- Classification 1
+  a_visiter_moved0 character varying, -- A visiter
+  visite character varying, -- Visit�
+  a_visite boolean, -- A visiter
+  a_visiter boolean, -- A visiter
+  CONSTRAINT res_partner_pkey PRIMARY KEY (id),
+  CONSTRAINT res_partner_activation_autorisee_id_fkey FOREIGN KEY (activation_autorisee_id)
+      REFERENCES public.i_t_activation_autorisee (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_activite_pos_id_fkey FOREIGN KEY (activite_pos_id)
+      REFERENCES public.i_t_activite_pos (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_agence_id_fkey FOREIGN KEY (agence_id)
+      REFERENCES public.i_t_agence (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_cible_activation_id_fkey FOREIGN KEY (cible_activation_id)
+      REFERENCES public.i_t_cible_activation (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_cible_installation_presentoirs_id_fkey FOREIGN KEY (cible_installation_presentoirs_id)
+      REFERENCES public.i_t_cible_installation_presentoirs (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_classification1_id_fkey FOREIGN KEY (classification1_id)
+      REFERENCES public.i_t_classification1 (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_classification2_id_fkey FOREIGN KEY (classification2_id)
+      REFERENCES public.i_t_classification2 (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_commercial_partner_id_fkey FOREIGN KEY (commercial_partner_id)
+      REFERENCES public.res_partner (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_company_id_fkey FOREIGN KEY (company_id)
+      REFERENCES public.res_company (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_contrat_id_fkey FOREIGN KEY (contrat_id)
+      REFERENCES public.i_t_contrat (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_cooperation_itg_id_fkey FOREIGN KEY (cooperation_itg_id)
+      REFERENCES public.i_t_cooperation_itg (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_country_id_fkey FOREIGN KEY (country_id)
+      REFERENCES public.res_country (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE RESTRICT,
+  CONSTRAINT res_partner_couverture_commerciale_id_fkey FOREIGN KEY (couverture_commerciale_id)
+      REFERENCES public.i_t_couverture_commerciale (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_create_uid_fkey FOREIGN KEY (create_uid)
+  ----------->>>>>>>>>>>    REFERENCES public.res_users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_emplacement_id_fkey FOREIGN KEY (emplacement_id)
+      REFERENCES public.i_t_emplacement (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_enseigne_appartenance_id_fkey FOREIGN KEY (enseigne_appartenance_id)
+      REFERENCES public.i_t_enseigne_appartenance (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_fournisseur_principal_id_fkey FOREIGN KEY (fournisseur_principal_id)
+      REFERENCES public.i_t_client_grossite (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_fournisseur_secondaire_id_fkey FOREIGN KEY (fournisseur_secondaire_id)
+      REFERENCES public.i_t_client_grossite (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_frequence_approvisionnement_id_fkey FOREIGN KEY (frequence_approvisionnement_id)
+      REFERENCES public.i_t_frequence_approvisionnement (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_frequence_visite_id_fkey FOREIGN KEY (frequence_visite_id)
+      REFERENCES public.i_t_frequence_visite (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_nom_agent_commercial_id_fkey FOREIGN KEY (nom_agent_commercial_id)
+      --------->>>>>>>>>>>>>>>    REFERENCES public.res_users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_parent_id_fkey FOREIGN KEY (parent_id)
+     ***************** REFERENCES public.res_partner (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT "res_partner_permanent_POSM1_id_fkey" FOREIGN KEY ("permanent_POSM1_id")
+      REFERENCES public.i_t_permanent_posm (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT "res_partner_permanent_POSM2_id_fkey" FOREIGN KEY ("permanent_POSM2_id")
+      REFERENCES public.i_t_permanent_posm (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT "res_partner_permanent_POSM3_id_fkey" FOREIGN KEY ("permanent_POSM3_id")
+      REFERENCES public.i_t_permanent_posm (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT "res_partner_permanent_POSM4_id_fkey" FOREIGN KEY ("permanent_POSM4_id")
+      REFERENCES public.i_t_permanent_posm (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT "res_partner_permanent_POSM5_id_fkey" FOREIGN KEY ("permanent_POSM5_id")
+      REFERENCES public.i_t_permanent_posm (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_preference_animateur_id_fkey FOREIGN KEY (preference_animateur_id)
+      REFERENCES public.i_t_preference_animateur (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_proximite_id_fkey FOREIGN KEY (proximite_id)
+      REFERENCES public.i_t_proximite (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_region_id_fkey FOREIGN KEY (region_id)
+      REFERENCES public.i_t_region (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_secteur_id_fkey FOREIGN KEY (secteur_id)
+      REFERENCES public.i_t_secteur (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_source_approvisionnement_id_fkey FOREIGN KEY (source_approvisionnement_id)
+      REFERENCES public.i_t_source_approvisionnement (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_state_id_fkey FOREIGN KEY (state_id)
+      ***********   REFERENCES public.res_country_state (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE RESTRICT,
+  CONSTRAINT res_partner_statut_client_id_fkey FOREIGN KEY (statut_client_id)
+      REFERENCES public.i_t_statut_client (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_team_id_fkey FOREIGN KEY (team_id)
+     ************ REFERENCES public.crm_team (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_title_fkey FOREIGN KEY (title)
+    ************  REFERENCES public.res_partner_title (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_type_client_id_fkey FOREIGN KEY (type_client_id)
+      REFERENCES public.i_t_type_client (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_type_quartier_id_fkey FOREIGN KEY (type_quartier_id)
+      REFERENCES public.i_t_type_quartier (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_user_id_fkey FOREIGN KEY (user_id)
+     ---------->>>>>>>>>>>>>>>   REFERENCES public.res_users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_utilisateur_associe_id_fkey FOREIGN KEY (utilisateur_associe_id)
+      --------->>>>>>>>>>>>>   REFERENCES public.res_users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_ville_id_fkey FOREIGN KEY (ville_id)
+      REFERENCES public.i_t_ville (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_write_uid_fkey FOREIGN KEY (write_uid)
+      REFERENCES public.res_users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_zone_id_fkey FOREIGN KEY (zone_id)
+      REFERENCES public.i_t_zone (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE SET NULL,
+  CONSTRAINT res_partner_check_name CHECK (type::text = 'contact'::text AND name IS NOT NULL OR type::text <> 'contact'::text)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE public.res_partner
+  OWNER TO odoo10;
+COMMENT ON COLUMN public.res_partner.comment IS 'Notes';
+COMMENT ON COLUMN public.res_partner.website IS 'Website';
+COMMENT ON COLUMN public.res_partner.create_date IS 'Created on';
+COMMENT ON COLUMN public.res_partner.color IS 'Color Index';
+COMMENT ON COLUMN public.res_partner.active IS 'Active';
+COMMENT ON COLUMN public.res_partner.street IS 'Street';
+COMMENT ON COLUMN public.res_partner.supplier IS 'Is a Vendor';
+COMMENT ON COLUMN public.res_partner.city IS 'City';
+COMMENT ON COLUMN public.res_partner.display_name IS 'Display Name';
+COMMENT ON COLUMN public.res_partner.zip IS 'Zip';
+COMMENT ON COLUMN public.res_partner.title IS 'Title';
+COMMENT ON COLUMN public.res_partner.country_id IS 'Country';
+COMMENT ON COLUMN public.res_partner.commercial_company_name IS 'Company Name Entity';
+COMMENT ON COLUMN public.res_partner.parent_id IS 'Related Company';
+COMMENT ON COLUMN public.res_partner.company_name IS 'Company Name';
+COMMENT ON COLUMN public.res_partner.employee IS 'Employee';
+COMMENT ON COLUMN public.res_partner.ref IS 'Internal Reference';
+COMMENT ON COLUMN public.res_partner.email IS 'Email';
+COMMENT ON COLUMN public.res_partner.is_company IS 'Is a Company';
+COMMENT ON COLUMN public.res_partner.function IS 'Job Position';
+COMMENT ON COLUMN public.res_partner.lang IS 'Language';
+COMMENT ON COLUMN public.res_partner.fax IS 'Fax';
+COMMENT ON COLUMN public.res_partner.street2 IS 'Street2';
+COMMENT ON COLUMN public.res_partner.barcode IS 'Barcode';
+COMMENT ON COLUMN public.res_partner.phone IS 'Phone';
+COMMENT ON COLUMN public.res_partner.write_date IS 'Last Updated on';
+COMMENT ON COLUMN public.res_partner.date IS 'Date';
+COMMENT ON COLUMN public.res_partner.tz IS 'Timezone';
+COMMENT ON COLUMN public.res_partner.write_uid IS 'Last Updated by';
+COMMENT ON COLUMN public.res_partner.customer IS 'Is a Customer';
+COMMENT ON COLUMN public.res_partner.create_uid IS 'Created by';
+COMMENT ON COLUMN public.res_partner.credit_limit IS 'Credit Limit';
+COMMENT ON COLUMN public.res_partner.user_id IS 'Salesperson';
+COMMENT ON COLUMN public.res_partner.mobile IS 'Mobile';
+COMMENT ON COLUMN public.res_partner.type IS 'Address Type';
+COMMENT ON COLUMN public.res_partner.partner_share IS 'Share Partner';
+COMMENT ON COLUMN public.res_partner.vat IS 'TIN';
+COMMENT ON COLUMN public.res_partner.state_id IS 'State';
+COMMENT ON COLUMN public.res_partner.commercial_partner_id IS 'Commercial Entity';
+COMMENT ON COLUMN public.res_partner.date_localization IS 'Geolocation Date';
+COMMENT ON COLUMN public.res_partner.partner_latitude IS 'Geo Latitude';
+COMMENT ON COLUMN public.res_partner.partner_longitude IS 'Geo Longitude';
+COMMENT ON COLUMN public.res_partner.notify_email IS 'Email Messages and Notifications';
+COMMENT ON COLUMN public.res_partner.message_last_post IS 'Last Message Date';
+COMMENT ON COLUMN public.res_partner.opt_out IS 'Opt-Out';
+COMMENT ON COLUMN public.res_partner.message_bounce IS 'Bounce';
+COMMENT ON COLUMN public.res_partner.signup_type IS 'Signup Token Type';
+COMMENT ON COLUMN public.res_partner.signup_expiration IS 'Signup expiration';
+COMMENT ON COLUMN public.res_partner.signup_token IS 'Signup token';
+COMMENT ON COLUMN public.res_partner.team_id IS 'Sales Team';
+COMMENT ON COLUMN public.res_partner.calendar_last_notif_ack IS 'Last notification marked as read from base Calendar';
+COMMENT ON COLUMN public.res_partner.type_quartier_id IS 'Type Quartier';
+COMMENT ON COLUMN public.res_partner.source_approvisionnement_id IS 'Source d''approvisionnement';
+COMMENT ON COLUMN public.res_partner.cible_installation_presentoirs_id IS 'Cible installation pr�sentoirs';
+COMMENT ON COLUMN public.res_partner.numero_telephone2 IS 'N� de t�l�phone 2';
+COMMENT ON COLUMN public.res_partner.numero_telephone3 IS 'N� de t�l�phone 3';
+COMMENT ON COLUMN public.res_partner.numero_telephone1 IS 'N� de t�l�phone 1';
+COMMENT ON COLUMN public.res_partner.couverture_commerciale_id IS 'Couverture Commerciale';
+COMMENT ON COLUMN public.res_partner.classification2_id IS 'Classification 2';
+COMMENT ON COLUMN public.res_partner.nom_gerant IS 'Nom du G�rant';
+COMMENT ON COLUMN public.res_partner.frequence_approvisionnement_id IS 'Fr�quence d''approvisionnement';
+COMMENT ON COLUMN public.res_partner.enseigne_appartenance_id IS 'Enseigne d''appartenance';
+COMMENT ON COLUMN public.res_partner.agence_id IS 'Agence';
+COMMENT ON COLUMN public.res_partner.activite_pos_id IS 'Activit� POS';
+COMMENT ON COLUMN public.res_partner.fournisseur_principal_id IS 'Fournisseur principal';
+COMMENT ON COLUMN public.res_partner.contrat_id IS 'Contrat';
+COMMENT ON COLUMN public.res_partner.fournisseur_secondaire_id IS 'Fournisseur secondaire';
+COMMENT ON COLUMN public.res_partner.nom_agent_commercial_id IS 'Nom Agent Commercial';
+COMMENT ON COLUMN public.res_partner.cible_activation_id IS 'Cible Activation';
+COMMENT ON COLUMN public.res_partner.state IS 'Etat';
+COMMENT ON COLUMN public.res_partner.statut_client_id IS 'Statut Client';
+COMMENT ON COLUMN public.res_partner."permanent_POSM5_id" IS 'Permanent POSM 5';
+COMMENT ON COLUMN public.res_partner.point_de_vente IS 'Est un point de vente';
+COMMENT ON COLUMN public.res_partner.repere IS 'Rep�re';
+COMMENT ON COLUMN public.res_partner.emplacement_id IS 'Emplacement';
+COMMENT ON COLUMN public.res_partner.cooperation_itg_id IS 'Coop�ration ITG';
+COMMENT ON COLUMN public.res_partner.proximite_id IS 'Proximit�';
+COMMENT ON COLUMN public.res_partner.frequence_visite_id IS 'Fr�quence de visite';
+COMMENT ON COLUMN public.res_partner."permanent_POSM3_id" IS 'Permanent POSM 3';
+COMMENT ON COLUMN public.res_partner."permanent_POSM1_id" IS 'Permanent POSM 1';
+COMMENT ON COLUMN public.res_partner.adresse IS 'Adresse';
+COMMENT ON COLUMN public.res_partner.preference_animateur_id IS 'Pr�f�rence animateur';
+COMMENT ON COLUMN public.res_partner.provider_latitude IS 'Coordonn�es GPS Latitude';
+COMMENT ON COLUMN public.res_partner.zone_id IS 'Zone';
+COMMENT ON COLUMN public.res_partner.latitude IS 'Coordonn�es GPS Latitude';
+COMMENT ON COLUMN public.res_partner.commentaire IS 'Commentaires';
+COMMENT ON COLUMN public.res_partner.longitude IS 'Coordonn�es GPS Longitude';
+COMMENT ON COLUMN public.res_partner.message_warning IS 'Message warning';
+COMMENT ON COLUMN public.res_partner."permanent_POSM4_id" IS 'Permanent POSM 4';
+COMMENT ON COLUMN public.res_partner.region_id IS 'R�gion';
+COMMENT ON COLUMN public.res_partner.nom_pos IS 'Nom du POS';
+COMMENT ON COLUMN public.res_partner.quartier IS 'Quartier';
+COMMENT ON COLUMN public.res_partner.ville_id IS 'Ville';
+COMMENT ON COLUMN public.res_partner.type_client_id IS 'Type Client';
+COMMENT ON COLUMN public.res_partner.utilisateur_associe_id IS 'Utilisateur associ�';
+COMMENT ON COLUMN public.res_partner."permanent_POSM2_id" IS 'Permanent POSM 2';
+COMMENT ON COLUMN public.res_partner.secteur_id IS 'Secteur';
+COMMENT ON COLUMN public.res_partner.provider_longitude IS 'Coordonn�es GPS Longitude';
+COMMENT ON COLUMN public.res_partner.code_client IS 'Code Client';
+COMMENT ON COLUMN public.res_partner.activation_autorisee_id IS 'Activation autoris�e';
+COMMENT ON COLUMN public.res_partner.is_today IS 'Is today';
+COMMENT ON COLUMN public.res_partner.classification1_id IS 'Classification 1';
+COMMENT ON COLUMN public.res_partner.a_visiter_moved0 IS 'A visiter';
+COMMENT ON COLUMN public.res_partner.visite IS 'Visit�';
+COMMENT ON COLUMN public.res_partner.a_visite IS 'A visiter';
+COMMENT ON COLUMN public.res_partner.a_visiter IS 'A visiter';
+
+
+-- Index: public.res_partner_commercial_partner_id_index
+
+-- DROP INDEX public.res_partner_commercial_partner_id_index;
+
+CREATE INDEX res_partner_commercial_partner_id_index
+  ON public.res_partner
+  USING btree
+  (commercial_partner_id);
+
+-- Index: public.res_partner_company_id_index
+
+-- DROP INDEX public.res_partner_company_id_index;
+
+CREATE INDEX res_partner_company_id_index
+  ON public.res_partner
+  USING btree
+  (company_id);
+
+-- Index: public.res_partner_date_index
+
+-- DROP INDEX public.res_partner_date_index;
+
+CREATE INDEX res_partner_date_index
+  ON public.res_partner
+  USING btree
+  (date);
+
+-- Index: public.res_partner_display_name_index
+
+-- DROP INDEX public.res_partner_display_name_index;
+
+CREATE INDEX res_partner_display_name_index
+  ON public.res_partner
+  USING btree
+  (display_name COLLATE pg_catalog."default");
+
+-- Index: public.res_partner_name_index
+
+-- DROP INDEX public.res_partner_name_index;
+
+CREATE INDEX res_partner_name_index
+  ON public.res_partner
+  USING btree
+  (name COLLATE pg_catalog."default");
+
+-- Index: public.res_partner_parent_id_index
+
+-- DROP INDEX public.res_partner_parent_id_index;
+
+CREATE INDEX res_partner_parent_id_index
+  ON public.res_partner
+  USING btree
+  (parent_id);
+
+-- Index: public.res_partner_ref_index
+
+-- DROP INDEX public.res_partner_ref_index;
+
+CREATE INDEX res_partner_ref_index
+  ON public.res_partner
+  USING btree
+  (ref COLLATE pg_catalog."default");
+
+-- Index: public.res_partner_state_index
+
+-- DROP INDEX public.res_partner_state_index;
+
+CREATE INDEX res_partner_state_index
+  ON public.res_partner
+  USING btree
+  (state COLLATE pg_catalog."default");
+
