@@ -4,6 +4,8 @@ import { Database_manager } from 'src/app/model/DAO/database_manager.model';
 import { Router } from '@angular/router';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { MessageService } from 'primeng/api';
+import {MenuItem} from 'primeng/api';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-new-fiche-visite',
@@ -11,6 +13,7 @@ import { MessageService } from 'primeng/api';
   styleUrls: ['./new-fiche-visite.page.scss'],
 })
 export class NewFicheVisitePage implements OnInit {
+  itemes: MenuItem[];
   items: { id: number; label: string; } [];
   itemsActions: { id: number; label: string; } [];
   fg : FormGroup ;
@@ -19,7 +22,7 @@ export class NewFicheVisitePage implements OnInit {
   partner_id : Array<any> = [] ;
   location : any ;
 
-  constructor(private messageService : MessageService, private geolocation : Geolocation,private router : Router, private fb : FormBuilder, private dbm : Database_manager) { }
+  constructor(private messageService : MessageService,private storage : Storage, private geolocation : Geolocation,private router : Router, private fb : FormBuilder, private dbm : Database_manager) { }
 
   ionViewWillEnter(){
     this.dbm.get_res_partner_data_for_visite().then(async data => {
@@ -32,6 +35,10 @@ export class NewFicheVisitePage implements OnInit {
   }
 
   ngOnInit() {
+	  
+	  this.itemes = [
+			{label: 'Déconnecter', icon: 'pi pi-fw pi-plus'}, 
+		  ];
     this.items = [
       {id : 1 , label:'NOUVEAU'},
       {id : 2 , label:'OUVERTE'},
@@ -84,6 +91,15 @@ export class NewFicheVisitePage implements OnInit {
        console.log('Error getting location', error);
      });
   }
-
+	 data_cmp  : any;
+  Deconnexion(){
+    this.storage.get('data_p2')
+    .then((data2:any)=>{
+      this.data_cmp = JSON.parse(data2);
+      this.dbm.Updata_active_Login(this.data_cmp.id);
+      this.storage.clear();
+    })
+    this.router.navigate(['home']);
+  }
 }
  

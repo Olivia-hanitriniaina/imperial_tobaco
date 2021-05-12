@@ -5,7 +5,7 @@ export class i_t_agence extends base_data {
     code : string ;
     region_id : number ;
 
-    constructor(code : string, region_id : number, create_uid : number, name : string, write_uid : number, id? : number){
+    constructor(code : string = "", region_id : number = 0, create_uid : number = 0, name : string = "", write_uid : number = 0, id? : number){
         if(id){
             super(create_uid, name, write_uid, id);
         }

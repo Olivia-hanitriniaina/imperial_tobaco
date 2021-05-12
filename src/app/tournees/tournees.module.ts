@@ -16,6 +16,8 @@ import { AccordionModule } from 'primeng/accordion';
 import { PasswordModule } from 'primeng/password';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
+import {MenuModule} from 'primeng/menu';
+
 
 const routes: Routes = [
   {
@@ -40,7 +42,8 @@ const routes: Routes = [
     PasswordModule,
     MessagesModule,
     MessageModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    MenuModule
   ],
   declarations: [TourneesPage]
 })

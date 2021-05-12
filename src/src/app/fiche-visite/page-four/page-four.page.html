@@ -1,0 +1,144 @@
+<ion-content>
+	<div class = "container">
+
+		<!-- HEAD -->
+		<div class = "head">
+		  <div class="back_button" (click) = "open_menu()" >
+		    <i class="fas fa-th" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		  </div>
+
+		  <div class = "menu">
+		    <div class="list_icon">
+		      <i class="fas fa-at" style="color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		      <i class="fas fa-comments" style=" color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		      <i class="fas fa-ban on fa-camera" style=" color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		    </div> 
+		  </div>
+
+		  <div class= "menu_icon">
+		      <i class="fas fa-bars" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		  </div>
+		</div>
+		<!-- HEAD -->
+
+
+		<div class="body">
+			<div class="bg-blanc">
+				<div class="title_body" > 
+						<h3>
+								<a  (click)="page_three()">
+									  <i class="fas fa-arrow-left" style="font-size: 18px ; color: #21B799"></i> 
+								</a>
+								{{data_from_route.partner_id}}
+						  </h3>
+		      	</div>			
+
+				<div class = "btn-action-general">
+		            <button *ngIf = "edit == false" pButton type="button" label="MODIFIER" class="bt bt-vert" (click)= "enable_edit()"></button>
+								<button *ngIf = "edit == true" pButton type="button" label="SAUVEGARDER" (click)="save()" class="bt bt-vert"></button>
+								<button *ngIf = "edit == true" pButton type="button" label="ANNULER" (click)="cancel()" class="bt ui-button-secondary"></button>
+		      	</div>
+
+		      	<div class="breacumb ui-g">
+			        <div class="ui-g-4 dropdownworkflow">
+			          
+			        </div>
+			        <div class="ui-g-8 dropdownworkflow noCLick">
+			          <p-dropdown [options]="items" [(ngModel)]="selectedWorkFlow" [placeholder]="items.label" optionLabel="label" [showClear]="true"></p-dropdown>
+			        </div> 
+		      	</div>
+
+		      	<div class="real-content-page">
+							<h3>{{data_from_route.partner_id}}</h3>
+							
+		      		<h5>Audit Point de Vente</h5>
+		      		<div class="table" *ngIf = "edit == false">
+			      		<p-table class="standart-tableau" [value] = "pos_audit_data">
+						    <ng-template pTemplate="header">
+						        <tr>
+						            <th>Liste des critères à évaluer</th>
+						            <th>Visite précédente</th>
+						            <th>Début Visite</th>
+						            <th>Fin visite</th>
+						        </tr>
+						    </ng-template>
+						    <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+						        <tr [pEditableRow]="rowData">
+
+												<td>{{rowData.name}}</td>
+												<td></td>
+
+												<td>
+														{{rowData.visit_begin}}
+												</td>
+
+												<td>
+													{{rowData.visit_end}}
+												</td>
+										</tr>
+						    </ng-template>
+						</p-table>
+							</div>
+							
+							<div class="table" *ngIf = "edit == true">
+			      		<p-table class="standart-tableau" [value] = "pos_audit_data">
+						    <ng-template pTemplate="header">
+						        <tr>
+						            <th>Liste des critères à évaluer</th>
+						            <th>Visite précédente</th>
+						            <th>Début Visite</th>
+						            <th>Fin visite</th>
+						        </tr>
+						    </ng-template>
+						    <ng-template pTemplate="body" let-rowData let-editing="editing" let-ri="rowIndex">
+						        <tr [pEditableRow]="rowData">
+
+												<td style="pointer-events: none; background: #d3d3d3">{{rowData.name}}</td>
+												<td style="pointer-events: none; background: #d3d3d3"></td>
+
+												<td pEditableColumn>
+													<p-cellEditor>
+															<ng-template pTemplate="input">
+																	<p-dropdown [options]="rowData.answer_name" [(ngModel)] = "rowData.response_begin" [style]="{'width':'100%'}"></p-dropdown>
+															</ng-template>
+
+															<ng-template pTemplate="output">
+																{{rowData.visit_begin}}
+															</ng-template>
+															
+													</p-cellEditor>
+												</td>
+
+												<td pEditableColumn>
+													<p-cellEditor>
+															<ng-template pTemplate="input">
+																<p-dropdown [options]="rowData.answer_name" [(ngModel)] = "rowData.response_end" [style]="{'width':'100%'}"></p-dropdown>
+															</ng-template>
+
+															<ng-template pTemplate="output">
+																	{{rowData.visit_end}}
+															</ng-template>
+													</p-cellEditor>
+												</td>
+										</tr>
+						    </ng-template>
+						</p-table>
+							</div>
+							
+		      	</div>
+
+		      	<div class="btn-action-etapes">
+	      			<button pButton type="button" label="RETOUR" class="bt btn-retour" (click)="page_three()"></button>
+	      			<span style="margin-left: 5px;margin-right: 5px;">ou</span>
+					  <button pButton type="button" label="SUIVANT" class="bt btn-suivant" (click)="page_five()"></button>
+					  <p>page 4/7</p>
+	      		</div>
+
+	      	</div>
+
+		</div>
+		<div class="footer"></div>
+
+		</div>
+
+</ion-content>

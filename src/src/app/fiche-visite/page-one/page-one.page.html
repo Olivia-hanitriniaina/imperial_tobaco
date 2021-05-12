@@ -1,0 +1,127 @@
+<ion-content>
+	<div class="container">
+
+		<!-- HEAD -->
+		<div class="head">
+			<div class="back_button" (click)="open_menu()">
+				<i class="fas fa-th"
+					style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+			</div>
+
+			<div class="menu">
+				<div class="list_icon">
+					<i class="fas fa-at"
+						style="color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+					<i class="fas fa-comments"
+						style=" color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+					<i class="fas fa-ban on fa-camera"
+						style=" color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+				</div>
+			</div>
+
+			<div class="menu_icon">
+				<i class="fas fa-bars"
+					style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+			</div>
+		</div>
+		<!-- HEAD -->
+
+
+		<div class="body">
+			<div class="bg-blanc">
+				<div class="title_body">
+					<h3>
+						<i class="fas fa-arrow-left" style="font-size: 18px ; color: #21B799"
+							(click)="page_fiche_visite()"></i> {{res_partner_name.partner_id}}
+					</h3>
+				</div>
+
+				<div class="btn-action-general" *ngIf="!edit">
+					<button pButton type="button" label="MODIFIER" (click)="modify()" class="bt"></button>
+				</div>
+				<div class="btn-action-general" *ngIf="edit">
+					<button pButton type="button" label="SAUVEGARDER" (click)="save()" class="bt"></button>
+					<button pButton type="button" class="ui-button-secondary" label="ANNULER" (click)="cancel()" class="bt"></button>
+				</div>
+
+				<div class="breacumb ui-g">
+					<div class="ui-g-4 dropdownworkflow">
+
+					</div>
+					<div class="ui-g-8 dropdownworkflow noCLick">
+						<p-dropdown [options]="items" [(ngModel)]="selectedWorkFlow" [placeholder]="items.label"
+							optionLabel="label" [showClear]="true"></p-dropdown>
+					</div>
+				</div>
+
+				<div class="bouton_visite" *ngIf="res_partner_name.state == 'ouvert' || res_partner_name.state =='nouveau' ">
+					<button pButton type="button" label="DÉMARRER LA VISITE" class="bt2 ui-button-success"
+						(click)="demarrer_visite()"></button>
+				</div>
+
+				<div class="real-content-page">
+					<h3>{{res_partner_name.partner_id}}</h3>
+					<div class="sho-data">
+						<label>Commercial</label>
+						<p>{{name}}</p>
+					</div>
+
+					<!--<div class="sho-data">
+						<label>POS initial</label>
+						<p-checkbox [(ngModel)]="checked" binary="true"></p-checkbox>
+					</div>-->
+
+					<div class="sho-data">
+						<label>Début de visite</label>
+						<p>{{res_partner_name.tournee_begin}}</p>
+					</div>
+
+					<div class="sho-data">
+						<label>Coordonnée Longitude</label>
+						<div *ngIf="!edit">
+							<p *ngIf="!coord">0.0000000</p>
+							<p *ngIf="coord">{{coord.longitude}}</p>
+						</div>
+						<div *ngIf="edit">
+							<input type="text" value="{{coord.longitude}}" pInputText [(ngModel)]="location.longitude" />
+						</div>
+					</div>
+
+					<div class="sho-data">
+						<label>Coordonnée Latitude</label>
+						<div *ngIf="!edit">
+							<p *ngIf="!coord">0.0000000</p>
+							<p *ngIf="coord">{{coord.latitude}}</p>
+						</div>
+						<div *ngIf="edit">
+							<input type="text" pInputText [(ngModel)]="location.latitude" value="{{coord.latitude}}" />
+						</div>
+					</div>
+
+					<div class="sho-data">
+						<label>Distance entre GPS initial du POS et GPS actuel (mètre)</label>
+						<p *ngIf="!dist">0.0 m</p>
+						<p *ngIf="dist">{{dist}}</p>
+					</div>
+
+					<div class="sho-data" *ngIf="duree != 0">
+						<label>Durée de la visite</label>
+						<p>{{duree}}</p>
+					</div>
+
+					<div class="btn-action-etapes" *ngIf="res_partner_name.state != 'ouvert' ">
+						<button pButton type="button" label="SUIVANT" class="bt" (click)="page_two()"></button>
+						<p>page 1/7</p>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div class="footer">
+
+		</div>
+
+	</div>
+</ion-content>

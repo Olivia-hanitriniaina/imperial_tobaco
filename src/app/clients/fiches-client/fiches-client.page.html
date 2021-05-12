@@ -16,8 +16,9 @@
         </div>
 
         <div class= "menu_icon">
-            <i class="fas fa-bars" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
-        </div>
+            <p-menu (click) = "Deconnexion()" #menu [popup]="true" [model]="itemes"></p-menu>
+            <a (click)="menu.toggle($event)"> <i class="fas fa-bars" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i></a>
+          </div>
       </div>
       <!-- HEAD -->
 
@@ -40,11 +41,6 @@
 
                   <ng-template pTemplate="header" let-columns>
                       <tr>
-                         <!--
-                            <th style="width: 3em">
-                              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                          </th>
-                         --> 
                           <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'display': col.display}">
                               {{col.header}}
                               <p-sortIcon [field]="col.field"></p-sortIcon>
@@ -53,17 +49,9 @@
                   </ng-template>
                   
                   <ng-template pTemplate="body" let-rowData let-columns="columns">
-                      <tr [pSelectableRow]="rowData">
-                        <!--
- <td>
-                              <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
-                          </td>
-                        -->
-                         
-
-                          <td *ngFor="let col of columns" (click) = "onRowClicked(rowData)" [ngStyle]="{'display': col.display}">
-                                  {{rowData[col.field]}}
-                          </td>
+                      <tr [pSelectableRow]="rowData"><td *ngFor="let col of columns" (click) = "onRowClicked(rowData)" [ngStyle]="{'display': col.display}">
+                        {{rowData[col.field]}}
+                      </td>
                       </tr>
                   </ng-template>
               </p-table>

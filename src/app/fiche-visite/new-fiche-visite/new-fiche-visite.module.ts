@@ -25,6 +25,7 @@ import { TableModule } from 'primeng/table';
 import {CheckboxModule} from 'primeng/checkbox';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { MessageService } from 'primeng/api';
+import {MenuModule} from 'primeng/menu';
 
 const routes: Routes = [
   {
@@ -57,7 +58,8 @@ const routes: Routes = [
     TableModule,
     DynamicDialogModule,
     CheckboxModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    MenuModule
   ],
   declarations: [NewFicheVisitePage],
   providers : [MessageService]

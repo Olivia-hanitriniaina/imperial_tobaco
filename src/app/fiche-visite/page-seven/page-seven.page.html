@@ -16,9 +16,10 @@
 		  </div>
 
 		  <div class= "menu_icon">
-		      <i class="fas fa-bars" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+				<p-menu (click) = "Deconnexion()" #menu [popup]="true" [model]="itemes"></p-menu>
+				<a (click)="menu.toggle($event)"> <i class="fas fa-bars" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i></a>
+			  </div>
 		  </div>
-		</div>
 		<!-- HEAD -->
 
 
@@ -26,14 +27,12 @@
 			<div class="bg-blanc">
 				<div class="title_body" > 
 		          	<h3>
-		              <i class="fas fa-arrow-left" style="font-size: 18px ; color: #21B799" (click)="page_six()"></i> {{data_from_route.partner_id}}
+						  <a (click)="page_six()">
+								<i class="fas fa-arrow-left" style="font-size: 18px ; color: #21B799"></i> 
+						  </a>
+		           {{data_from_route.partner_id}}
 		            </h3>
 		      	</div>			
-
-				<div class = "btn-action-general">
-		            <button pButton type="button" label="Modifier" class="bt bt-vert"></button>
-		            <button pButton type="button" label="Créer" class="bt bt-no-bg"></button>
-		      	</div>
 
 		      	<div class="breacumb ui-g">
 			        <div class="ui-g-4 dropdownworkflow">
@@ -43,18 +42,103 @@
 			          <p-dropdown [options]="items" [(ngModel)]="selectedWorkFlow" [placeholder]="items.label" optionLabel="label" [showClear]="true"></p-dropdown>
 			        </div> 
 		      	</div>
+				
+			
+				<h3>{{data_from_route.partner_id}}</h3>
+				
+				<h5>Questionnaire</h5> 
+			<!--	<ion-input  formControlName = "filename" id="filename" [(ngModel)]="filename" required type="file" (change)="onFileSelected($event)">	</ion-input>-->
 
-		      	<div class="real-content-page">
-		      		<h3>{{data_from_route.partner_id}}</h3>
-		      		
-		      		<h5>Questionnaire</h5>
-		      		<p>Aucun questionnaire prévu pour cette visite !</p>
-		      	</div>
+				<div  class="real-content-page" >
+					<p-table #dt [columns]="cols" [value]="data_question">
+		
+						<ng-template pTemplate="header" let-columns>
+								<tr>
 
-		      	<div class="btn-action-etapes">
-	      			<button pButton type="button" label="RETOUR" class="bt btn-retour" (click)="page_six()"></button>
-	      		</div>
+										<th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'display': col.display}">
+												{{col.header}}
+												<p-sortIcon [field]="col.field"></p-sortIcon>
+										</th>
+								</tr>
+						</ng-template>
+						
+						<ng-template pTemplate="body" let-rowData let-columns="columns">
+								<tr>
 
+										<td *ngFor="let col of columns" [ngStyle]=" {'display': col.display, 'text-align' : col.text_align, 'pointer-events' : col.pointer_events, 'background' : col.bg} " pEditableColumn>
+											<p-cellEditor>
+
+													<ng-template pTemplate="input">
+															<input pInputText type="text" [(ngModel)]="rowData[col.field]">
+													</ng-template>
+
+													<ng-template pTemplate="output">
+															{{rowData[col.field]}}
+													</ng-template>
+
+											</p-cellEditor>
+									</td>
+									
+								</tr>
+						</ng-template>
+				</p-table>
+				<ion-input  formControlName = "filename" pInputText required type="file" (onChange) = "onFileSelected(&event)"></ion-input>
+					<p-dialog header="Tous les questions sur cette visite " [(visible)]="display">
+						
+						<form  class = "connexion" [formGroup]="todo" (ngSubmit)= "removeControl()">
+							<p *ngFor="let valeur of data_from_db, let i = index">
+							
+							<ion-list [ngSwitch] = "valeur.type" lines="full" class="ion-no-margin ion-no-padding">
+								
+								<ion-item *ngSwitchCase ="'input'">
+									<ion-label for = "name" position="stacked">{{valeur.name}} <ion-text color="danger">*</ion-text></ion-label>
+									<ion-input  formControlName = "input{{i}}" pInputText required type="text">	</ion-input>		
+								</ion-item>
+								<ion-item  *ngSwitchCase ="'datetime'" >	
+									<ion-label for = "name" position="stacked">{{valeur.name}} <ion-text color="danger">*</ion-text></ion-label>
+									<ion-datetime formControlName="input{{i}}" display-format="DD-MM-YYYYTHH:mm:ss" pInputText  type="datetime" ></ion-datetime>
+								</ion-item>
+								<ion-item  *ngSwitchCase ="'number'" >	
+									<ion-label for = "name" position="stacked">{{valeur.name}} <ion-text color="danger">*</ion-text></ion-label>
+									<ion-input formControlName="input{{i}}" pInputText required type="number" ></ion-input>
+								</ion-item>
+								<ion-item  *ngSwitchCase ="'textarea'" >
+									<ion-label for = "name" position="stacked">{{valeur.name}}</ion-label>
+									<ion-input formControlName="input{{i}}" pInputText required type="textarea" ></ion-input>
+								</ion-item>						
+								<ion-item  *ngSwitchCase ="'simple_choice'" >
+									<ion-label for = "name" position="stacked">{{valeur.name}}</ion-label>
+									<ion-select formControlName ="input{{i}}"  pInputText > 
+										<ion-select-option *ngFor = "let retour of valeur.options" [value] ="retour.label"> {{retour.label}}</ion-select-option> 
+									</ion-select>
+								</ion-item>
+								<ion-item  *ngSwitchCase ="'multiple_choice'" >
+									<ion-label for = "name" position="stacked">{{valeur.name}}</ion-label>
+									<ion-select  multiple="true" formControlName="input{{i}}" pInputText>
+											<ion-select-option *ngFor = "let retour of valeur.options" [value] ="retour.label" checked="true">{{retour.label}}</ion-select-option>
+										</ion-select>
+								</ion-item>
+								</ion-list>
+							</p>
+							<br class="br-responsive">
+							
+							<div class="btn-action-etapes">
+								<button pButton  type="submit"  label="Valider" class="bt btn-suivant"></button>
+								<span style="margin-left: 5px;margin-right: 5px;">ou</span>
+								<button pButton type="button" label="Annuler" class="bt btn-suivant" (click)="Annuler()"></button>
+							</div>
+							</form>
+						</p-dialog>
+				<button *ngIf ="cols == 0" type="button" style="margin-left: 19%;" (click)="showDialog()" pButton icon="pi pi-info-circle" label="Accéder au questionnaire"></button>
+			</div>
+				
+			<div class="btn-action-etapes">
+				<button pButton type="button" class="bt btn-retour" label="RETOUR" (click)="page_six()"></button>
+				<span style="margin-left: 5px;margin-right: 5px;">ou</span>
+				<button *ngIf="data_from_route.state!='fermé'" pButton type="button" class="bt btn-suivant" label = "FIN DE VISITE" (click)="end_visite()"></button>
+		  <span style="margin-left: 5px;margin-right: 5px;">ou</span>
+		  <button pButton type="button" class="bt btn-suivant" label ="RETOUR À LA PAGE 1" (click)="page_one()"></button>
+	  </div>
 	      	</div>
 
 		</div>

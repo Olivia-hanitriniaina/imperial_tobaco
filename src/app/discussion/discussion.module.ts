@@ -18,6 +18,8 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { TabViewModule } from 'primeng/tabview';
+import {MenuModule} from 'primeng/menu';
+
 
 const routes: Routes = [
   {
@@ -47,7 +49,8 @@ const routes: Routes = [
     MessageModule,
     BreadcrumbModule,
     TabViewModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    MenuModule
   ],
   declarations: [DiscussionPage]
 })

@@ -1,13 +1,15 @@
 export class base_data {
-    id : number ;
-    create_uid : number ;
-    create_date : string ;
-    name : string ;
-    write_uid : number ;
-    write_date : string ;
+    id : number = 0 ;
+    create_uid : number = 0;
+    create_date : string = "";
+    name : string = "" ;
+    write_uid : number = 0;
+    write_date : string ="";
+    table : string = "" ;
+    x_odoo_id : number  = 0;
     
 
-    constructor (create_uid : number, name : string, write_uid : number, id? : number) {
+    constructor (create_uid : number = 0, name : string = "", write_uid : number =0 , id? : number) {
         if (id) {
             this.setId(id) ;
         }
@@ -16,7 +18,6 @@ export class base_data {
         this.setName (name) ;
         this.setWtrite_uid(write_uid) ;
         this.setWrite_date() ;
-        
     }
 
     public setId(id : number) {

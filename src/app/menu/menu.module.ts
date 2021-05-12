@@ -5,7 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 import { IonicModule } from '@ionic/angular';
-
+import {MenuModule} from 'primeng/menu';
 import { MenuPage } from './menu.page';
 
 const routes: Routes = [
@@ -21,8 +21,10 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     Ng2SearchPipeModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    MenuModule
   ],
-  declarations: [MenuPage]
+  declarations: [MenuPage],
+ 
 })
 export class MenuPageModule {}

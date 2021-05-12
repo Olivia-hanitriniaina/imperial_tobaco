@@ -24,6 +24,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { TableModule } from 'primeng/table';
 
 import { PageThreePage } from './page-three.page';
+import {MenuModule} from 'primeng/menu';
 
 const routes: Routes = [
   {
@@ -53,7 +54,8 @@ const routes: Routes = [
     ToastModule,
     CheckboxModule,
     TableModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    MenuModule
   ],
   declarations: [PageThreePage],
   providers : [MessageService]

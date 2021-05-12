@@ -4,7 +4,9 @@
     </div>
 
     <div class = "body">
+       
         <div class = "form">
+           
             <form class = "connexion" [formGroup]="userFormGroup" (ngSubmit)="onSubmit()">
                 <div class="field">
                     <p class="first">Login</p>
@@ -22,15 +24,6 @@
                 <div class = "bouton">
                     <button type="submit" pButton label="Connexion" [disabled]="!userFormGroup.valid"></button>
                 </div>
-
-                
-
-                
-                 <div class = "bouton">
-                    <button type="button" pButton label="Direct" (click) = "test_odoo()"></button>
-                </div> 
-                
-                 
             </form>
             
         </div>

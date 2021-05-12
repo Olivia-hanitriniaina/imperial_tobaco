@@ -5,6 +5,7 @@ import { Storage } from '@ionic/storage'
 import { HttpClient } from '@angular/common/http';
 import { ClientInterface } from '../../model/screen/clients.screen';
 import { Data } from 'src/app/model/data/data.model';
+import {MenuItem} from 'primeng/api';
 
 @Component({
   selector: 'app-fiches-client',
@@ -18,7 +19,7 @@ import { Data } from 'src/app/model/data/data.model';
   `]
 })
 export class FichesClientPage implements OnInit {
-  
+  itemes: MenuItem[];
   cols: { field: string; header: string; display : string}[];
   data : ClientInterface [] ;
   selected : ClientInterface[]
@@ -26,6 +27,11 @@ export class FichesClientPage implements OnInit {
   constructor(private data_router : Data , private dbm : Database_manager,private router : Router, private storage : Storage, private http : HttpClient) { }
 
   ngOnInit() {
+
+    this.itemes = [
+      {label: 'Déconnecter', icon: 'pi pi-fw pi-plus'}, 
+    ];
+
     this.cols = [
       { field: 'id' , header: 'id', display : 'none' },
       { field: 'name' , header: 'Code client' , display: 'table-cell'},
@@ -39,7 +45,9 @@ export class FichesClientPage implements OnInit {
       { field: 'nom_gerant' , header: 'Nom du Gérant', display: 'table-cell' },
       { field: 'adresse' , header: 'Adresse', display: 'table-cell' },
       { field: 'state_id' , header: 'Etat', display: 'table-cell' }
+      
     ];
+    
   }
 
   ionViewWillEnter(){
@@ -65,12 +73,21 @@ export class FichesClientPage implements OnInit {
 
   onRowClicked(rowData : ClientInterface){
     let navigationExtras: NavigationExtras = {
-            queryParams: {
-               
-                "id": rowData.id
-            }
-        };
+      queryParams: {
+        "id": rowData.id
+      }
+    };
     this.data_router.storage = rowData.id ;
     this.router.navigate(['detail-fiche-client'], navigationExtras) ;
+  }
+  data_cmp  : any;
+  Deconnexion(){
+    this.storage.get('data_p2')
+    .then((data2:any)=>{
+      this.data_cmp = JSON.parse(data2);
+      this.dbm.Updata_active_Login(this.data_cmp.id);
+      this.storage.clear();
+    })
+    this.router.navigate(['home']);
   }
 }

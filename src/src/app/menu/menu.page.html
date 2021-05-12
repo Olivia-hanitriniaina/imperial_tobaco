@@ -1,0 +1,50 @@
+<ion-content>
+    <div class = "container">
+
+      <!-- HEAD -->
+      <div class = "head">
+        <div class="back_button"  >
+          <i class="fas fa-chevron-left" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle" *ngIf="root" (click)="navigate_back()"></i>
+          <i class="fas fa-chevron-left" style=" color: #875A7B; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle" *ngIf="!root"></i>
+        </div>
+
+        <div class = "menu">
+          <div class="list_icon">
+            <i class="fas fa-at" style="color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+            <i class="fas fa-comments" style=" color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+            <i class="fas fa-ban on fa-camera" style=" color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+          </div> 
+        </div>
+
+        <div class= "menu_icon">
+            <i class="fas fa-bars" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+        </div>
+      </div>
+      <!-- HEAD -->
+
+      <!-- SEARCH-BAR -->
+      <div class="search_bar">
+        <div class="ui-inputgroup ZoneSearchAccueil">
+          <span class="ui-inputgroup-addon"><i class="fas fa-search"></i></span>
+          <input class="search" type="text" [(ngModel)]="term" pInputText placeholder="Recherche">         
+        </div>
+      </div>
+       <!-- SEARCH-BAR -->
+    
+
+    <div class="body">
+        <div class="ui-g" >
+            <div class="cmp ui-g-3" *ngFor = "let menu of menus | filter:term" (click) = "open_menu(menu.name)">
+              <img class = "mn_icn" [src] = "menu.icone">
+              <span class="nom">{{menu.name}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class = "footer">
+      <img src = "assets/image/Odoo.png">
+    </div>
+
+</div>
+
+</ion-content>

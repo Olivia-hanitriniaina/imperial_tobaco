@@ -1,5 +1,8 @@
 import { base_data } from './base_data.model';
 
 export class itg_manufacturer extends base_data {
-    sequence : string ;
+    sequence : string = "";
+    constructor(){
+        super();
+    }
 }

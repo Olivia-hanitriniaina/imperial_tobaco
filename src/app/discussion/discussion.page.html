@@ -16,8 +16,9 @@
           </div>
 
           <div class= "menu_icon">
-              <i class="pi pi-bars" style="font-size: 24px ; color: white"></i>
-          </div>
+              <p-menu (click) = "Deconnexion()" #menu [popup]="true" [model]="itemes"></p-menu>
+              <a (click)="menu.toggle($event)"> <i class="fas fa-bars" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i></a>
+            </div>
         </div>
         <!-- HEAD -->
 

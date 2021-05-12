@@ -18,8 +18,9 @@
         </div>
 
         <div class= "menu_icon">
-            <i class="fas fa-bars" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
-        </div>
+            <p-menu (click) = "Deconnexion()" #menu [popup]="true" [model]="itemes"></p-menu>
+            <a (click)="menu.toggle($event)"> <i class="fas fa-bars" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i></a>
+          </div>
       </div>
       <!-- HEAD -->
 
@@ -78,12 +79,13 @@
 
             <div class="cam ui-g-3">
               <div  *ngIf = "!filePath"> <i class="pi pi-camera" style="font-size: 78px ; color: gray" ></i> <br /></div>
-              <div *ngIf = "filePath" [style.background] = "'url('+ filePath +')'" class="contentAvatar"></div>
+              <div *ngIf = "filePath" [style.background] = "'url('+ filePath +')'" class="contentAvatar" (click) = "open_full_screen()"></div>
               <div class="del_mod_btn">
                 <button pButton type="button" icon="pi pi-pencil" iconPos="center" class="bt ui-button-success" (click)="showImageFromCamera()"></button>
                 <button pButton type="button" icon="pi pi-trash" iconPos="center" class="bt ui-button-danger"></button>
               </div>
             </div>
+
   
             <!-- <div class="cam ui-g-3" *ngIf = "!filePath" >
               <i class="pi pi-camera" style="font-size: 78px ; color: gray" (click)="showImageFromCamera()"></i> <br />
@@ -123,7 +125,7 @@
 
                 <ion-item>
                   <ion-label position="floating">Secteur</ion-label>
-                  <ion-select  formControlName= "secteur_id" >
+                  <ion-select  formControlName= "secteur_id" (ionChange)="secteurChange($event.detail.value)" >
                     <ion-select-option *ngFor = "let secteur of i_t_secteur_filtered" [value] = "secteur.id" > {{secteur.name}}</ion-select-option>
                   </ion-select>
                 </ion-item>
@@ -297,9 +299,14 @@
                  <p-tabView>
 
                     <p-tabPanel header="AGENTS COMMERCIAUX">
-                        <ion-chip>
-                          <ion-label>{{signature}}</ion-label>
-                        </ion-chip>
+                      <ion-item>
+                        <tag-input formControlName= "user_id" [onlyFromAutocomplete]="true" placeholder = "User">
+                          <tag-input-dropdown [autocompleteItems]="users_same_secteur" [showDropdownIfEmpty]="true" [dynamicUpdate]="false"> </tag-input-dropdown>
+                        </tag-input>
+                      </ion-item>
+
+                      
+                      
                     </p-tabPanel>
 
                     <p-tabPanel header="PERMANENT POSM">
@@ -312,12 +319,16 @@
                       </ion-item>
                       
                       <ion-item>
-                          <ion-label position="floating">Permanent POSM 1</ion-label>
-                          <ion-select  formControlName= "permanent_POSM1_id" >
-                            <ion-select-option *ngFor = "let posm1 of i_t_permanent_posm" [value] = "posm1.id" > {{posm1.name}}</ion-select-option>
-                          </ion-select>
+                          <!--<ion-label position="floating">Permanent POSM</ion-label>
+                          <ion-select  formControlName= "permanent_POSM_id" multiple="true">
+                            <ion-select-option *ngFor = "let posm1 of i_t_permanent_posm" [value] = "posm1.value" > {{posm1.label}}</ion-select-option>
+                          </ion-select> -->
+                          <tag-input formControlName= "permanent_POSM_id" [onlyFromAutocomplete]="true" placeholder = "Permanent POSM">
+                            <tag-input-dropdown [autocompleteItems]="i_t_permanent_posm" [showDropdownIfEmpty]="true" [dynamicUpdate]="false"> </tag-input-dropdown>
+                          </tag-input>
                       </ion-item>
                     
+                    <!--
                       <ion-item>
                           <ion-label position="floating">Permanent POSM 2</ion-label>
                           <ion-select  formControlName= "permanent_POSM2_id" >
@@ -345,6 +356,7 @@
                             <ion-select-option *ngFor = "let posm5 of i_t_permanent_posm" [value] = "posm5.id" > {{posm5.name}}</ion-select-option>
                           </ion-select>
                       </ion-item>
+                    -->  
                     
 
                     </p-tabPanel>
@@ -402,7 +414,7 @@
                     </ion-item>
                       
                     <ion-item>
-                        <ion-label position="floating">Source d'approvisionnemen</ion-label>
+                        <ion-label position="floating">Source d'approvisionnement</ion-label>
                         <ion-select  formControlName= "source_approvisionnement_id" >
                           <ion-select-option *ngFor = "let source_appro of i_t_source_approvisionnement" [value] = "source_appro.id" > {{source_appro.name}}</ion-select-option>
                         </ion-select>
@@ -445,11 +457,17 @@
         </div>
       </div>
 
+     
+
       
 
       <div class="footer">
 
       </div>
   </div>
+
+  <p-dialog [(visible)]="display" [modal]="true" [responsive]="true" styleClass = "mydialog" appendTo="body">
+    <ion-img [src] = "filePath"> </ion-img>
+</p-dialog>
 
 </ion-content>

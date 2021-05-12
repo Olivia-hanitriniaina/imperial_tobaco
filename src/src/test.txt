@@ -1,0 +1,202 @@
+<!--<ion-content padding>
+
+
+<p-chart type="doughnut" [data]="data"></p-chart> 
+
+<p-fullCalendar [events]="events"> </p-fullCalendar>
+
+<div class = "test">
+  <p>Nom : {{personneAffiche._nom}}  </p>
+  <p>Prenom : {{personneAffiche._prenom}}</p>
+</div>
+
+<div class="button">
+  <button pButton type="button" icon="pi pi-chevron-left"   [disabled]="enablePreivous" (click) = "onClickPrevious()">  </button>
+  <button pButton type="button" icon="pi pi-chevron-right"  [disabled]= "enableNext"    (click) = "onClickNext()">  </button>
+</div>
+
+
+</ion-content> 
+
+<ion-content>
+  <div calss="menu_content">
+      <div class="menu_bar">
+
+          <div class="icon_menu_bar">
+              <p-sidebar [(visible)]="visibleSidebar1" [baseZIndex]="10000">
+                  <button pButton type="button" (click)="test_click()" label="Save" class="ui-button-success"></button>
+                  <button pButton type="button" (click)="test_click()" label="Cancel" class="ui-button-secondary"></button>
+              </p-sidebar>
+              <button pButton class="ui-button-success" type="button" (click)="visibleSidebar1 = true" icon="pi pi-bars"></button>
+          </div>
+       
+    
+        <div class = "dropdown">
+            <p-dropdown [options]="cities" [(ngModel)]="selectedCity" placeholder="Select a City" optionLabel="name" [showClear]="true"></p-dropdown>
+        </div>
+    
+        <div class = "date">
+            <input id="input" type="text" size="10" pInputText [(ngModel)]="text"> 
+        </div>
+        
+      </div>
+  </div>
+
+  <div class="body_content">
+      <p-accordion [multiple]="true">
+          <p-accordionTab header="Godfather I">
+              The story begins  as Don Vito Corleone, the head of a New York Mafia family, overseeshis daughter's wedding. His beloved son ichael has just come home from the war, but does not intend to become part of his father's business. T hrough Michael's life the nature of the family business becomes clear. The business of the family is just like the head of the family, kind and benevolent to those who give respect, but given to ruthless violence whenever anything stands against the good of the family.
+          </p-accordionTab>
+          <p-accordionTab header="Godfather II">
+              Francis Ford Coppola's legendary continuation and sequel to his landmark 1972 film, The_Godfather parallels the young Vito Corleone's rise with his son Michael's spiritual fall, deepening The_Godfather's depiction of the dark side of the American dream. In the early 1900s, the child Vito flees his Sicilian village for America after the local Mafia kills his family. Vito struggles to make a living, legally or illegally, for his wife and growing brood in Little Italy, killing the local Black Hand Fanucci after he demands his customary cut of the tyro's business. With Fanucci gone, Vito's communal stature grows.
+         </p-accordionTab>
+          <p-accordionTab header="Godfather III">
+              After a break of more than  15 years, director Francis Ford Coppola and writer Mario Puzo returned to the well for this third and final story of the fictional Corleone crime family. Two decades have passed, and crime kingpin Michael Corleone, now divorced from his wife Kay has nearly succeeded in keeping his promise that his family would one day be completely legitimate.
+          </p-accordionTab>
+      </p-accordion>
+  </div>
+  
+  
+</ion-content> -->
+
+
+.test {
+    text-align: -webkit-center;
+}
+
+.button { 
+    text-align: -webkit-center;
+}
+
+.menu_bar[_ngcontent-c0] {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    width: 100%;
+    height: 40px;
+    background-color: #34A835;
+}
+
+import { Component, OnInit } from '@angular/core';
+import { personneModel } from '../model/personne.model';
+
+@Component({
+  selector: 'app-home',
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss'],
+})
+export class HomePage implements OnInit{    
+
+  visibleSidebar1;  
+  data: any;
+  events : any[] ;
+  personnes : Array<personneModel> ;
+  position : number ;
+  personneAffiche : personneModel ;
+  enablePreivous : boolean ;
+  enableNext : boolean ;
+
+  constructor() {
+     /* this.data = {
+          labels: ['A','B','C'],
+          datasets: [
+              {
+                  data: [300, 50, 100],
+                  backgroundColor: [
+                      "#FF6384",
+                      "#36A2EB",
+                      "#FFCE56"
+                  ],
+                  hoverBackgroundColor: [
+                      "#FF6384",
+                      "#36A2EB",
+                      "#FFCE56"
+                  ]
+              }]    
+          };    */
+    }
+
+  ngOnInit(): void {
+   /* this.events = [
+            {
+                "title": "All Day Event",
+                "start": "2016-01-01"
+            },
+            {
+                "title": "Long Event",
+                "start": "2016-01-07",
+                "end": "2016-01-10"
+            },
+            {
+                "title": "Repeating Event",
+                "start": "2016-01-09T16:00:00"
+            },
+            {
+                "title": "Repeating Event",
+                "start": "2016-01-16T16:00:00"
+            },
+            {
+                "title": "Conference",
+                "start": "2016-01-11",
+                "end": "2016-01-13"
+            }
+        ];*/
+
+        let p1  =  new personneModel("RAKOTO", "Rija") ;
+        let p2  =  new personneModel("RAZAKA", "Rasoa") ;
+        let p3  =  new personneModel("RABENJA", "Randria") ;
+        let p4  =  new personneModel("RAHERY", "Benja") ;
+        let p5  =  new personneModel("HARY", "Maria") ;
+        let p6  =  new personneModel("RANDRIA", "Saonina") ;
+        let p7  =  new personneModel("RAPIERA", "Edmond") ;
+        let p8  =  new personneModel("JEAN", "Pierre") ;
+        let p9  =  new personneModel("TINA", "Suzanne") ;
+        let p10 =  new personneModel("VERO", "Saholy") ;
+
+        this.personnes = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10];
+        this.position = this.personnes.length - 1 ;
+        this.personneAffiche = this.personnes[this.position] ;
+        this.enablePreivous = false ;
+        this.enableNext = true ;
+
+    }
+
+    public onClickPrevious(){
+        this.checkPosition(this.position - 1) ;
+        this.position-- ;
+    }
+
+    public onClickNext(){
+        this.checkPosition(this.position + 1) ;
+        this.position++ ;
+    }
+
+    public checkPosition(pos : number)  {
+        switch (true) {
+            case (pos >= this.personnes.length - 1) : {
+                this.enablePreivous = false ;
+                this.enableNext = true ;
+                this.personneAffiche = this.personnes[this.personnes.length - 1] ;
+                break ;
+            }
+            case (pos < this.personnes.length - 1 && pos > 0 ) : {
+                this.enablePreivous = false ;
+                this.enableNext = false ;
+                this.personneAffiche = this.personnes[pos] ;
+                break ;
+            }
+            case (pos <= 0 ) : {
+                this.enablePreivous = true ;
+                this.enableNext = false ;
+                this.personneAffiche = this.personnes[0] ;
+                break ;   
+            }
+
+        }
+    }
+
+    test_click(){
+        console.log("mande kay")
+    }
+}
+
+

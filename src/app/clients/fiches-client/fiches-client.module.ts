@@ -19,7 +19,7 @@ import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { TableModule } from 'primeng/table';
 import { Database_manager } from '../../model/DAO/database_manager.model';
-
+import {MenuModule} from 'primeng/menu';
 const routes: Routes = [
   {
     path: '',
@@ -44,7 +44,8 @@ const routes: Routes = [
     MessagesModule,
     MessageModule,
     TableModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    MenuModule
   ],
   declarations: [FichesClientPage] ,
   providers : [

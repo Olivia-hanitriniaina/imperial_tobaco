@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Database_manager } from 'src/app/model/DAO/database_manager.model';
-import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras, ParamMap } from '@angular/router';
 import { tournees_sc1 } from 'src/app/model/screen/tournnees.screen1';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { Storage } from '@ionic/storage'
+import {MenuItem} from 'primeng/api';
 
 interface safidy {
   name: string;
@@ -32,6 +34,7 @@ interface safidy {
 
 export class DetailTourneePage implements OnInit {
 
+  itemes: MenuItem[];
   data_pv : Array<tournees_sc1> = [] ;
   data_pvs : Array<tournees_sc1> = [] ;
   data_p : Array<tournees_sc1> = [] ;
@@ -56,11 +59,14 @@ export class DetailTourneePage implements OnInit {
   visites: safidy[] ;
   id_tournee : number ;
 
-  constructor(private fb : FormBuilder,private geolocation : Geolocation, private dbm : Database_manager, private router : ActivatedRoute, private route : Router) { 
-
+  constructor(private fb : FormBuilder,private geolocation : Geolocation, private activatedRoute : ActivatedRoute, private storage : Storage, private dbm : Database_manager, private router : ActivatedRoute, private route : Router) { 
+    
   }
 
   ngOnInit() {
+    this.itemes = [
+      {label: 'Déconnecter', icon: 'pi pi-fw pi-plus'}, 
+    ];
     this.visites = [
       {name : "oui", code : "oui"} ,
       {name : "non", code : "non"} ,
@@ -284,6 +290,16 @@ export class DetailTourneePage implements OnInit {
 
   open_menu(){
     this.route.navigate(['liste-tournee'])
+  }
+  data_cmp  : any;
+  Deconnexion(){
+    this.storage.get('data_p2')
+    .then((data2:any)=>{
+      this.data_cmp = JSON.parse(data2);
+      this.dbm.Updata_active_Login(this.data_cmp.id);
+      this.storage.clear();
+    })
+    this.route.navigate(['homme'])
   }
 
 }

@@ -21,7 +21,12 @@ import { MessageModule } from 'primeng/message';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { TabViewModule } from 'primeng/tabview';
 import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/components/common/messageservice';
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+import { DialogModule } from 'primeng/dialog';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { MessageService, DialogService } from 'primeng/api';
+import { TagInputModule } from 'ngx-chips';
+import {MenuModule} from 'primeng/menu';
 
 const routes: Routes = [
   {
@@ -49,9 +54,19 @@ const routes: Routes = [
     BreadcrumbModule,
     TabViewModule,
     ToastModule,
-    RouterModule.forChild(routes)
+    DynamicDialogModule,
+    DialogModule,
+    TagInputModule,
+    RouterModule.forChild(routes),
+    MenuModule
   ],
   declarations: [NewClientPage],
-  providers : [Camera, Geolocation, MessageService]
+  providers : [
+    DialogService ,
+    Camera, 
+    Geolocation, 
+    MessageService,
+    PhotoViewer
+  ]
 })
 export class NewClientPageModule {}

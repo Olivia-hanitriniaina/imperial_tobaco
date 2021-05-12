@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Database_manager } from '../../model/DAO/database_manager.model';
+import { Storage } from '@ionic/storage';
 import { i_t_region } from '../../model/data/i_t_region.model';
 import { i_t_activation_autorisee } from '../../model/data/i_t_activation_autorisee.model';
 import { i_t_cible_activation } from '../../model/data/i_t_cible_activation.model';
@@ -17,7 +18,7 @@ import { i_t_classification2 } from '../../model/data/i_t_classification2.model'
 import { i_t_contrat } from '../../model/data/i_t_contrat.model';
 import { i_t_cooperation_itg } from '../../model/data/i_t_cooperation_itg.model';
 import { i_t_couverture_commerciale } from '../../model/data/i_t_couverture_commerciale.model';
-import { i_t_emplacement } from '../../model/data/i_t_emplacement.model';
+import { i_t_emplacement } from   '../../model/data/i_t_emplacement.model';
 import { i_t_enseigne_appartenance } from '../../model/data/i_t_enseigne_appartenance.model';
 import { i_t_frequence_approvisionnement } from '../../model/data/i_t_frequence_approvisionnement.model';
 import { i_t_frequence_visite } from '../../model/data/i_t_frequence_visite.model';
@@ -36,14 +37,23 @@ import { res_users } from '../../model/data/res_users.model';
 import { stringify } from 'querystring';
 import { NEXT } from '@angular/core/src/render3/interfaces/view';
 import { i_t_canal } from 'src/app/model/data/i_t_canal.model';
+import { FullScreenImage } from '@ionic-native/full-screen-image/ngx';
+
+export interface name_id {
+  value : any ;
+  display : string ;
+}
 
 @Component({
   selector: 'app-new-client',
   templateUrl: './new-client.page.html',
   styleUrls: ['./new-client.page.scss'],
 })
-export class NewClientPage implements OnInit {
 
+
+
+export class NewClientPage implements OnInit {
+  itemes: MenuItem[];
   items : Array<MenuItem> ;
   itemsActions : Array<MenuItem> ;
   home : any ;
@@ -64,7 +74,7 @@ export class NewClientPage implements OnInit {
   i_t_enseigne_appartenance: Array<i_t_enseigne_appartenance> = [] ;
   i_t_frequence_approvisionnement: Array<i_t_frequence_approvisionnement> = [] ;
   i_t_frequence_visite: Array<i_t_frequence_visite> = [] ;
-  i_t_permanent_posm: Array<i_t_permanent_posm> = [] ;
+  i_t_permanent_posm: Array<name_id> = [] ;
   i_t_preference_animateur: Array<i_t_preference_animateur> = [] ;
   i_t_proximite: Array<i_t_proximite> = [] ;
   i_t_secteur: Array<i_t_secteur> = [] ;
@@ -72,14 +82,17 @@ export class NewClientPage implements OnInit {
   i_t_type_quartier: Array<i_t_type_quartier> = [] ;
   i_t_ville: Array<i_t_ville> = [] ;
   i_t_zone: Array<i_t_zone> = [] ;
-  i_t_fournisseur_secondaire: Array<i_t_fournisseur_secondaire> = [] ;
-  i_t_fournisseur_principale: Array<i_t_fournisseur_principale> = [] ;
+  i_t_fournisseur_secondaire: Array<name_id> = [] ;
+  i_t_fournisseur_principale: Array<name_id> = [] ;
   i_t_region: Array<i_t_region> = [] ;
   i_t_source_approvisionnement : Array<i_t_source_approvisionnement> ;
   i_t_zone_filtered : Array<i_t_zone> = [] ;
   i_t_secteur_filtered : Array<i_t_secteur> = [] ;
   i_t_canal : Array<i_t_canal> = [] ;
   i_t_canal_filtered : Array<i_t_canal> = [] ;
+  res_user : Array<name_id> ;
+  users_same_secteur : Array<name_id> = [] ;
+
   signature : string ;
   invalid_fields = [] ;
   canal : string = "" ;
@@ -88,11 +101,16 @@ export class NewClientPage implements OnInit {
   active : number = 0 ;
   filePath : string ;
   window : any = window ;
+  display : boolean = false ;
+  max : number ;
 
-  constructor(private messageService : MessageService, private toast : ToastController,private dbm : Database_manager,private form_builder : FormBuilder, private router : Router ,private camera: Camera, private geolocation: Geolocation, private alert : AlertController) { }
+  constructor(private fullScreenImage : FullScreenImage,  private storage : Storage,private messageService : MessageService, private toast : ToastController,private dbm : Database_manager,private form_builder : FormBuilder, private router : Router ,private camera: Camera, private geolocation: Geolocation, private alert : AlertController) { }
 
   ngOnInit() {
 
+    this.itemes = [
+      {label: 'Déconnecter', icon: 'pi pi-fw pi-plus'}, 
+    ];
     this.items = [
       {label:'PROSPECT'},
       {label:'VALIDÉE PAR SUPERVISEUR'},
@@ -163,8 +181,12 @@ export class NewClientPage implements OnInit {
       this.i_t_frequence_visite = data ;
     }) ;
 
-    this.dbm.select_basic_data("i_t_permanent_posm").then(data => {
+    this.dbm.select_data_with_table_name("i_t_permanent_posm").then(data => {
       this.i_t_permanent_posm = data ;
+    }) ;
+
+    this.dbm.select_data_res_users("res_users").then(data => {
+      this.res_user = data ;
     }) ;
 
     this.dbm.select_basic_data("i_t_preference_animateur").then(data => {
@@ -195,13 +217,19 @@ export class NewClientPage implements OnInit {
       this.i_t_zone = data ;
     }) ;
 
-    this.dbm.select_basic_data("i_t_fournisseur_secondaire").then(data => {
+    this.dbm.select_max_basic_data("res_partner").then(data => {
+      this.max = data ;
+    }) ;
+
+    this.dbm.get_name_id_data("res_partner").then(data => {
+      this.i_t_fournisseur_principale = data ;
       this.i_t_fournisseur_secondaire = data ;
     }) ;
 
-    this.dbm.select_basic_data("i_t_fournisseur_principale").then(data => {
+    /*this.dbm.get_name_id_data("i_t_fournisseur_secondaire").then(data => {
       this.i_t_fournisseur_principale = data ;
-    }) ;
+      this.i_t_fournisseur_secondaire = data ;
+    }) ; */
 
     this.dbm.select_basic_data("i_t_source_approvisionnement").then(data => {
       this.i_t_source_approvisionnement = data ;
@@ -260,11 +288,7 @@ export class NewClientPage implements OnInit {
       photo : [''] ,
 
       cible_installation_presentoirs_id : ['', Validators.required] ,
-      permanent_POSM1_id : ['', Validators.required] ,
-      permanent_POSM2_id : ['', Validators.required] ,
-      permanent_POSM3_id : ['', Validators.required] ,
-      permanent_POSM4_id : ['', Validators.required] ,
-      permanent_POSM5_id : ['', Validators.required] ,
+      permanent_POSM_id : ['', Validators.required] ,
 
       contrat_id : ['', Validators.required] ,
       date_debut_contrat : ['', Validators.required] ,
@@ -289,7 +313,7 @@ export class NewClientPage implements OnInit {
   /* this.dbm.select_max_basic_data("i_t_contat").then(data => {
      console.log(data);
       this.fiche_client.controls['contrat_id'].setValue(data.max) ;
-    }) ;*/
+    }) ; */
   } 
 
   async takePicture(){
@@ -318,7 +342,7 @@ export class NewClientPage implements OnInit {
     var options = {
       enableHighAccuracy: true, timeout: 60000, maximumAge: 0
     };
-    console.log("mande") ;
+    
     this.geolocation.getCurrentPosition(options).then((resp) => {
 
       this.fiche_client.get('longitude').setValue(resp.coords.longitude) ;
@@ -381,7 +405,7 @@ export class NewClientPage implements OnInit {
         values[i] = "NULL" ;
       }
 
-      if(keys[i].trim() == "date_debut_contrat" || keys[i].trim() == "date_fin_contrat"){
+      if(keys[i].trim() == "date_debut_contrat" || keys[i].trim() == "date_fin_contrat" || keys[i].trim() == "user_id" || keys[i].trim() == "permanent_POSM_id"){
         i++ ;
       }
       else{
@@ -397,18 +421,45 @@ export class NewClientPage implements OnInit {
 
     let query = q1 + " ( "+ q2 + keys[keys.length - 1] + " ) values (" + q3 + " \" "+ values[values.length - 1] + " \" )";
     let query2 = "insert into i_t_contrat (date_debut_contrat, date_fin_contrat) values ('" + this.fiche_client.get('date_debut_contrat').value + "' ,'" + this.fiche_client.get('date_debut_contrat').value + "' )" ;
+    let query5 = "insert into data_for_sync (table_name, is_synced, table_id, action_type, type) values (\"res_partner\", 0, (select max (id) + 1 from res_partner ), 0,\"insert\")" ;
     
-    console.log('query \n' + query);
-    this.dbm.insert_res_data(query).then(() => {
+    this.dbm.insert_res_data(query5).then(() => {
+      console.log("success data_for_sync") ;
+    }).catch(e => {
+      console.log("error data_for_sync" + e ) ;
+    }) ;
+
+    for(var i = 0 ; i < this.fiche_client.get('user_id').value.length ; i++) {
+      // insert into res_users_res_partner_rel (res_partner_id, res_users_id) values ( (select max (id) + 1 from res_partner ) , '"+ this.fiche_client.get('date_debut_contrat').value[i] +"' )
+      let query3 = "insert into res_users_res_partner_rel (partner_id, res_users_id) values ( (select max (id) + 1 from res_partner ) , '"+ this.fiche_client.get('date_debut_contrat').value[i].value +"' )" ;
+      this.dbm.insert_res_data(query3).then(() => {
+        console.log("success res_users_res_partner_rel") ;
+      }).catch(e => {
+        console.log("error res_users_res_partner_rel" + e ) ;
+      }) ;
+    }
+    
+    for(var i = 0 ; i < this.fiche_client.get('permanent_POSM_id').value.length ; i++) {
+      //insert into i_t_permanent_posm_res_partner_rel (res_partner_id, res_users_id) values ( (select max (id) + 1 from res_partner ) , '"+ this.fiche_client.get('permanent_POSM_id').value[i] +"' )
+      let query4 = "insert into i_t_permanent_posm_res_partner_rel (partner_id, i_t_permanent_posm_id) values ( (select max (id) + 1 from res_partner ) , '"+ this.fiche_client.get('permanent_POSM_id').value[i].value +"' )" ;
+      this.dbm.insert_res_data(query4).then(() => {
+        console.log("success i_t_permanent_posm_res_partner_rel") ;
+      }).catch(e => {
+        console.log("error res_users_res_partner_rel" + e ) ;
+      }) ; 
+    }
+      this.dbm.insert_res_data(query).then(() => {
       this.dbm.insert_res_data(query2).then(()=> {
         this.make_toast("Insertion avec succès") ;
         this.router.navigate(['fiches-client']) ;
+        
         }).catch(e => {
           console.log('tsy mety \n ', stringify(e)) ;
       })
     }).catch(e => {
-      console.log('tsy mety res \n ', JSON.stringify(e)) }) ;
-    }
+      console.log('tsy mety res \n ', JSON.stringify(e)) 
+    })  ;
+    } 
   }
 
   abort_new_client() {
@@ -444,13 +495,25 @@ export class NewClientPage implements OnInit {
     console.log('1 : ' + JSON.stringify(this.i_t_agence)) ;
   }
 
+  secteurChange(event){
+    let secteur_id = event ;
+    this.dbm.get_user_by_secteur(secteur_id)
+      .then((data : any ) => {
+        if(data){
+          this.users_same_secteur = data ;
+          console.log(JSON.stringify(this.users_same_secteur))
+        }
+      },)
+      .catch(error => alert(error.message))
+      
+  }
+
   activite_pos_Change(event){
     this.fiche_client.controls['canal_id'].setValue(event) ;
     this.i_t_canal_filtered = this.i_t_canal.filter(function(canal_filtered) {
       return canal_filtered.id == event;
     });
     this.canal = this.i_t_canal_filtered[0].name 
-    
     console.log('1 : ' + JSON.stringify(this.i_t_canal_filtered)) ;
   }
 
@@ -468,7 +531,16 @@ export class NewClientPage implements OnInit {
   open_menu() {
     this.router.navigate(['fiches-client'])
   }
-
+  data_cmp  : any;
+  Deconnexion(){
+    this.storage.get('data_p2')
+    .then((data2:any)=>{
+      this.data_cmp = JSON.parse(data2);
+      this.dbm.Updata_active_Login(this.data_cmp.id);
+      this.storage.clear();
+    })
+    this.router.navigate(['home']);
+  }
   //this.posts.filter(post => post.nomCategorie === m_categorie) ; (selectionChange)="selectChangeSigle($event)"
 
 }

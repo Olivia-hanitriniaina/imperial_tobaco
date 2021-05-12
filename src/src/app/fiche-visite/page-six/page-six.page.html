@@ -1,0 +1,78 @@
+<ion-content>
+	<div class = "container">
+
+		<!-- HEAD -->
+		<div class = "head">
+		  <div class="back_button" (click) = "open_menu()" >
+		    <i class="fas fa-th" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		  </div>
+
+		  <div class = "menu">
+		    <div class="list_icon">
+		      <i class="fas fa-at" style="color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		      <i class="fas fa-comments" style=" color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		      <i class="fas fa-ban on fa-camera" style=" color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		    </div> 
+		  </div>
+
+		  <div class= "menu_icon">
+		      <i class="fas fa-bars" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		  </div>
+		</div>
+		<!-- HEAD -->
+
+
+		<div class="body">
+			<div class="bg-blanc">
+				<div class="title_body" > 
+		          	<h3>
+						  <a  (click)="page_five()">
+								<i class="fas fa-arrow-left" style="font-size: 18px ; color: #21B799" ></i> 
+						  </a>
+						  {{data_from_route.partner_id}}
+		            </h3>
+		      	</div>			
+
+				<div class = "btn-action-general">
+		            <button pButton type="button" label="Modifier" (click)="modif_next_visit_goal()" *ngIf="!modifiable"  class="bt bt-vert"></button>
+		            <button pButton type="button" label="Créer" (click)="save_next_visit_goal()" *ngIf="modifiable" class="bt bt-no-bg"></button>
+		      	</div>
+
+		      	<div class="breacumb ui-g">
+			        <div class="ui-g-4 dropdownworkflow">
+			          
+			        </div>
+			        <div class="ui-g-8 dropdownworkflow noCLick">
+			          <p-dropdown [options]="items" [(ngModel)]="selectedWorkFlow" [placeholder]="items.label" optionLabel="label" [showClear]="true"></p-dropdown>
+			        </div> 
+		      	</div>
+
+		      	<div class="real-content-page">
+		      		<h3>{{data_from_route.partner_id}}</h3>
+		      		
+		      		<h5>Objectif prochaine visite</h5>
+		      		<div class="table">
+						<form>
+							<ion-item>
+								<ion-textarea autofocus="true" [(ngModel)]="visit_goal" name="visit_goal" *ngIf="!modifiable" disabled></ion-textarea>
+								<ion-textarea autofocus="true" [(ngModel)]="visit_goal" name="visit_goal" *ngIf="modifiable"></ion-textarea>
+							</ion-item>
+						</form>
+		      		</div>
+		      	</div>
+
+		      	<div class="btn-action-etapes">
+	      			<button pButton type="button" label="RETOUR" class="bt btn-retour" (click)="page_five()"></button>
+	      			<span style="margin-left: 5px;margin-right: 5px;">ou</span>
+					  <button pButton type="button" label="SUIVANT" class="bt btn-suivant" (click)="page_seven()"></button>
+					  <p>page 6/7</p>
+	      		</div>
+
+	      	</div>
+
+		</div>
+
+		<div class="footer"></div>
+
+	</div>
+</ion-content>

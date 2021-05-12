@@ -15,24 +15,35 @@
 		    </div> 
 		  </div>
 
-		  <div class= "menu_icon">
-		      <i class="fas fa-bars" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
-		  </div>
-		</div>
+		   <div class= "menu_icon">
+				<p-menu (click) = "Deconnexion()" #menu [popup]="true" [model]="itemes"></p-menu>
+				<a (click)="menu.toggle($event)"> <i class="fas fa-bars" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i></a>
+			  </div>
+			</div>
 		<!-- HEAD -->
 
 
 		<div class="body">
 			<div class="bg-blanc">
 				<div class="title_body" > 
-		          	<h3>
-		              <i class="fas fa-arrow-left" style="font-size: 18px ; color: #21B799" (click) = "page_four()"></i> {{data_from_route.partner_id}}
-		            </h3>
+						<h3>
+								<a  (click)="page_four()">
+									  <i class="fas fa-arrow-left" style="font-size: 18px ; color: #21B799" ></i> 
+								</a>
+								{{data_from_route.partner_id}}
+						  </h3>
 		      	</div>			
 
-				<div class = "btn-action-general">
-		            <button pButton type="button" label="MODIFIER" class="bt bt-vert" (click) = "enable_edit()"></button>
-		      	</div>
+				  <div *ngIf="data_from_route.state != 'fermé'">
+					<div class="btn-action-general">
+						<button *ngIf="edit == false" pButton type="button" label="MODIFIER" class="bt bt-vert"
+							(click)="enable_edit()"></button>
+						<button *ngIf="edit == true" pButton type="button" label="SAUVEGARDER" (click)="save()"
+							class="bt bt-vert"></button>
+						<button *ngIf="edit == true" pButton type="button" label="ANNULER" (click)="cancel()"
+							class="bt ui-button-secondary"></button>
+					</div>
+				</div>
 
 		      	<div class="breacumb ui-g">
 			        <div class="ui-g-4 dropdownworkflow">
@@ -48,12 +59,12 @@
 								
 								<h5>Relevé de stocks et Placement</h5>
 								<div class="table" *ngIf = "edit == true">
-									<p-table #dt [columns]="cols" [value]="data_from_db">
+									<p-table #dt [columns]="cols" [resizableColumns]="true" [value]="data_from_db">
 		
 										<ng-template pTemplate="header" let-columns>
 												<tr>
 	
-														<th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'display': col.display}">
+														<th style="width:70%" *ngFor="let col of columns" [pSortableColumn]="col.field" pResizableColumn [ngStyle]="{'display': col.display}">
 																{{col.header}}
 																<p-sortIcon [field]="col.field"></p-sortIcon>
 														</th>
@@ -63,7 +74,7 @@
 										<ng-template pTemplate="body" let-rowData let-columns="columns">
 												<tr>
 	
-													<td *ngFor="let col of columns" [ngStyle]="{'display': col.display, 'text-align' : col.text_align}" pEditableColumn>
+														<td *ngFor="let col of columns" [ngStyle]=" {'display': col.display, 'text-align' : col.text_align, 'pointer-events' : col.pointer_events, 'background' : col.bg} " pEditableColumn>
 															<p-cellEditor>
 	
 																	<ng-template pTemplate="input">
@@ -112,7 +123,8 @@
 		      	<div class="btn-action-etapes">
 	      			<button pButton type="button" label="RETOUR" class="bt btn-retour" (click)="page_four()"></button>
 	      			<span style="margin-left: 5px;margin-right: 5px;">ou</span>
-	      			<button pButton type="button" label="SUIVANT 5/7" class="bt btn-suivant" (click)="page_six()"></button>
+					  <button pButton type="button" label="SUIVANT" class="bt btn-suivant" (click)="page_six()"></button>
+					  <p>5/7</p>
 	      		</div>
 
 	      	</div>

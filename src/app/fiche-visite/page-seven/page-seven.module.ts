@@ -22,8 +22,12 @@ import { MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
 import { CheckboxModule } from 'primeng/checkbox';
 import { TableModule } from 'primeng/table';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import {DialogModule} from 'primeng/dialog';
+import {FormlyModule} from '@ngx-formly/core';
+import {FormlyIonicModule} from '@ngx-formly/ionic' ;
 import { PageSevenPage } from './page-seven.page';
+import {MenuModule} from 'primeng/menu';
 
 const routes: Routes = [
   {
@@ -53,7 +57,12 @@ const routes: Routes = [
     ToastModule,
     CheckboxModule,
     TableModule,
-    RouterModule.forChild(routes)
+    ReactiveFormsModule,
+    DialogModule,
+    FormlyModule.forRoot(),
+    FormlyIonicModule ,
+    RouterModule.forChild(routes),
+    MenuModule
   ],
   declarations: [PageSevenPage],
   providers : [MessageService]

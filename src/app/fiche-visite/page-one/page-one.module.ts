@@ -23,6 +23,7 @@ import { ToastModule } from 'primeng/toast';
 import { CheckboxModule } from 'primeng/checkbox';
 
 import { PageOnePage } from './page-one.page';
+import {MenuModule} from 'primeng/menu';
 
 const routes: Routes = [
   {
@@ -51,7 +52,8 @@ const routes: Routes = [
     CardModule,
     ToastModule,
     CheckboxModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    MenuModule
   ],
   declarations: [PageOnePage],
   providers : [MessageService]

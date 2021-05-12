@@ -39,7 +39,9 @@ import { LoadingController, ToastController } from '@ionic/angular';
 import { MessageService } from 'primeng/api';
 import { i_t_canal } from 'src/app/model/data/i_t_canal.model';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-
+import { FullScreenImage } from '@ionic-native/full-screen-image/ngx';
+import { name_id } from '../new-client/new-client.page';
+import {MenuItem} from 'primeng/api';
 @Component({
   selector: 'app-detail-fiche-client',
   templateUrl: './detail-fiche-client.page.html',
@@ -50,6 +52,7 @@ export class DetailFicheClientPage implements OnInit {
 
   }
 
+  itemes: MenuItem[];
   edit : boolean = false ;
   items: { id : number , label: string; } [] ;
   itemsActions: {id : number , label: string; } [] ;
@@ -69,7 +72,7 @@ export class DetailFicheClientPage implements OnInit {
   i_t_enseigne_appartenance: Array<i_t_enseigne_appartenance> = [] ;
   i_t_frequence_approvisionnement: Array<i_t_frequence_approvisionnement> = [] ;
   i_t_frequence_visite: Array<i_t_frequence_visite> = [] ;
-  i_t_permanent_posm: Array<i_t_permanent_posm> = [] ;
+  i_t_permanent_posm: Array<name_id> = [] ;
   i_t_preference_animateur: Array<i_t_preference_animateur> = [] ;
   i_t_proximite: Array<i_t_proximite> = [] ;
   i_t_secteur: Array<i_t_secteur> = [] ;
@@ -77,11 +80,12 @@ export class DetailFicheClientPage implements OnInit {
   i_t_type_quartier: Array<i_t_type_quartier> = [] ;
   i_t_ville: Array<i_t_ville> = [] ;
   i_t_zone: Array<i_t_zone> = [] ;
-  i_t_fournisseur_secondaire: Array<i_t_fournisseur_secondaire> = [] ;
-  i_t_fournisseur_principale: Array<i_t_fournisseur_principale> = [] ;
+  i_t_fournisseur_secondaire: Array<name_id> = [] ;
+  i_t_fournisseur_principale: Array<name_id> = [] ;
   i_t_region: Array<i_t_region> = [] ;
   i_t_source_approvisionnement : Array<i_t_source_approvisionnement>
-  res_user: any = {} ;
+  res_user : Array<name_id> ;
+  res_user_active : Array<name_id> ;
   fiche_client: FormGroup;
   data_cli : any = {} ;
   i_t_agence_filtered : Array<i_t_agence> =  [] ;
@@ -93,11 +97,14 @@ export class DetailFicheClientPage implements OnInit {
   filePath : String = "";
   window : any = window ;
   resp : any ;
-
+  display : boolean = false ;
+  fichier :  File;
+ 
+  valeur :any;
   // By Tolotra
   OnClickInactif : number ;
 
-  constructor(private camera : Camera,private messageService : MessageService, private toast : ToastController, private load : LoadingController, private data_router : Data, private geolocation : Geolocation,private storage: Storage, private dbm : Database_manager, private form_builder: FormBuilder, private router : Router, private activatedRoute : ActivatedRoute) { 
+  constructor(private fullScreenImage: FullScreenImage, private camera : Camera,private messageService : MessageService, private toast : ToastController, private load : LoadingController, private data_router : Data, private geolocation : Geolocation,private storage: Storage, private dbm : Database_manager, private form_builder: FormBuilder, private router : Router, private activatedRoute : ActivatedRoute) { 
 
   }
 
@@ -114,39 +121,134 @@ export class DetailFicheClientPage implements OnInit {
       {id : 3 , label:'VALIDÉE PAR ADMINISTRATEUR'},
     ];
 
+      this.itemes = [
+        {label: 'Déconnecter', icon: 'pi pi-fw pi-plus'}, 
+    ];
    this.activatedRoute.queryParams.subscribe( async params =>{
+
     this.dbm.get_res_partner_data(params["id"]).then( data => {
+     
+      console.log("res_partner_data " + JSON.stringify(data));
+      let md = { value: Number, label: String  } ;
+      let md2 = { value: Number, label: String  } ;
+      var md_data2 = new Array () ;
+      var md_data = new Array() ;
+
+        if(data.cnc_posm != null) {
+          if(data.cnc_posm.includes('|') == true) {
+            var cnc_posm = data.cnc_posm.split('|') ;
+            var cnc_posm_id =  data.cnc_posm_id.split('|') ;
+            for (var i = 0; i < cnc_posm_id.length ; i++) {
+              try {
+                md = { value : cnc_posm_id[i], label : cnc_posm[i] } ;
+                console.log(md) ;
+                md_data.push(md) ;
+              }
+              catch(e) {
+                console.log("data.cnc_posm ==> ", e) ;
+              }
+            } data.cnc_posm = md_data ;
+            console.log("login"+data.cnc_posm);
+          }
+          else {
+            try {
+              md = { value : data.cnc_posm_id, label : cnc_posm}
+              md_data.push(md) ;
+            }
+            catch(e) {
+              console.log("else n°1 data.cnc_posm ==> ", e) ;
+            }
+          }
+        }
+        else {
+          try {
+            md = { value : null, label : null}
+            md_data.push(md) ;
+          }
+          catch(e) {
+            console.log("else n°2 data.cnc_posm ==> ", e) ;
+          }
+            
+        }
+          
+        if(data.cnc_login != null) {
+          
+          if(data.cnc_login.includes('|') == true) {
+            var cnc_login = data.cnc_login.split('|') ;
+            var cnc_usr_id =  data.cnc_usr_id.split('|') ;
+            for (var i = 0; i < cnc_usr_id.length ; i++) {
+              try {
+                md2 = { value : cnc_usr_id[i], label : cnc_login[i] }
+                md_data2.push(md2) ;
+              }
+              catch(e) {
+                console.log("data.cnc_login ==> ", e) ;
+              }
+            }
+          }
+          else {
+            try {
+              md2 = { value : data.cnc_usr_id, label : data.cnc_login}
+              md_data2.push(md2) ;
+            }
+            catch(e) {
+              console.log("else n°1 data.cnc_login ==> ", e) ;
+            }
+          }
+         
+          data.cnc_login = md_data2 ;
+          console.log("login"+data.cnc_login);
+        }
+        else {
+          try {
+            md2 = { value : null, label : null}
+            md_data2.push(md2) ;
+          }
+          catch(e) {
+            console.log("else n°2 data.cnc_login ==> ", e) ;
+        }
+      }
+      data.cnc_login = md_data2 ;
+      data.cnc_posm = md_data ;
       this.client_detail = data ;
-    }) ;
+      console.log("clientttttttttttt"+JSON.stringify(this.client_detail));
     
-     this.dbm.select_basic_data_with_id("res_partner",params["id"]).then(data_res_partner => {
+  }) ;
+    
+    this.dbm.select_basic_data_with_id("res_partner",params["id"]).then(data_res_partner => {
         this.data_cli = data_res_partner;
-        console.log(this.data_cli) ;
+        console.log("update"+JSON.stringify( this.data_cli));
     }) ;
 
     this.dbm.select_basic_data("i_t_region").then( data => {
       this.i_t_region = data ;
-            
+    }) ;
+
+    this.dbm.select_data_with_table_name("i_t_permanent_posm").then(data => {
+      this.i_t_permanent_posm = data ;
+    }) ;
+    
+    this.dbm.select_data_res_users("res_users").then(data => {
+       this.res_user = data ;
+       console.log("1"+JSON.stringify(this.res_user));
+    }) ;
+
+    this.dbm.select_res_user_active().then( data => {
+      this.res_user_active = data ;
+      console.log("2"+JSON.stringify(this.res_user));
     }) ;
 
     this.dbm.select_basic_data("i_t_agence").then( data => {
       this.i_t_agence = data ;
-      
     }) ;
 
      this.dbm.select_basic_data("i_t_zone").then( data => {
       this.i_t_zone = data ;
-      
     }) ;
 
-    this.dbm.select_basic_data("i_t_activite_pos").then( data => {
-      
+      this.dbm.select_basic_data("i_t_activite_pos").then( data => {
         this.i_t_activite_pos = data ;
-       
-      
       }) ;
-
-    
   
         this.dbm.select_basic_data("i_t_activation_autorisee").then( data => {
         this.i_t_activation_autorisee = data ;
@@ -161,7 +263,7 @@ export class DetailFicheClientPage implements OnInit {
       }) ;
 
  
-     this.dbm.select_basic_data("i_t_classification1").then( data => {
+      this.dbm.select_basic_data("i_t_classification1").then( data => {
         this.i_t_classification1 = data ;
       }) ;
   
@@ -197,11 +299,7 @@ export class DetailFicheClientPage implements OnInit {
         this.i_t_frequence_visite = data ;
       }) ;
   
-        this.dbm.select_basic_data("i_t_permanent_posm").then( data => {
-        this.i_t_permanent_posm = data ;
-      }) ;
-  
-        this.dbm.select_basic_data("i_t_preference_animateur").then( data => {
+      this.dbm.select_basic_data("i_t_preference_animateur").then( data => {
         this.i_t_preference_animateur = data ;
       }) ;
   
@@ -227,12 +325,9 @@ export class DetailFicheClientPage implements OnInit {
   
       
   
-        this.dbm.select_basic_data("i_t_fournisseur_secondaire").then( data => {
-        this.i_t_fournisseur_secondaire = data ;
-      }) ;
-  
-        this.dbm.select_basic_data("i_t_fournisseur_principale").then( data => {
+      this.dbm.get_name_id_data("res_partner").then(data => {
         this.i_t_fournisseur_principale = data ;
+        this.i_t_fournisseur_secondaire = data ;
       }) ;
   
         this.dbm.select_basic_data("i_t_source_approvisionnement").then( data => {
@@ -244,18 +339,13 @@ export class DetailFicheClientPage implements OnInit {
         this.canal = this.i_t_canal[0].name 
       }) ;
   
-        this.dbm.select_res_user_active().then( data => {
-        this.res_user = data ;
-      }) ;
-
-      
-
+        
       this.fiche_client = this.form_builder.group({
         region_id : ['', Validators.required],
         agence_id : ['', Validators.required] ,
         zone_id : ['', Validators.required] ,
         secteur_id : [''] ,
-
+        
         nom_pos : ['', Validators.required] ,
         nom_gerant : ['', Validators.required] ,
         adresse : ['', Validators.required] ,
@@ -281,16 +371,13 @@ export class DetailFicheClientPage implements OnInit {
         couverture_commerciale_id : ['', Validators.required] ,
         frequence_visite_id : [''] ,
 
+        user_id : ['', Validators.required] ,
         canal_id : ['', Validators.required] ,
 
         active : [''] ,
 
         cible_installation_presentoirs_id : ['', Validators.required] ,
-        permanent_POSM1_id : ['', Validators.required] ,
-        permanent_POSM2_id : ['', Validators.required] ,
-        permanent_POSM3_id : ['', Validators.required] ,
-        permanent_POSM4_id : ['', Validators.required] ,
-        permanent_POSM5_id : ['', Validators.required] ,
+        permanent_POSM_id : ['', Validators.required] ,
 
         contrat_id : ['', Validators.required] ,
         date_debut_contrat : [this.client_detail.date_debut_contrat, Validators.required] ,
@@ -315,8 +402,7 @@ export class DetailFicheClientPage implements OnInit {
       this.fiche_client.controls['date_fin_contrat'].patchValue(this.client_detail.date_fin_contrat) ; 
       this.fiche_client.controls['canal_id'].disable() ; 
    }) ;
-    
-      
+  
   }
 
   edit_fiche_client(){
@@ -367,7 +453,7 @@ export class DetailFicheClientPage implements OnInit {
           values[i] = "NULL" ;
         }
   
-        if(keys[i].trim() == "date_debut_contrat" || keys[i].trim() == "date_fin_contrat"){
+        if(keys[i].trim() == "date_debut_contrat" || keys[i].trim() == "date_fin_contrat" || keys[i].trim() == "user_id" || keys[i].trim() == "permanent_POSM_id"){
           i++ ;
         }
         else{
@@ -383,8 +469,42 @@ export class DetailFicheClientPage implements OnInit {
   
       let query = q1 + q2 + keys[keys.length-1] + " = \" " + values[values.length - 1] + " \" where id = " + params["id"] ;
       let query2 = "update i_t_contrat set date_debut_contrat = '" + this.fiche_client.get('date_debut_contrat').value + "' , date_fin_contrat = '" + this.fiche_client.get('date_debut_contrat').value + "' where id = " + this.data_cli.contrat_id ;
-      console.log('query \n' + query) ;
-      console.log('query2 \n' + query2) ;
+      
+      let query5 = "delete from res_users_res_partner_rel where partner_id = " + params["id"] ;
+      let query6   = "delete from i_t_permanent_posm_res_partner_rel where partner_id = " + params["id"] ;
+
+      this.dbm.insert_res_data(query5).then(() => {
+        console.log("delete success i_t_permanent_posm_res_partner_rel") ;
+      }).catch(e => {
+        console.log("error delete i_t_permanent_posm_res_partner_rel" + e ) ;
+      }) ; 
+
+      this.dbm.insert_res_data(query6).then(() => {
+        console.log("delete success i_t_permanent_posm_res_partner_rel") ;
+      }).catch(e => {
+        console.log("error delete i_t_permanent_posm_res_partner_rel" + e ) ;
+      }) ; 
+
+      for(var i = 0 ; i < this.fiche_client.get('user_id').value.length ; i++) {
+        // insert into res_users_res_partner_rel (res_partner_id, res_users_id) values ( (select max (id) + 1 from res_partner ) , '"+ this.fiche_client.get('date_debut_contrat').value[i] +"' )
+        let query3 = "insert into res_users_res_partner_rel (partner_id, res_users_id) values ( (select max (id) + 1 from res_partner ) , '"+ this.fiche_client.get('date_debut_contrat').value[i].value +"' )" ;
+        this.dbm.insert_res_data(query3).then(() => {
+          console.log("success res_users_res_partner_rel") ;
+        }).catch(e => {
+          console.log("error res_users_res_partner_rel" + e ) ;
+        }) ;
+      }
+      
+      for(var i = 0 ; i < this.fiche_client.get('permanent_POSM_id').value.length ; i++) {
+        //insert into i_t_permanent_posm_res_partner_rel (res_partner_id, res_users_id) values ( (select max (id) + 1 from res_partner ) , '"+ this.fiche_client.get('permanent_POSM_id').value[i] +"' )
+        let query4 = "insert into i_t_permanent_posm_res_partner_rel (partner_id, i_t_permanent_posm_id) values ( (select max (id) + 1 from res_partner ) , '"+ this.fiche_client.get('permanent_POSM_id').value[i].value +"' )" ;
+        this.dbm.insert_res_data(query4).then(() => {
+          console.log("success i_t_permanent_posm_res_partner_rel") ;
+        }).catch(e => {
+          console.log("error res_users_res_partner_rel" + e ) ;
+        }) ; 
+      }
+
       this.dbm.update_res_data(query).then(() => {
         this.dbm.update_res_data(query2).then(() => {
           this.make_toast("Mise à jour avec succès...") ;
@@ -393,8 +513,7 @@ export class DetailFicheClientPage implements OnInit {
         }) ;
       }) ;
     }
-    }) ;
-    
+  }) ;
 }
 
 open_fiche_client(){
@@ -417,8 +536,6 @@ async getMyLocation(){
     loading.present() ;
 
     this.geolocation.getCurrentPosition(options).then((resp) => {
-      // resp.coords.latitude
-      // resp.coords.longitude
       this.resp = resp.coords ;
       this.fiche_client.controls['longitude'].setValue(resp.coords.longitude) ;
       this.fiche_client.controls['latitude'].setValue(resp.coords.latitude) ;
@@ -459,7 +576,7 @@ async getMyLocation(){
     this.fiche_client.controls[champ].setValue(null) ;
     //console.log(this.fiche_client.get('champ').value) ;
   }
-
+ 
   async regionChange(event) {
     this.i_t_agence_filtered = await this.i_t_agence.filter(function(agence_filtered) {
       return agence_filtered.region_id == event;
@@ -486,18 +603,21 @@ async getMyLocation(){
     this.i_t_canal_filtered = await this.i_t_canal.filter(function(canal_filtered) {
       return canal_filtered.id == event;
     });
-    console.log('zoneChange : ' + JSON.stringify(this.i_t_canal_filtered)) ;
-    this.canal = this.i_t_canal_filtered[0].name 
+    console.log('activite_pos_Change : ' + JSON.stringify(this.i_t_canal_filtered)) ;
+    if(this.i_t_canal_filtered.length > 0 ) {
+      this.canal = this.i_t_canal_filtered[0].name 
+    }
+    else {
+      this.canal = "" ;
+    }
+    
   }
-
   async takePicture(){
     let cameraOptions: CameraOptions = {
-      quality: 100,
+      quality: 50,
       destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE ,
-      targetHeight : 70 ,
-      targetWidth : 100
     };
     const imagePath : string = await this.camera.getPicture(cameraOptions);
     return this.window.Ionic.WebView.convertFileSrc(imagePath);
@@ -505,9 +625,14 @@ async getMyLocation(){
 
   async showImageFromCamera() {
     try {
+     
+     
       this.filePath = await this.takePicture();
-      this.fiche_client.controls['photo'].setValue(this.filePath) ;
+
+      this.fiche_client.controls['photo'].setValue(this.filePath);
+     
       console.log("showImageFromCamera : " +  this.fiche_client.get('photo').value) ;
+     
     } catch(error) {
       console.log(error);
     }
@@ -525,5 +650,20 @@ async getMyLocation(){
     });
     console.log(this.items)
   }
+
+  open_full_screen(){
+    this.display = true ;
+  }
+  data_cmp  : any;
+  Deconnexion(){
+    this.storage.get('data_p2')
+    .then((data2:any)=>{
+      this.data_cmp = JSON.parse(data2);
+      this.dbm.Updata_active_Login(this.data_cmp.id);
+      this.storage.clear();
+    })
+    this.router.navigate(['home']);
+  }
+
 
 }

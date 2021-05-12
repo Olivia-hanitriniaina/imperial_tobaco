@@ -2,11 +2,11 @@ import { base_data } from './base_data.model';
 
 export class i_t_tournee extends base_data {
 
-    commercial_id : number ;
-    start_date : Date ;
-    end_date : Date ;
-    date : Date ;
-    state : string ;
+    commercial_id : number = 0 ;
+    start_date : Date = new Date(0);
+    end_date : Date = new Date(0);
+    date : Date = new Date(0);
+    state : string = "" ;
 
     constructor(commercial_id : number,  date : Date, state : string, create_uid : number, name : string, write_uid : number, id? : number){
         super(create_uid, name, write_uid, id) ;

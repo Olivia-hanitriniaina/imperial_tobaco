@@ -15,24 +15,33 @@
 		    </div> 
 		  </div>
 
-		  <div class= "menu_icon">
-		      <i class="fas fa-bars" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		   <div class= "menu_icon">
+			<p-menu (click) = "Deconnexion()" #menu [popup]="true" [model]="itemes"></p-menu>
+			<a (click)="menu.toggle($event)"> <i class="fas fa-bars" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i></a>
 		  </div>
-		</div>
+	  </div>
 		<!-- HEAD -->
 
 
 		<div class="body">
 			<div class="bg-blanc">
 				<div class="title_body" > 
-		          	<h3>
-		              <i class="fas fa-arrow-left" style="font-size: 18px ; color: #21B799" (click)="page_one()"></i> {{data_from_route.partner_id}}
-		            </h3>
+						<h3>
+								<a  (click)="page_one()">
+									  <i class="fas fa-arrow-left" style="font-size: 18px ; color: #21B799" ></i> 
+								</a>
+								{{data_from_route.partner_id}}
+						  </h3>
 		      	</div>			
 
-				<div class = "btn-action-general">
-		      <button pButton type="button" label="MODIFIER" class="bt" (click) = "enable_edit()"></button>
-		    </div>
+				<div *ngIf="data_from_route.state != 'fermé'">
+					<div class = "btn-action-general">
+						<button *ngIf = "edit == false" pButton type="button" label="MODIFIER" class="bt bt-vert" (click)= "enable_edit()"></button>
+						<button *ngIf = "edit == true" pButton type="button" label="SAUVEGARDER" class="bt bt-vert" (click)= "sauvegarder()"></button>
+						<button *ngIf = "edit == true" pButton type="button" label="ANNULER" class="bt ui-button-secondary" (click)= "annuler()"></button>
+					</div>
+				</div>
+				
 
 		      	<div class="breacumb ui-g">
 			        <div class="ui-g-4 dropdownworkflow">
@@ -63,18 +72,16 @@
 									<ng-template pTemplate="body" let-rowData let-columns="columns">
 											<tr>
 
-												<td *ngFor="let col of columns" [ngStyle]="{'display': col.display, 'text-align' : col.text_align}" pEditableColumn>
+												<td *ngFor="let col of columns" [ngStyle]=" {'display': col.display, 'text-align' : col.text_align, 'pointer-events' : col.pointer_events, 'background' : col.bg} " pEditableColumn>
 														<p-cellEditor>
 
 																<ng-template pTemplate="input">
 																		<input pInputText type="text" [(ngModel)]="rowData[col.field]">
-																</ng-template>
-																
-															<ng-template pTemplate="output">
-																	blabla1
+																</ng-template>	
+		
+																<ng-template pTemplate="output">
 																		{{rowData[col.field]}}
 																</ng-template>
-																
 		
 														</p-cellEditor>
 												</td>
@@ -112,9 +119,10 @@
 		      	</div>
 
 		      	<div class="btn-action-etapes">
-	      			<button pButton type="button" label="RETOUR" class="bt btn-retour" (click)="page_one()"></button>
-	      			<span style="margin-left: 5px;margin-right: 5px;">ou</span>
-	      			<button pButton type="button" label="SUIVANT 2/7" class="bt" (click)="page_three()"></button>
+						<button pButton type="button" label="RETOUR" class="bt btn-retour" (click)="page_one()"></button>
+						<span style="margin-left: 5px;margin-right: 5px;">ou</span>
+					  <button pButton type="button" label="SUIVANT" class="bt" (click)="page_three()"></button>
+					  <p>page 2/7</p>
 	      		</div>
 
 	      	</div>

@@ -1,0 +1,306 @@
+
+	<ion-content>
+		<div class = "container">
+			<!-- HEAD -->
+			<div class = "head">
+			  <div class="back_button" (click) = "open_menu()" >
+				<i class="fas fa-th" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+			  </div>
+
+			  <div class = "menu">
+				<div class="list_icon">
+				  <i class="fas fa-at" style="color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+				  <i class="fas fa-comments" style=" color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+				  <i class="fas fa-ban on fa-camera" style=" color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+				</div> 
+			  </div>
+
+			  <div class= "menu_icon">
+				  <i class="fas fa-bars" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+			  </div>
+			</div>
+		
+		
+			<div class="body">
+				<div class = "title_body" (click) = "open_fiche_client()" >
+				  <h3>
+					  <i class="fas fa-arrow-left" style="font-size: 18px ; color: #21B799"></i> {{name}}
+				  </h3>
+                </div>
+                
+                <div class = "btn_nw_cr">
+                        <button pButton type="button" label="MODIFIER"  *ngIf="edit==false"   class="bt ui-button-success" (click)="edit_tournee()"></button>
+                    <button pButton type="button" label="SAUVEGARDER"  *ngIf="edit==true"   class="bt ui-button-success" (click)="save_tournee()"></button>
+                    <button pButton type="button" label="ANNULER"     class="bt ui-button-secondary" (click)="abort_tournee()"></button>
+              </div>
+				
+				<div class="breacumb ui-g">
+				  <div class="ui-g-4 dropdownworkflow">
+					  <!-- <button pButton type="button" label="VALIDÉE PAR SUPERVISEUR"  class="bt ui-button-secondary"></button> -->
+					  <p-dropdown [options]="itemsActions" [(ngModel)]="selectedAction" placeholder="ACTION" optionLabel="label" [showClear]="true" (onChange) = "itemsActionsChange($event.value)"></p-dropdown>
+				  </div>
+				  <div class="ui-g-8 dropdownworkflow noCLick"> 
+					  <!-- <p-breadcrumb [model]="items" [home]="home"></p-breadcrumb> -->
+					  <p-dropdown [options]="items" [(ngModel)]="selectedWorkFlow" [placeholder]="items.label" optionLabel="label" [showClear]="true"></p-dropdown>
+				  </div> 
+				</div>
+
+        <div class="ban-gris ui-g">
+            <div class="ui-g-7">
+               
+            </div>
+
+          <div class="fiche-visite ui-g-5" (click) = "go_fiche_visite()">Fiche de visite</div>
+        </div>
+
+        <!--
+        <div class="photo ui-g show-detail-tourne">
+          <p class="label_nom">Nom</p>
+          <p class="nom_tournee">{{from_liste.name}}</p>
+        </div>
+        
+        -->
+        
+        <div class="photo ui-g show-detail-tourne" >
+          <div class = "ui-g-6">
+              <p class="label_nom">Commercial</p>
+          </div>
+
+          <div class = "ui-g-6">
+              <p class="nom_tournee"><span class="txt-blue">Administrateur</span></p>
+          </div>
+          
+         
+        </div>
+
+        <div class="photo ui-g show-detail-tourne" *ngIf="start_date">
+          <p class="label_nom">Date de démarrage</p>
+          <p class="nom_tournee">{{from_liste.start_date}}</p>
+        </div>
+				
+				  
+				<div class = "form">
+					<div class = "form_inside">
+              <div class = "table">
+                  <p class="first">POINTS DE VENTE INITIAUX</p>
+                  <p-table [columns]="cols_pv" [value]="data_pv" dataKey="name" class="tableau">
+      
+                      <ng-template pTemplate="header" let-columns>
+                          <tr>
+                            <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'display': col.display}">
+                                  {{col.header}}
+                                  <p-sortIcon [field]="col.field"></p-sortIcon>
+                              </th>
+                            <th *ngIf ="edit==true"></th>
+                          </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-rowData let-columns="columns">
+                          <tr [pSelectableRow]="rowData" [ngClass]="rowData.state == 'oui' ? 'non' : null">
+                              <td *ngFor="let col of columns" (click) = "onRowClicked(rowData)" [ngClass]="rowData[col.field] == 'non' ? 'oui' : null" [ngStyle]="{'display': col.display}">
+                                      {{rowData[col.field]}}
+                              </td>
+                              <td *ngIf = "edit == true" class="icn">
+                                <i class="fas fa-trash-alt" style="font-size: 18px ; color: gray"></i>
+                            </td>
+                          </tr>
+                      </ng-template>
+                  </p-table>
+      
+              </div>
+          </div>
+          
+          <div class = "form_inside">
+              <div class = "table">
+                  <p class="first">POINTS DE VENTE SUPPLÉMENTAIRES</p>
+                  <p-table [columns]="cols_pvs" [value]="data_pvs" dataKey="name" class="tableau">
+                           
+                      <ng-template pTemplate="header" let-columns>
+                          <tr>
+                                  <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'display': col.display}">
+                                  {{col.header}}
+                                  <p-sortIcon [field]="col.field"></p-sortIcon>
+                              </th>
+                          </tr>
+                      </ng-template>
+                      <ng-template pTemplate="body" let-rowData let-columns="columns">
+                          <tr [pSelectableRow]="rowData" [ngClass]="rowData.state == 'oui' ? 'non' : null">    
+                              <td *ngFor="let col of columns" (click) = "onRowClicked(rowData)" [ngClass]="rowData[col.field] == 'non' ? 'oui' : null" [ngStyle]="{'display': col.display}">
+                                      {{rowData[col.field]}}
+                              </td>
+                          </tr>
+                      </ng-template>
+                  </p-table>
+      
+              </div>
+          </div>
+          
+      </div>
+
+      
+    <p-dialog [(header)]="name" [(visible)]="display" [modal]="true" [responsive]="true" styleClass = "mydialog" appendTo="body">
+      
+      <div>
+        <p class="label_nom">Sequence</p>
+        <p class="nom_tournee">{{name}}</p>
+      </div>
+
+      <div>
+        <p class="label_nom">Nom</p>
+        <p class="nom_tournee">{{screen.res_partner_name}}</p>
+      </div>
+
+      <div>
+        <p class="label_nom">Visité</p>
+        <p class="nom_tournee">{{screen.visit}}</p>
+      </div>
+
+        <p-footer>
+            <button type="button" pButton (click)="display=false" label="Fermer" class="ui-button-secondary"></button>
+        </p-footer>
+    </p-dialog>
+
+    <p-dialog [(header)]="name" [(visible)]="display4" [modal]="true" [responsive]="true" styleClass = "mydialog" appendTo="body">
+            <div class = "form">
+                    <form [formGroup]="tournees_fg">
+                      <div class = "form_inside">
+        
+                        <div class="form_item">
+          
+                          <ion-item>
+                            <ion-label position="floating">Séquence</ion-label>
+                            <ion-input formControlName= "sequence" [(ngModel)] = "screen.sequence" type="text"> </ion-input>
+                          </ion-item>
+          
+                          <ion-item class="InputObligatoire">
+                            <ion-label position="floating">Nom</ion-label>
+                            <ion-input formControlName= "name" [(ngModel)] = "screen.name" type="text" > </ion-input>
+                          </ion-item>
+          
+                          <ion-item class="InputObligatoire">
+                            <ion-label position="floating">Visité</ion-label>
+                            <ion-select [(ngModel)] = "screen.visit" formControlName= "visite" (ionChange) = "visite_change()">
+                              <ion-select-option *ngFor = "let visite of visites" [value] = "visite.code" > {{visite.name}}</ion-select-option>
+                            </ion-select>
+                          </ion-item>
+                          <!--
+                            <p-dropdown [(ngModel)] = "screen.visite" [options]="visites" formControlName="visite"></p-dropdown>
+                          -->
+                        </div>
+                     </div>
+                    </form>
+            </div>
+      
+        <p-footer>
+            <button type="button" pButton (click)="display4=false" label="SAUVEGARDER" class="ui-button-secondary"></button>
+            <button type="button" pButton (click)="display4=false" label="ANNULER" class="ui-button-secondary"></button>
+        </p-footer>
+
+    </p-dialog>
+
+    <p-dialog header="Odoo" [(visible)]="display2" [modal]="true" [responsive]="true" styleClass = "mydialog" appendTo="body">
+      
+      <div class="message">
+          Voici la liste des points de ventes non visité lors de la tournées de la veille.
+      </div>
+
+      <div class = "form_inside">
+        <div class = "table">
+            <p class="first">POINTS DE VENTE</p>
+            <p-table #dt [columns]="cols_p" [value]="data_p"  class="tableau">
+                     
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'display': col.display}">
+                          {{col.header}}
+                          <p-sortIcon [field]="col.field"></p-sortIcon>
+                        </th>
+
+                        <th></th>
+
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr>    
+                        
+                        <td *ngFor="let col of columns" [ngStyle]="{'display': col.display}">
+                                {{rowData[col.field]}}
+                        </td>
+
+                       <!-- <td *ngIf = "rowData.visite == 'non' ">
+                            <button pButton icon="fas fa-check" (click)="addWithButton(rowData)"></button>
+                        </td>
+
+                        <td *ngIf =  "rowData.visite == 'oui' ">
+                            <button pButton icon="fas fa-times" (click)="deleteWithButton(rowData)"></button>
+                        </td> -->
+
+                    </tr>
+                </ng-template>
+            </p-table>
+
+        </div>
+    </div>
+      
+        <p-footer>
+            <button type="button" pButton (click)="valider_tournee()" label="VALIDER ET DÉMARRER LA TOURNÉE" class="ui-button-success"></button>
+            <button type="button" pButton (click)="display2=false" label="CANCEL" class="ui-button-secondary"></button>
+        </p-footer>
+        
+    </p-dialog>
+
+
+
+
+    <p-dialog header="Odoo" [(visible)]="display3" [modal]="true" [responsive]="true" styleClass = "mydialog" appendTo="body">
+      
+      <div class="message">
+          Voici la liste des points de ventes non visité ce jour.
+      </div>
+
+      <div class = "form_inside">
+        <div class = "table">
+            <p class="first">POINTS DE VENTE</p>
+            <p-table #dt [columns]="cols_pn" [value]="data_pn"  class="tableau">
+                     
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns" [pSortableColumn]="col.field" [ngStyle]="{'display': col.display}">
+                          {{col.header}}
+                          <p-sortIcon [field]="col.field"></p-sortIcon>
+                        </th>
+
+                        <th></th>
+
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr>    
+                        
+                        <td *ngFor="let col of columns" [ngStyle]="{'display': col.display}">
+                                {{rowData[col.field]}}
+                        </td>
+
+                    </tr>
+                </ng-template>
+            </p-table>
+
+        </div>
+    </div>
+      
+        <p-footer>
+            <button type="button" pButton (click)="cloturer_tournee()" label="FERMER ET CLÔTURER LA TOURNÉE" class="ui-button-success"></button>
+            <button type="button" pButton (click)="display3=false" label="CANCEL" class="ui-button-secondary"></button>
+        </p-footer>
+        
+    </p-dialog>
+
+			<div class="footer">
+
+      </div>
+			
+		  </div>
+    </div>
+    
+</ion-content>

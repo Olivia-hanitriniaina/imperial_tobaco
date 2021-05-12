@@ -4,7 +4,7 @@ export class i_t_activite_pos extends base_data {
 
     canal_id : number ;
 
-    constructor(create_uid : number, name : string, canal_id : number, write_uid : number, id? : number){
+    constructor(create_uid : number = 0 , name : string = "" , canal_id : number = 0 , write_uid : number = 0, id? : number){
         if(id){
             super(create_uid, name, write_uid, id);
         }

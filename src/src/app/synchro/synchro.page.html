@@ -1,0 +1,79 @@
+<ion-content>
+	<div class = "container">
+
+		<!-- HEAD -->
+		<div class = "head">
+		  <div class="back_button" (click) = "open_menu()" >
+		    <i class="fas fa-th" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		  </div>
+
+		  <div class = "menu">
+		    <div class="list_icon">
+		      <i class="fas fa-at" style="color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		      <i class="fas fa-comments" style=" color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		      <i class="fas fa-ban on fa-camera" style=" color: white ;   margin-right: 10px; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		    </div> 
+		  </div>
+
+		  <div class= "menu_icon">
+		      <i class="fas fa-bars" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+		  </div>
+		</div>
+		<!-- HEAD -->
+
+
+		<div class="body">
+			<div class="bg-blanc">
+
+					<div class = "title_body" (click) = "open_fiche_client()">
+							<h3>
+							  <i class="fas fa-arrow-left" style="font-size: 18px ; color: #21B799" >
+							  </i> Synchronisation
+							</h3>
+						  </div>
+
+          <div class="real-content-page">
+              <form class = "connexion" [formGroup]="sync" (ngSubmit)="synchroniser()">
+
+				<div class="field">
+					<p class="first">URL</p>
+					<input formControlName="url" type="text" size="30" pInputText required> 
+				</div>
+
+                <div class="field">
+                    <p class="first">Base de données</p>
+                    <input formControlName="database" type="text" size="30" pInputText required> 
+                </div>
+
+                <div class="field">
+                    <p class="first">Utilisateur</p>
+                    <input formControlName="username" type="text" size="30" pInputText required> 
+                </div>
+
+                <div class="field">
+                    <p class="first">Mot de passe</p>
+                    <input formControlName="password" type="password" size="30" pPassword required/> 
+                </div>
+              
+                
+                <div class = "bouton">
+                  <button pButton type="submit" label="SYNCHRONISER" [disabled]="!sync.valid" class="bt2 ui-button-success"></button>
+                </div>
+                
+            </form>
+          </div>
+          
+          <div class="bouton_visite">
+            
+          </div>
+
+	    </div>
+
+		</div>
+
+		<div class="footer">
+			
+		</div>
+
+	</div>
+</ion-content>

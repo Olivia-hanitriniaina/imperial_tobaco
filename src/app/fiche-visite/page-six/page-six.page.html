@@ -16,7 +16,8 @@
 		  </div>
 
 		  <div class= "menu_icon">
-		      <i class="fas fa-bars" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i>
+			<p-menu (click) = "Deconnexion()" #menu [popup]="true" [model]="itemes"></p-menu>
+			<a (click)="menu.toggle($event)"> <i class="fas fa-bars" style=" color: white; font-size: 20px ; font-size: 20px ; vertical-align: -webkit-baseline-middle"></i></a>
 		  </div>
 		</div>
 		<!-- HEAD -->
@@ -26,14 +27,18 @@
 			<div class="bg-blanc">
 				<div class="title_body" > 
 		          	<h3>
-		              <i class="fas fa-arrow-left" style="font-size: 18px ; color: #21B799" (click)="page_five()"></i> {{data_from_route.partner_id}}
+						  <a  (click)="page_five()">
+								<i class="fas fa-arrow-left" style="font-size: 18px ; color: #21B799" ></i> 
+						  </a>
+						  {{data_from_route.partner_id}}
 		            </h3>
 		      	</div>			
-
-				<div class = "btn-action-general">
-		            <button pButton type="button" label="Modifier" class="bt bt-vert"></button>
-		            <button pButton type="button" label="Créer" class="bt bt-no-bg"></button>
-		      	</div>
+				  <div *ngIf="data_from_route.state != 'fermé'">
+					<div class = "btn-action-general">
+						<button pButton type="button" label="Modifier" (click)="modif_next_visit_goal()" *ngIf="!modifiable"  class="bt bt-vert"></button>
+						<button pButton type="button" label="Créer" (click)="save_next_visit_goal()" *ngIf="modifiable" class="bt bt-no-bg"></button>
+					  </div>
+				  </div>
 
 		      	<div class="breacumb ui-g">
 			        <div class="ui-g-4 dropdownworkflow">
@@ -49,37 +54,20 @@
 		      		
 		      		<h5>Objectif prochaine visite</h5>
 		      		<div class="table">
-			      		<p-table [value]="cars" class="standart-tableau">
-						    <ng-template pTemplate="header">
-						        <tr>
-						            <th>Vin</th>
-						            <th>Year</th>
-						            <th>Brand</th>
-						            <th>Color</th>
-						        </tr>
-						    </ng-template>
-						    <ng-template pTemplate="body" let-car>
-						        <tr>
-						            <td>azeaa</td>
-						            <td>azeaa</td>
-						            <td>azeaa</td>
-						            <td>azeaa</td>
-						        </tr>
-						        <tr>
-						            <td>azeaa</td>
-						            <td>azeaa</td>
-						            <td>azeaa</td>
-						            <td>azeaa</td>
-						        </tr>
-						    </ng-template>
-						</p-table>
+						<form>
+							<ion-item>
+								<ion-textarea autofocus="true" [(ngModel)]="visit_goal" name="visit_goal" *ngIf="!modifiable" disabled></ion-textarea>
+								<ion-textarea autofocus="true" [(ngModel)]="visit_goal" name="visit_goal" *ngIf="modifiable"></ion-textarea>
+							</ion-item>
+						</form>
 		      		</div>
 		      	</div>
 
 		      	<div class="btn-action-etapes">
 	      			<button pButton type="button" label="RETOUR" class="bt btn-retour" (click)="page_five()"></button>
 	      			<span style="margin-left: 5px;margin-right: 5px;">ou</span>
-	      			<button pButton type="button" label="SUIVANT 6/7" class="bt btn-suivant" (click)="page_seven()"></button>
+					  <button pButton type="button" label="SUIVANT" class="bt btn-suivant" (click)="page_seven()"></button>
+					  <p>page 6/7</p>
 	      		</div>
 
 	      	</div>

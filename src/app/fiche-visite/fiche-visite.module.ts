@@ -23,6 +23,7 @@ import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { MessageService } from 'primeng/api';
 import { TableModule } from 'primeng/table';
 import { Camera } from '@ionic-native/camera/ngx';
+import {MenuModule} from 'primeng/menu';
 
 
 
@@ -53,7 +54,8 @@ const routes: Routes = [
     TabViewModule,
     ToastModule,
     TableModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    MenuModule
   ],
   declarations: [FicheVisitePage],
   providers : [Camera, Geolocation, MessageService]

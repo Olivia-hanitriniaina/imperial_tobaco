@@ -3,21 +3,21 @@ import { base_data } from './base_data.model';
 export class res_users extends base_data {
     
 
-    active : number;
-    login : string;
-    password : string;
-    company_id : number;
-    share : boolean;
-    action_id : number;
-    signature : string;
-    password_crypt : string;
-    alias_id : number;
-    sale_team : number;
-    target_sales_done : number;
-    target_sales_won : number;
-    partner_id : number
+    active : number = 0;
+    login : string = "";
+    password : string = "" ;
+    company_id : number = 0 ;
+    share : boolean = false;
+    action_id : number = 0 ;
+    signature : string = "" ;
+    password_crypt : string = "" ;
+    alias_id : number = 0 ;
+    sale_team : number = 0 ;
+    target_sales_done : number = 0 ;
+    target_sales_won : number = 0 ;
+    partner_id : number =0 ;
 
-    constructor(active : number, login : string, password : string, company_id : number, partner_id : number, share : boolean, action_id : number, signature : string, password_crypt : string, alias_id : number, sale_team : number, target_sales_done : number, target_sales_won : number, create_uid : number, name : string, write_uid : number, id? : number){
+    constructor(active : number = 0, login : string = "" , password : string = "" , company_id : number = 0, partner_id : number = 0, share : boolean = false, action_id : number = 0, signature : string = "" , password_crypt : string = "" , alias_id : number = 0, sale_team : number = 0, target_sales_done : number = 0, target_sales_won : number = 0, create_uid : number = 0, name : string = "" , write_uid : number = 0, id? : number){
         super(create_uid, name, write_uid, id);
         this.setactive(active) ;
         this.setlogin(login);

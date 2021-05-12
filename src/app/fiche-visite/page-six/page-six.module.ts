@@ -24,7 +24,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { TableModule } from 'primeng/table';
 
 import { PageSixPage } from './page-six.page';
-
+import {MenuModule} from 'primeng/menu';
 const routes: Routes = [
   {
     path: '',
@@ -53,7 +53,8 @@ const routes: Routes = [
     ToastModule,
     CheckboxModule,
     TableModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    MenuModule
   ],
   declarations: [PageSixPage],
   providers : [MessageService]

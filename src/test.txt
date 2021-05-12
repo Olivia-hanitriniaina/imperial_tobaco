@@ -1,1 +1,6 @@
-select t2.product_id,itg_product.name as product_name,itg_manufacturer.name as manufacturer_name,ifnull(sum(available_stock),0) as available_stock,ifnull(sum(last_visit_stock),0) as last_visit_stock,ifnull(sum(placement),0) as placement, (select sum(placement) from stock_line as t1 where t1.product_id = t2.product_id and visit_sheet_id in(select id from visit_sheet where id in (select id from visit_sheet where partner_id = 35 and id < 79 order by id desc limit 1 ) and partner_id = 35 )) as last_placement , (select avg(last_visit_stock) as last_visit_stock_avg from stock_line as t3 where t3.product_id=t2.product_id and visit_sheet_id in (select id from visit_sheet where partner_id = 35 order by id Desc limit 4) group by t3.product_id,t3.manufacturer_id) as last_visit_stock_avg from stock_line as t2 join itg_product on itg_product.id= t2.product_id join itg_manufacturer on t2.manufacturer_id = itg_manufacturer.id where visit_sheet_id = 79 group by t2.product_id,t2.manufacturer_id
+0 update 
+1 insert
+
+p3 manao select anaty price_line where visit_sheet_id = ? and product_id = ?
+if misy dia update quantity 
+else insert into _price line

@@ -2,15 +2,10 @@ import { base_data } from './base_data.model';
 
 export class i_t_zone extends base_data {
 
-    agence_id : number ;
+    agence_id : number = 0 ;
 
-    constructor(create_uid : number, name : string, write_uid : number, agence_id : number, id? : number){
-        if(id){
-            super(create_uid, name, write_uid, id);
-        }
-        else {
-            super(create_uid, name, write_uid);
-        }
+    constructor( create_uid : number, name : string, write_uid : number, agence_id : number = 0, id? : number){
+        super(create_uid, name, write_uid, id);
         this.set_agence_id(agence_id) ;
     }
 

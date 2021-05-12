@@ -1,0 +1,171 @@
+{
+    "from_offline": [],
+    "to_offline": [
+        {
+            "name": "test 1234",
+            "sequence": 0,
+            "x_offline_id": false,
+            "x_synced": true,
+            "action_type": 1,
+            "table": "itg_manufacturer",
+            "x_odoo_id": 5
+        },
+        {
+            "name": "Telma",
+            "sequence": 0,
+            "x_offline_id": false,
+            "x_synced": true,
+            "action_type": 1,
+            "table": "itg_manufacturer",
+            "x_odoo_id": 4
+        },
+        {
+            "name": "Marque 1",
+            "x_offline_id": false,
+            "x_synced": true,
+            "action_type": 1,
+            "table": "itg_brand",
+            "x_odoo_id": 1
+        },
+        {
+            "name": "marque2",
+            "x_offline_id": false,
+            "x_synced": true,
+            "action_type": 1,
+            "table": "itg_brand",
+            "x_odoo_id": 3
+        },
+        {
+            "name": "Ambatondrazaka",
+            "x_offline_id": false,
+            "x_synced": true,
+            "action_type": 1,
+            "table": "i_t_ville",
+            "x_odoo_id": 1
+        },
+        {
+            "name": "Anstiranana",
+            "x_offline_id": false,
+            "x_synced": true,
+            "action_type": 1,
+            "table": "i_t_ville",
+            "x_odoo_id": 5
+        },
+        {
+            "name": "Rural",
+            "x_offline_id": false,
+            "x_synced": true,
+            "action_type": 1,
+            "table": "i_t_emplacement",
+            "x_odoo_id": 2
+        },
+        {
+            "name": "Urbain",
+            "x_offline_id": false,
+            "x_synced": true,
+            "action_type": 1,
+            "table": "i_t_emplacement",
+            "x_odoo_id": 1
+        },
+        {
+            "x_odoo_id": 14,
+            "retailer_pqt_sale_price": 5200,
+            "x_offline_id": false,
+            "tax_status_id": false,
+            "dmg_sale_price": 4800,
+            "brand_id": false,
+            "table": "itg_product",
+            "product_price_history_ids": [
+                25,
+                40,
+                49,
+                50
+            ],
+            "active": true,
+            "grs_sale_price": 4200,
+            "name": "Gauloises CO",
+            "retailer_unit_sale_price": 330,
+            "grs_cost_price": 0,
+            "product_type_code": false,
+            "x_synced": true,
+            "dmg_cost_price": 0,
+            "action_type": 1,
+            "manufacturer_id": 1,
+            "ref": "REF000014",
+            "product_type": 1
+        },
+        {
+            "code": false,
+            "name": "Centre",
+            "regional_director_id": false,
+            "x_offline_id": false,
+            "x_synced": true,
+            "action_type": 1,
+            "table": "i_t_region",
+            "x_odoo_id": 3
+        },
+        {
+            "code": false,
+            "name": "Nord",
+            "regional_director_id": false,
+            "x_offline_id": false,
+            "x_synced": true,
+            "action_type": 1,
+            "table": "i_t_region",
+            "x_odoo_id": 1
+        },
+        {
+            "code": "DMG",
+            "name": "Demi-grossiste",
+            "x_offline_id": false,
+            "action_type": 1,
+            "table": "i_t_type_client",
+            "x_odoo_id": 246
+        },
+        {
+            "code": "D",
+            "name": "Détaillant",
+            "x_offline_id": false,
+            "action_type": 1,
+            "table": "i_t_type_client",
+            "x_odoo_id": 247
+        },
+        {
+            "name": "Non",
+            "x_offline_id": false,
+            "action_type": 1,
+            "table": "i_t_couverture_commerciale",
+            "x_odoo_id": 4
+        },
+        {
+            "name": "DP",
+            "x_offline_id": false,
+            "action_type": 1,
+            "table": "tax_status",
+            "x_odoo_id": 121
+        },
+        {
+            "name": "NDP",
+            "x_offline_id": false,
+            "action_type": 1,
+            "table": "tax_status",
+            "x_odoo_id": 122
+        },
+        {
+            "code": "for_sale",
+            "name": "En vente",
+            "x_offline_id": false,
+            "action_type": 1,
+            "table": "itg_product_type",
+            "x_odoo_id": 1
+        },
+        {
+            "code": "promo",
+            "name": "Promo",
+            "x_offline_id": false,
+            "action_type": 1,
+            "table": "itg_product_type",
+            "x_odoo_id": 2
+        }
+    ]
+}

@@ -3,6 +3,8 @@ import { Router, NavigationExtras } from '@angular/router';
 import { Database_manager } from 'src/app/model/DAO/database_manager.model';
 import { i_t_tournee } from 'src/app/model/data/i_t_tournee.model';
 import { Storage } from '@ionic/storage' ;
+import {MenuItem} from 'primeng/api';
+
 @Component({
   selector: 'app-liste-tournee',
   templateUrl: './liste-tournee.page.html',
@@ -13,14 +15,19 @@ import { Storage } from '@ionic/storage' ;
     ]
 })
 export class ListeTourneePage implements OnInit {
-
+  itemes: MenuItem[];
   cols: { field: string; header: string; display : string}[];
   data : i_t_tournee [] ;
-  selected : any[]
+  selected : any[];
+  user_id : number ;
 
   constructor( private dbm : Database_manager, private router : Router, private storage : Storage) { }
 
   ngOnInit() {
+    this.itemes = [
+      {label: 'Déconnecter', icon: 'pi pi-fw pi-plus'}, 
+    ];
+
     this.cols = [
       { field: 'id' , header: 'id', display : 'none' },
       { field: 'name' , header: 'Nom' , display: 'table-cell'},
@@ -28,10 +35,22 @@ export class ListeTourneePage implements OnInit {
       { field: 'start_date' , header: 'start_date' , display: 'none'},
       { field: 'end_date' , header: 'start_date', display: 'none' },
     ];
+    this.dbm.select_res_user_active().then( data => {
+      this.user_id = data.id
+      this.dbm.get_all_tournees_by_user(this.user_id)
+        .then( (data :any) => {
+          if(data){
+            this.data = data
+          }
+        })
+        .catch(e => alert(e.message)) ;
+    }) ;
   }
 
   ionViewWillEnter(){
-    this.dbm.select_basic_data("i_t_tournee").then( (data) => this.data = data) ;
+        
+
+    
   }
 
   open_menu(){
@@ -64,5 +83,14 @@ export class ListeTourneePage implements OnInit {
     //this.data_router.storage = rowData.id ;
     this.router.navigate(['detail-tournee'], navigationExtras) ; 
   }
-
+  data_cmp  : any;
+  Deconnexion(){
+    this.storage.get('data_p2')
+    .then((data2:any)=>{
+      this.data_cmp = JSON.parse(data2);
+      this.dbm.Updata_active_Login(this.data_cmp.id);
+      this.storage.clear();
+    })
+    this.router.navigate(['home']);
+  }
 }

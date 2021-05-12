@@ -24,6 +24,7 @@ import { DialogModule } from 'primeng/dialog';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { TableModule } from 'primeng/table';
 import { MessageService, DialogService } from 'primeng/api';
+import {MenuModule} from 'primeng/menu';
 
 const routes: Routes = [
   {
@@ -55,7 +56,8 @@ const routes: Routes = [
     DialogModule,
     TableModule,
     DynamicDialogModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    MenuModule
   ],
   declarations: [DetailTourneePage] ,
   providers : [

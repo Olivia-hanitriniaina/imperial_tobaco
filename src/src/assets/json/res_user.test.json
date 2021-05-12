@@ -1,0 +1,45 @@
+[
+    {
+       "active" : 0,
+       "login" : "manaja" ,
+       "password" : "manaja123" ,
+       "company_id" : 1 ,
+       "share" : 1,
+       "action_id" : 1 , 
+       "signature" : "manaja",
+       "password_crypt" : "manaja123",
+       "alias_id" : 11,
+       "sale_team" : 12 ,
+       "target_sales_done" : 12, 
+       "target_sales_won" : 12
+    },
+    {
+        "active" : 0,
+        "login" : "test" ,
+        "password" : "test123" ,
+        "company_id" : 2 ,
+        "share" : 1,
+        "action_id" : 2 , 
+        "signature" : "test",
+        "password_crypt" : "test123",
+        "alias_id" : 11,
+        "sale_team" : 12 ,
+        "target_sales_done" : 12, 
+        "target_sales_won" : 12
+     },
+     {
+        "active" : 0,
+        "login" : "bema" ,
+        "password" : "bema123" ,
+        "company_id" : 3 ,
+        "share" : 1,
+        "action_id" : 3 , 
+        "signature" : "bema",
+        "password_crypt" : "bema123",
+        "alias_id" : 11,
+        "sale_team" : 12 ,
+        "target_sales_done" : 12, 
+        "target_sales_won" : 12
+     }
+
+]
